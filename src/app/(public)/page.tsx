@@ -33,7 +33,7 @@ export default function HomePage() {
           style={{ animationDelay: "1.5s" }}
         />
 
-        <div className="site-shell relative grid min-h-[calc(100vh-5rem)] items-center py-16 md:py-20">
+        <div className="site-shell relative grid min-h-[calc(100vh-5rem)] place-items-center py-16 md:py-20">
           <div className="hero-brand fade-up max-w-3xl">
             <SnowflakeLogo className="hero-brand__mark" />
             <h1 className="hero-brand__name">
@@ -45,7 +45,7 @@ export default function HomePage() {
             <p className="fade-up-delay-2 mt-4 max-w-xl text-base leading-relaxed text-ink-soft md:text-lg">
               {settings.hero_intro}
             </p>
-            <div className="fade-up-delay-2 mt-9 flex flex-wrap gap-3">
+            <div className="fade-up-delay-2 mt-9 flex flex-wrap justify-center gap-3">
               <Link href="/projeler" className="btn btn-primary">
                 Projelerime bakın
               </Link>
@@ -57,7 +57,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="site-shell border-t border-pink-200/60 py-16">
+      <section className="site-shell home-section border-t border-pink-200/60 py-16">
         <p className="text-sm font-semibold uppercase tracking-[0.14em] text-rose">
           Şu an
         </p>
@@ -67,17 +67,15 @@ export default function HomePage() {
         </p>
       </section>
 
-      <section className="site-shell py-16">
-        <div className="flex items-end justify-between gap-4">
-          <div>
-            <h2 className="type-h2">Öne çıkan projeler</h2>
-            <p className="mt-2 text-ink-soft">Seçilmiş işler ve denemeler.</p>
-          </div>
-          <Link href="/projeler" className="nav-link shrink-0">
+      <section className="site-shell home-section py-16">
+        <div className="home-section__head">
+          <h2 className="type-h2">Öne çıkan projeler</h2>
+          <p className="text-ink-soft">Seçilmiş işler ve denemeler.</p>
+          <Link href="/projeler" className="nav-link mt-1">
             Tümü
           </Link>
         </div>
-        <ul className="mt-10 space-y-8">
+        <ul className="home-list mt-10 space-y-8">
           {projects.map((p) => (
             <li key={p.id} className="border-b border-pink-200/70 pb-8">
               <Link href={`/projeler/${p.slug}`} className="group block">
@@ -91,17 +89,15 @@ export default function HomePage() {
         </ul>
       </section>
 
-      <section className="site-shell pb-20">
-        <div className="flex items-end justify-between gap-4">
-          <div>
-            <h2 className="type-h2">Son yazılar</h2>
-            <p className="mt-2 text-ink-soft">Blogdan kısa notlar.</p>
-          </div>
-          <Link href="/blog" className="nav-link shrink-0">
+      <section className="site-shell home-section pb-20">
+        <div className="home-section__head">
+          <h2 className="type-h2">Son yazılar</h2>
+          <p className="text-ink-soft">Blogdan kısa notlar.</p>
+          <Link href="/blog" className="nav-link mt-1">
             Blog
           </Link>
         </div>
-        <ul className="mt-10 space-y-8">
+        <ul className="home-list mt-10 space-y-8">
           {posts.map((post) => (
             <li key={post.id} className="border-b border-pink-200/70 pb-8">
               <Link href={`/blog/${post.slug}`} className="group block">

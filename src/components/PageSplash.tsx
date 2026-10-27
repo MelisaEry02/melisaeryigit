@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
 
-const DURATION_MS = 2000;
-const FADE_MS = 400;
+const DURATION_MS = 2800;
+const FADE_MS = 520;
 
 type Flake = {
   id: number;
@@ -20,12 +20,12 @@ type Flake = {
 function makeFlakes(count: number): Flake[] {
   return Array.from({ length: count }, (_, i) => ({
     id: i,
-    left: `${(i * 37 + 11) % 100}%`,
-    size: 10 + ((i * 7) % 14),
-    delay: (i % 8) * 0.12,
-    duration: 1.55 + (i % 5) * 0.2,
-    opacity: 0.5 + (i % 4) * 0.1,
-    drift: ((i % 5) - 2) * 12,
+    left: `${(i * 41 + 7) % 100}%`,
+    size: 12 + ((i * 9) % 18),
+    delay: (i % 10) * 0.14,
+    duration: 2.1 + (i % 6) * 0.28,
+    opacity: 0.35 + (i % 5) * 0.1,
+    drift: ((i % 7) - 3) * 18,
   }));
 }
 
@@ -33,24 +33,26 @@ export function PageSplash({ siteName }: { siteName: string }) {
   const pathname = usePathname();
   const [show, setShow] = useState(true);
   const [leaving, setLeaving] = useState(false);
-  const [nameWhite, setNameWhite] = useState(false);
-  const flakes = useMemo(() => makeFlakes(20), []);
+  const [phase, setPhase] = useState<"in" | "white" | "hold">("in");
+  const flakes = useMemo(() => makeFlakes(26), []);
+  const name = siteName || "Melisa Eryiğit";
 
   useEffect(() => {
     setShow(true);
     setLeaving(false);
-    setNameWhite(false);
+    setPhase("in");
 
     const reduce =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (reduce) {
-      const t = window.setTimeout(() => setShow(false), 180);
+      const t = window.setTimeout(() => setShow(false), 160);
       return () => window.clearTimeout(t);
     }
 
-    const toWhite = window.setTimeout(() => setNameWhite(true), 650);
+    const toWhite = window.setTimeout(() => setPhase("white"), 900);
+    const toHold = window.setTimeout(() => setPhase("hold"), 1600);
     const toLeave = window.setTimeout(
       () => setLeaving(true),
       DURATION_MS - FADE_MS
@@ -59,6 +61,7 @@ export function PageSplash({ siteName }: { siteName: string }) {
 
     return () => {
       window.clearTimeout(toWhite);
+      window.clearTimeout(toHold);
       window.clearTimeout(toLeave);
       window.clearTimeout(toHide);
     };
@@ -78,6 +81,8 @@ export function PageSplash({ siteName }: { siteName: string }) {
       aria-hidden="true"
       onClick={skip}
     >
+      <div className="page-splash__veil" aria-hidden />
+
       <div className="page-splash__snow" aria-hidden>
         {flakes.map((f) => (
           <span
@@ -98,14 +103,28 @@ export function PageSplash({ siteName }: { siteName: string }) {
         ))}
       </div>
 
-      <div className="page-splash__brand">
-        <SnowflakeLogo className="page-splash__mark" title="" />
+      <div
+        className={`page-splash__brand page-splash__brand--${phase}`}
+      >
+        <div className="page-splash__mark-wrap">
+          <SnowflakeLogo className="page-splash__mark" title="" />
+        </div>
         <p
           className={`page-splash__name font-display${
-            nameWhite ? " page-splash__name--white" : ""
+            phase === "white" || phase === "hold"
+              ? " page-splash__name--white"
+              : ""
           }`}
         >
-          {siteName || "Melisa Eryiğit"}
+          {name.split("").map((ch, i) => (
+            <span
+              key={`${ch}-${i}`}
+              className="page-splash__letter"
+              style={{ animationDelay: `${0.35 + i * 0.035}s` }}
+            >
+              {ch === " " ? "\u00A0" : ch}
+            </span>
+          ))}
         </p>
       </div>
     </div>

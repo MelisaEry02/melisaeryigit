@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SpeechBubble } from "@/components/SpeechBubble";
 import { getDb, type Skill } from "@/lib/db";
 
 export const metadata: Metadata = { title: "Yetenekler" };
@@ -16,31 +17,24 @@ export default function SkillsPage() {
 
   return (
     <div className="site-shell py-16 md:py-20">
-      <h1 className="type-h1">Yetenekler</h1>
-      <p className="mt-3 max-w-xl type-lead">Araçlar ve konular — seviye 1–5.</p>
-      <div className="mt-12 space-y-12">
-        {Object.entries(byCategory).map(([cat, list]) => (
-          <section key={cat}>
-            <h2 className="type-h2">{cat}</h2>
-            <ul className="mt-5 space-y-5">
-              {list.map((s) => (
-                <li key={s.id}>
-                  <div className="flex items-baseline justify-between gap-4">
-                    <h3 className="font-medium text-ink">{s.name}</h3>
-                    <span className="text-sm text-ink-soft">{s.level}/5</span>
-                  </div>
-                  <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-pink-200/80">
-                    <div
-                      className="h-full rounded-full bg-rose transition-all"
-                      style={{ width: `${(s.level / 5) * 100}%` }}
-                    />
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))}
-      </div>
+      <SpeechBubble label="Yetenekler">
+        <h1 className="type-h1">Yetenekler</h1>
+        <p className="mt-3 type-lead">Araçlar ve konular.</p>
+        <div className="mt-10 space-y-10">
+          {Object.entries(byCategory).map(([cat, list]) => (
+            <section key={cat}>
+              <h2 className="type-h2">{cat}</h2>
+              <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
+                {list.map((s) => (
+                  <li key={s.id} className="text-ink-soft">
+                    {s.name}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+      </SpeechBubble>
     </div>
   );
 }
