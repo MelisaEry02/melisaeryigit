@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { SpeechBubble } from "@/components/SpeechBubble";
 import { getDb, type Project } from "@/lib/db";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -24,37 +25,39 @@ export default async function ProjectDetailPage({ params }: Props) {
   if (!project) notFound();
 
   return (
-    <article className="site-shell py-16 md:py-20">
-      <Link href="/projeler" className="nav-link text-sm">
-        ← Projeler
-      </Link>
-      <h1 className="type-h1 mt-6">{project.title}</h1>
-      <p className="mt-4 max-w-2xl type-lead">{project.summary}</p>
-      <div className="mt-10 max-w-2xl whitespace-pre-wrap leading-relaxed text-ink-soft">
-        {project.content}
-      </div>
-      <div className="mt-10 flex flex-wrap gap-4 text-sm">
-        {project.project_url ? (
-          <a
-            href={project.project_url}
-            className="btn btn-primary"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Projeyi aç
-          </a>
-        ) : null}
-        {project.github_url ? (
-          <a
-            href={project.github_url}
-            className="btn btn-ghost"
-            target="_blank"
-            rel="noreferrer"
-          >
-            GitHub
-          </a>
-        ) : null}
-      </div>
-    </article>
+    <div className="site-shell page-with-soft-snow py-16 md:py-20">
+      <SpeechBubble label="Proje">
+        <Link href="/projeler" className="nav-link text-sm">
+          ← Projeler
+        </Link>
+        <h1 className="type-h1 mt-4">{project.title}</h1>
+        <p className="mt-4 type-lead">{project.summary}</p>
+        <div className="mt-8 whitespace-pre-wrap leading-relaxed text-ink-soft">
+          {project.content}
+        </div>
+        <div className="mt-8 flex flex-wrap gap-3">
+          {project.project_url ? (
+            <a
+              href={project.project_url}
+              className="btn btn-primary"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Projeyi aç
+            </a>
+          ) : null}
+          {project.github_url ? (
+            <a
+              href={project.github_url}
+              className="btn btn-ghost"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub
+            </a>
+          ) : null}
+        </div>
+      </SpeechBubble>
+    </div>
   );
 }

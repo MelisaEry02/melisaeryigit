@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { SpeechBubble } from "@/components/SpeechBubble";
 import { getDb, type Post } from "@/lib/db";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -22,19 +23,21 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post) notFound();
 
   return (
-    <article className="site-shell py-16 md:py-20">
-      <Link href="/blog" className="nav-link text-sm">
-        ← Blog
-      </Link>
-      <time className="mt-6 block text-sm text-ink-soft">
-        {post.published_at
-          ? new Date(post.published_at).toLocaleDateString("tr-TR")
-          : ""}
-      </time>
-      <h1 className="type-h1 mt-3">{post.title}</h1>
-      <div className="mt-10 max-w-2xl whitespace-pre-wrap leading-relaxed text-ink-soft">
-        {post.content}
-      </div>
-    </article>
+    <div className="site-shell page-with-soft-snow py-16 md:py-20">
+      <SpeechBubble label="Yazı">
+        <Link href="/blog" className="nav-link text-sm">
+          ← Blog
+        </Link>
+        <time className="mt-4 block text-sm text-ink-soft">
+          {post.published_at
+            ? new Date(post.published_at).toLocaleDateString("tr-TR")
+            : ""}
+        </time>
+        <h1 className="type-h1 mt-2">{post.title}</h1>
+        <div className="mt-8 whitespace-pre-wrap leading-relaxed text-ink-soft">
+          {post.content}
+        </div>
+      </SpeechBubble>
+    </div>
   );
 }

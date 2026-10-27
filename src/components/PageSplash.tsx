@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { usePathname } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
 
 const DURATION_MS = 3600;
@@ -29,29 +28,31 @@ function makeFlakes(count: number): Flake[] {
   }));
 }
 
+/**
+ * Sadece hard load (layout ilk mount).
+ * App Router’da public layout client nav’da kalır → pathname’e bağlı değil.
+ */
 export function PageSplash({ siteName }: { siteName: string }) {
-  const pathname = usePathname();
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const [leaving, setLeaving] = useState(false);
   const [phase, setPhase] = useState<"boot" | "mark" | "name" | "white" | "hold">(
     "boot"
   );
+  const started = useRef(false);
   const flakes = useMemo(() => makeFlakes(22), []);
   const name = siteName || "Melisa Eryiğit";
 
   useEffect(() => {
-    setShow(true);
-    setLeaving(false);
-    setPhase("boot");
+    if (started.current) return;
+    started.current = true;
 
-    const reduce =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
-      const t = window.setTimeout(() => setShow(false), 140);
-      return () => window.clearTimeout(t);
+      setShow(false);
+      return;
     }
+
+    setShow(true);
 
     const tMark = window.setTimeout(() => setPhase("mark"), 180);
     const tName = window.setTimeout(() => setPhase("name"), 520);
@@ -71,7 +72,7 @@ export function PageSplash({ siteName }: { siteName: string }) {
       window.clearTimeout(tLeave);
       window.clearTimeout(tHide);
     };
-  }, [pathname]);
+  }, []);
 
   if (!show) return null;
 

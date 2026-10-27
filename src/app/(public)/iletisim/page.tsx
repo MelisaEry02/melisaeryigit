@@ -9,7 +9,7 @@ export default function ContactPage() {
   const settings = getSettings();
 
   return (
-    <div className="site-shell py-16 md:py-20">
+    <div className="site-shell page-with-soft-snow py-16 md:py-20">
       <SpeechBubble label="İletişim">
         <h1 className="type-h1">İletişim</h1>
         <p className="mt-3 type-lead">{settings.contact_blurb}</p>

@@ -12,7 +12,7 @@ export default function AboutPage() {
     .filter(Boolean);
 
   return (
-    <div className="site-shell py-16 md:py-20">
+    <div className="site-shell page-with-soft-snow py-16 md:py-20">
       <SpeechBubble label="Hakkımda">
         <h1 className="type-h1">
           {settings.site_name || "Melisa Eryiğit"}

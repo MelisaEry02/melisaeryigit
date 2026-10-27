@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { EmptyHint } from "@/components/EmptyHint";
 import { ExperienceStrip } from "@/components/ExperienceStrip";
+import { HeroSnowscape } from "@/components/HeroSnowscape";
 import { SectionPanel } from "@/components/SectionPanel";
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
 import {
@@ -36,22 +37,17 @@ export default function HomePage() {
     .all() as Experience[];
 
   return (
-    <div className="pb-8">
+    <div className="pb-8 page-with-soft-snow">
       <section className="hero-stage relative overflow-hidden">
         <div className="hero-stage__bg" aria-hidden>
           <span className="hero-stage__mesh" />
           <span className="hero-stage__drift hero-stage__drift--1" />
           <span className="hero-stage__drift hero-stage__drift--2" />
           <span className="hero-stage__drift hero-stage__drift--3" />
-          <span className="hero-stage__flake hero-stage__flake--1">
-            <SnowflakeLogo title="" />
-          </span>
-          <span className="hero-stage__flake hero-stage__flake--2">
-            <SnowflakeLogo title="" />
-          </span>
         </div>
+        <HeroSnowscape />
 
-        <div className="site-shell relative grid min-h-[calc(100vh-5rem)] place-items-center py-16 md:py-24">
+        <div className="site-shell relative z-[1] grid min-h-[calc(100vh-5rem)] place-items-center py-16 md:py-24">
           <div className="hero-brand fade-up max-w-4xl">
             <SnowflakeLogo className="hero-brand__mark" />
             <p className="hero-brand__eyebrow">Kişisel alan</p>
@@ -148,7 +144,9 @@ export default function HomePage() {
       </SectionPanel>
 
       <section className="site-shell pb-16 pt-4">
-        <ExperienceStrip items={experiences} />
+        <div className="section-panel !w-full !max-w-3xl">
+          <ExperienceStrip items={experiences} />
+        </div>
       </section>
     </div>
   );

@@ -10,7 +10,7 @@ export default function ExperiencePage() {
     .all() as Experience[];
 
   return (
-    <div className="site-shell py-16 md:py-20">
+    <div className="site-shell page-with-soft-snow py-16 md:py-20">
       <SpeechBubble label="Deneyim">
         <h1 className="type-h1">Deneyim & eğitim</h1>
         <p className="mt-3 type-lead">Zaman çizelgesi — iş ve okul.</p>
