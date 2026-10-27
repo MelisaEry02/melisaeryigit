@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SnowflakeLogo } from "@/components/SnowflakeLogo";
 import { getDb, getSettings, type Post, type Project } from "@/lib/db";
 
 export default function HomePage() {
@@ -33,22 +34,23 @@ export default function HomePage() {
         />
 
         <div className="site-shell relative grid min-h-[calc(100vh-5rem)] items-center py-16 md:py-20">
-          <div className="max-w-3xl">
-            <p className="fade-up font-display text-4xl leading-[1.05] tracking-tight text-ink sm:text-5xl md:text-6xl lg:text-7xl">
+          <div className="hero-brand fade-up max-w-3xl">
+            <SnowflakeLogo className="hero-brand__mark" />
+            <h1 className="hero-brand__name">
               {settings.site_name || "Melisa Eryiğit"}
-            </p>
-            <h1 className="fade-up-delay mt-5 max-w-2xl text-xl font-medium text-ink-soft md:text-2xl">
-              {settings.tagline}
             </h1>
-            <p className="fade-up-delay-2 mt-5 max-w-xl text-base leading-relaxed text-ink-soft md:text-lg">
+            <p className="fade-up-delay type-lead mt-1 max-w-2xl font-medium">
+              {settings.tagline}
+            </p>
+            <p className="fade-up-delay-2 mt-4 max-w-xl text-base leading-relaxed text-ink-soft md:text-lg">
               {settings.hero_intro}
             </p>
             <div className="fade-up-delay-2 mt-9 flex flex-wrap gap-3">
               <Link href="/projeler" className="btn btn-primary">
-                Projelerime bak
+                Projelerime bakın
               </Link>
               <Link href="/iletisim" className="btn btn-ghost">
-                Yaz bana
+                İletişim
               </Link>
             </div>
           </div>
@@ -59,10 +61,8 @@ export default function HomePage() {
         <p className="text-sm font-semibold uppercase tracking-[0.14em] text-rose">
           Şu an
         </p>
-        <h2 className="font-display mt-2 text-3xl text-ink md:text-4xl">
-          Ne üzerindeyim?
-        </h2>
-        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft">
+        <h2 className="type-h2 mt-2">Ne üzerindeyim?</h2>
+        <p className="mt-4 max-w-2xl type-lead">
           {settings.currently_working_on}
         </p>
       </section>
@@ -70,9 +70,7 @@ export default function HomePage() {
       <section className="site-shell py-16">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <h2 className="font-display text-3xl text-ink md:text-4xl">
-              Öne çıkan projeler
-            </h2>
+            <h2 className="type-h2">Öne çıkan projeler</h2>
             <p className="mt-2 text-ink-soft">Seçilmiş işler ve denemeler.</p>
           </div>
           <Link href="/projeler" className="nav-link shrink-0">
@@ -83,7 +81,7 @@ export default function HomePage() {
           {projects.map((p) => (
             <li key={p.id} className="border-b border-pink-200/70 pb-8">
               <Link href={`/projeler/${p.slug}`} className="group block">
-                <h3 className="font-display text-2xl text-ink transition group-hover:text-rose">
+                <h3 className="type-h3 transition group-hover:text-rose">
                   {p.title}
                 </h3>
                 <p className="mt-2 max-w-2xl text-ink-soft">{p.summary}</p>
@@ -96,9 +94,7 @@ export default function HomePage() {
       <section className="site-shell pb-20">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <h2 className="font-display text-3xl text-ink md:text-4xl">
-              Son yazılar
-            </h2>
+            <h2 className="type-h2">Son yazılar</h2>
             <p className="mt-2 text-ink-soft">Blogdan kısa notlar.</p>
           </div>
           <Link href="/blog" className="nav-link shrink-0">
@@ -109,7 +105,7 @@ export default function HomePage() {
           {posts.map((post) => (
             <li key={post.id} className="border-b border-pink-200/70 pb-8">
               <Link href={`/blog/${post.slug}`} className="group block">
-                <h3 className="font-display text-2xl text-ink transition group-hover:text-rose">
+                <h3 className="type-h3 transition group-hover:text-rose">
                   {post.title}
                 </h3>
                 <p className="mt-2 max-w-2xl text-ink-soft">{post.excerpt}</p>

@@ -31,9 +31,7 @@ export default async function BlogPostPage({ params }: Props) {
           ? new Date(post.published_at).toLocaleDateString("tr-TR")
           : ""}
       </time>
-      <h1 className="font-display mt-3 text-4xl text-ink md:text-5xl">
-        {post.title}
-      </h1>
+      <h1 className="type-h1 mt-3">{post.title}</h1>
       <div className="mt-10 max-w-2xl whitespace-pre-wrap leading-relaxed text-ink-soft">
         {post.content}
       </div>

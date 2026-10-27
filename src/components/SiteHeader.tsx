@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { SnowflakeLogo } from "@/components/SnowflakeLogo";
 
 const links = [
   { href: "/", label: "Ana sayfa" },
@@ -23,9 +24,10 @@ export function SiteHeader({ siteName }: { siteName: string }) {
       <div className="site-shell flex items-center justify-between gap-4 py-4">
         <Link
           href="/"
-          className="font-display text-xl tracking-tight text-ink md:text-2xl"
+          className="site-brand font-display tracking-tight text-ink"
         >
-          {siteName}
+          <SnowflakeLogo className="site-brand__mark" title="" />
+          <span>{siteName}</span>
         </Link>
 
         <button

@@ -2,9 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
+import { SnowflakeLogo } from "@/components/SnowflakeLogo";
 
-const DURATION_MS = 2100;
-const FADE_MS = 420;
+const DURATION_MS = 2000;
+const FADE_MS = 400;
 
 type Flake = {
   id: number;
@@ -22,8 +23,8 @@ function makeFlakes(count: number): Flake[] {
     left: `${(i * 37 + 11) % 100}%`,
     size: 10 + ((i * 7) % 14),
     delay: (i % 8) * 0.12,
-    duration: 1.6 + (i % 5) * 0.22,
-    opacity: 0.45 + (i % 4) * 0.12,
+    duration: 1.55 + (i % 5) * 0.2,
+    opacity: 0.5 + (i % 4) * 0.1,
     drift: ((i % 5) - 2) * 12,
   }));
 }
@@ -33,7 +34,7 @@ export function PageSplash({ siteName }: { siteName: string }) {
   const [show, setShow] = useState(true);
   const [leaving, setLeaving] = useState(false);
   const [nameWhite, setNameWhite] = useState(false);
-  const flakes = useMemo(() => makeFlakes(22), []);
+  const flakes = useMemo(() => makeFlakes(20), []);
 
   useEffect(() => {
     setShow(true);
@@ -45,12 +46,15 @@ export function PageSplash({ siteName }: { siteName: string }) {
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (reduce) {
-      const t = window.setTimeout(() => setShow(false), 200);
+      const t = window.setTimeout(() => setShow(false), 180);
       return () => window.clearTimeout(t);
     }
 
-    const toWhite = window.setTimeout(() => setNameWhite(true), 700);
-    const toLeave = window.setTimeout(() => setLeaving(true), DURATION_MS - FADE_MS);
+    const toWhite = window.setTimeout(() => setNameWhite(true), 650);
+    const toLeave = window.setTimeout(
+      () => setLeaving(true),
+      DURATION_MS - FADE_MS
+    );
     const toHide = window.setTimeout(() => setShow(false), DURATION_MS);
 
     return () => {
@@ -81,25 +85,29 @@ export function PageSplash({ siteName }: { siteName: string }) {
             className="page-splash__flake"
             style={{
               left: f.left,
-              fontSize: `${f.size}px`,
+              width: f.size,
+              height: f.size,
               animationDelay: `${f.delay}s`,
               animationDuration: `${f.duration}s`,
               opacity: f.opacity,
               ["--drift" as string]: `${f.drift}px`,
             }}
           >
-            ❄
+            <SnowflakeLogo className="page-splash__flake-icon" title="" />
           </span>
         ))}
       </div>
 
-      <p
-        className={`page-splash__name font-display${
-          nameWhite ? " page-splash__name--white" : ""
-        }`}
-      >
-        {siteName || "Melisa Eryiğit"}
-      </p>
+      <div className="page-splash__brand">
+        <SnowflakeLogo className="page-splash__mark" title="" />
+        <p
+          className={`page-splash__name font-display${
+            nameWhite ? " page-splash__name--white" : ""
+          }`}
+        >
+          {siteName || "Melisa Eryiğit"}
+        </p>
+      </div>
     </div>
   );
 }

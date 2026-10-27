@@ -15,10 +15,10 @@ export default function AboutPage() {
       <p className="text-sm font-semibold uppercase tracking-[0.14em] text-rose">
         Hakkımda
       </p>
-      <h1 className="font-display mt-3 text-4xl text-ink md:text-5xl">
+      <h1 className="type-h1 mt-3">
         {settings.site_name || "Melisa Eryiğit"}
       </h1>
-      <p className="mt-4 max-w-2xl text-lg text-ink-soft">{settings.about_short}</p>
+      <p className="mt-4 max-w-2xl type-lead">{settings.about_short}</p>
 
       <div className="mt-12 max-w-2xl space-y-5 text-base leading-relaxed text-ink-soft md:text-lg">
         {paragraphs.map((p, i) => (
@@ -28,12 +28,17 @@ export default function AboutPage() {
 
       <div className="mt-12 flex flex-wrap gap-3">
         {settings.cv_url ? (
-          <a href={settings.cv_url} className="btn btn-primary" target="_blank" rel="noreferrer">
+          <a
+            href={settings.cv_url}
+            className="btn btn-primary"
+            target="_blank"
+            rel="noreferrer"
+          >
             CV indir
           </a>
         ) : null}
         <Link href="/iletisim" className="btn btn-ghost">
-          İletişime geç
+          İletişim
         </Link>
       </div>
     </div>

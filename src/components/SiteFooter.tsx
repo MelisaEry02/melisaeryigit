@@ -16,7 +16,7 @@ export function SiteFooter({ siteName, social, cvUrl }: Props) {
     <footer className="mt-24 border-t border-pink-200/70">
       <div className="site-shell flex flex-col gap-6 py-10 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="font-display text-xl text-ink">{siteName}</p>
+          <p className="font-display text-2xl text-ink">{siteName}</p>
           <p className="mt-1 text-sm text-ink-soft">
             © {year} — kişisel site, local sürüm
           </p>

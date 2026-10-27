@@ -16,19 +16,17 @@ export default function SkillsPage() {
 
   return (
     <div className="site-shell py-16 md:py-20">
-      <h1 className="font-display text-4xl text-ink md:text-5xl">Yetenekler</h1>
-      <p className="mt-3 max-w-xl text-lg text-ink-soft">
-        Araçlar ve konular — seviye 1–5.
-      </p>
+      <h1 className="type-h1">Yetenekler</h1>
+      <p className="mt-3 max-w-xl type-lead">Araçlar ve konular — seviye 1–5.</p>
       <div className="mt-12 space-y-12">
         {Object.entries(byCategory).map(([cat, list]) => (
           <section key={cat}>
-            <h2 className="font-display text-2xl text-ink">{cat}</h2>
+            <h2 className="type-h2">{cat}</h2>
             <ul className="mt-5 space-y-5">
               {list.map((s) => (
                 <li key={s.id}>
                   <div className="flex items-baseline justify-between gap-4">
-                    <span className="font-medium text-ink">{s.name}</span>
+                    <h3 className="font-medium text-ink">{s.name}</h3>
                     <span className="text-sm text-ink-soft">{s.level}/5</span>
                   </div>
                   <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-pink-200/80">

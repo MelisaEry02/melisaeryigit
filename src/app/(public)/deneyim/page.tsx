@@ -5,19 +5,13 @@ export const metadata: Metadata = { title: "Deneyim" };
 
 export default function ExperiencePage() {
   const items = getDb()
-    .prepare(
-      `SELECT * FROM experiences ORDER BY sort_order ASC, id DESC`
-    )
+    .prepare(`SELECT * FROM experiences ORDER BY sort_order ASC, id DESC`)
     .all() as Experience[];
 
   return (
     <div className="site-shell py-16 md:py-20">
-      <h1 className="font-display text-4xl text-ink md:text-5xl">
-        Deneyim & eğitim
-      </h1>
-      <p className="mt-3 max-w-xl text-lg text-ink-soft">
-        Zaman çizelgesi — iş ve okul.
-      </p>
+      <h1 className="type-h1">Deneyim & eğitim</h1>
+      <p className="mt-3 max-w-xl type-lead">Zaman çizelgesi — iş ve okul.</p>
       <ol className="relative mt-14 space-y-0 border-l border-pink-300 pl-8">
         {items.map((item) => (
           <li key={item.id} className="relative pb-12">
@@ -26,13 +20,10 @@ export default function ExperiencePage() {
               aria-hidden
             />
             <p className="text-sm font-semibold uppercase tracking-wide text-rose">
-              {item.kind === "education" ? "Eğitim" : "İş"} ·{" "}
-              {item.start_date}
+              {item.kind === "education" ? "Eğitim" : "İş"} · {item.start_date}
               {item.end_date ? ` – ${item.end_date}` : " – devam"}
             </p>
-            <h2 className="font-display mt-2 text-2xl text-ink md:text-3xl">
-              {item.title}
-            </h2>
+            <h2 className="type-h2 mt-2">{item.title}</h2>
             <p className="mt-1 text-ink-soft">
               {item.organization}
               {item.location ? ` · ${item.location}` : ""}

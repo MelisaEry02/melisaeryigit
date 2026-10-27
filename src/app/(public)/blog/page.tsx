@@ -14,8 +14,8 @@ export default function BlogPage() {
 
   return (
     <div className="site-shell py-16 md:py-20">
-      <h1 className="font-display text-4xl text-ink md:text-5xl">Blog</h1>
-      <p className="mt-3 max-w-xl text-lg text-ink-soft">
+      <h1 className="type-h1">Blog</h1>
+      <p className="mt-3 max-w-xl type-lead">
         Notlar, öğrenimler ve ara sıra düşünceler.
       </p>
       <ul className="mt-12 space-y-10">
@@ -27,7 +27,7 @@ export default function BlogPage() {
                   ? new Date(post.published_at).toLocaleDateString("tr-TR")
                   : ""}
               </time>
-              <h2 className="font-display mt-2 text-3xl text-ink transition group-hover:text-rose">
+              <h2 className="type-h2 mt-2 transition group-hover:text-rose">
                 {post.title}
               </h2>
               <p className="mt-3 max-w-2xl text-ink-soft">{post.excerpt}</p>
