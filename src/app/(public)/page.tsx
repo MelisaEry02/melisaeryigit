@@ -47,7 +47,7 @@ export default function HomePage() {
         </div>
         <HeroSnowscape />
 
-        <div className="site-shell relative z-[1] grid min-h-[calc(100vh-5rem)] place-items-center py-16 md:py-24">
+        <div className="site-shell relative z-[2] grid min-h-[calc(100vh-5rem)] place-items-center py-16 md:py-24">
           <div className="hero-brand fade-up max-w-4xl">
             <SnowflakeLogo className="hero-brand__mark" />
             <p className="hero-brand__eyebrow">Kişisel alan</p>
@@ -65,9 +65,6 @@ export default function HomePage() {
                 Projelerime bakın
               </Link>
               <CvLink cvUrl={cvUrl} variant="ghost" />
-              <Link href="/iletisim" className="btn btn-ghost">
-                İletişim
-              </Link>
             </div>
           </div>
         </div>

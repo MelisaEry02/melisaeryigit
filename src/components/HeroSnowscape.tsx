@@ -1,27 +1,35 @@
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
 
-/** Hero: yukarıdan düşen kar → yer birikimi → kardan adam (blob yok). */
+/** Hero: net görünen düşen kar → birikim → kardan adam. */
 export function HeroSnowscape() {
-  const flakes = Array.from({ length: 18 }, (_, i) => i);
+  const flakes = Array.from({ length: 28 }, (_, i) => i);
 
   return (
     <div className="hero-snow" aria-hidden>
       <div className="hero-snow__fall">
-        {flakes.map((i) => (
-          <span
-            key={i}
-            className="hero-snow__flake"
-            style={{
-              left: `${(i * 5.7 + 2) % 98}%`,
-              animationDelay: `${(i % 9) * 0.4}s`,
-              animationDuration: `${6.5 + (i % 6) * 0.9}s`,
-              ["--size" as string]: `${9 + (i % 6) * 2.5}px`,
-              opacity: 0.4 + (i % 4) * 0.12,
-            }}
-          >
-            <SnowflakeLogo title="" />
-          </span>
-        ))}
+        {flakes.map((i) => {
+          const size = 16 + (i % 7) * 4;
+          return (
+            <span
+              key={i}
+              className={`hero-snow__flake${i % 3 === 0 ? " hero-snow__flake--dot" : ""}`}
+              style={{
+                left: `${(i * 3.7 + 1.5) % 97}%`,
+                animationDelay: `${-((i * 0.37) % 5)}s`,
+                animationDuration: `${4.2 + (i % 6) * 0.7}s`,
+                width: size,
+                height: size,
+                ["--drift" as string]: `${((i % 5) - 2) * 18}px`,
+              }}
+            >
+              {i % 3 === 0 ? (
+                <span className="hero-snow__dot" />
+              ) : (
+                <SnowflakeLogo title="" />
+              )}
+            </span>
+          );
+        })}
       </div>
 
       <div className="hero-snow__ground" />
