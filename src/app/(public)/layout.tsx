@@ -1,3 +1,4 @@
+import { PageSplash } from "@/components/PageSplash";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { getSettings } from "@/lib/db";
@@ -14,6 +15,7 @@ export default function PublicLayout({
 
   return (
     <>
+      <PageSplash siteName={siteName} />
       <SiteHeader siteName={siteName} />
       <main>{children}</main>
       <SiteFooter

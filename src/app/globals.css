@@ -220,4 +220,75 @@ a {
   .hero-orb {
     animation: none;
   }
+
+  .page-splash__flake {
+    animation: none !important;
+  }
+}
+
+/* —— Sayfa splash (kartanesi) —— */
+.page-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  cursor: pointer;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 35%, #f7d5e3 0%, transparent 60%),
+    linear-gradient(165deg, #fce8ef 0%, #f3c9d8 48%, #e8b0c4 100%);
+  opacity: 1;
+  transition: opacity 0.42s ease;
+}
+
+.page-splash--out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.page-splash__snow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.page-splash__flake {
+  position: absolute;
+  top: -8%;
+  color: #ffffff;
+  line-height: 1;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+  animation-name: splashSnowFall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+.page-splash__name {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 0 1.25rem;
+  text-align: center;
+  font-size: clamp(2rem, 7vw, 3.4rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: #d489a6;
+  transition: color 0.85s ease;
+  user-select: none;
+}
+
+.page-splash__name--white {
+  color: #ffffff;
+}
+
+@keyframes splashSnowFall {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(var(--drift, 0px), 115vh, 0) rotate(360deg);
+  }
 }
