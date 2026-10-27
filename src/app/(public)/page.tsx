@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { CvLink } from "@/components/CvLink";
+import { EdgeLogos } from "@/components/EdgeLogos";
 import { EmptyHint } from "@/components/EmptyHint";
 import { ExperienceStrip } from "@/components/ExperienceStrip";
 import { HeroSnowscape } from "@/components/HeroSnowscape";
@@ -15,6 +17,7 @@ import {
 export default function HomePage() {
   const settings = getSettings();
   const db = getDb();
+  const cvUrl = settings.cv_url || "";
 
   const projects = db
     .prepare(
@@ -41,9 +44,6 @@ export default function HomePage() {
       <section className="hero-stage relative overflow-hidden">
         <div className="hero-stage__bg" aria-hidden>
           <span className="hero-stage__mesh" />
-          <span className="hero-stage__drift hero-stage__drift--1" />
-          <span className="hero-stage__drift hero-stage__drift--2" />
-          <span className="hero-stage__drift hero-stage__drift--3" />
         </div>
         <HeroSnowscape />
 
@@ -64,6 +64,7 @@ export default function HomePage() {
               <Link href="/projeler" className="btn btn-primary">
                 Projelerime bakın
               </Link>
+              <CvLink cvUrl={cvUrl} variant="ghost" />
               <Link href="/iletisim" className="btn btn-ghost">
                 İletişim
               </Link>
@@ -72,82 +73,84 @@ export default function HomePage() {
         </div>
       </section>
 
-      <SectionPanel eyebrow="Şu an" className="pt-4">
-        <h2 className="type-h2">Ne üzerindeyim?</h2>
-        <p className="mt-4 max-w-2xl type-lead">
-          {settings.currently_working_on}
-        </p>
-      </SectionPanel>
+      <div className="relative">
+        <EdgeLogos />
 
-      <SectionPanel>
-        <div className="home-section__head">
-          <h2 className="type-h2">Öne çıkan projeler</h2>
-          <p className="text-ink-soft">Seçilmiş işler ve denemeler.</p>
-          <Link href="/projeler" className="nav-link mt-1">
-            Tümü
-          </Link>
-        </div>
-        {projects.length === 0 ? (
-          <EmptyHint
-            title="Henüz öne çıkan proje yok"
-            body="Admin’den bir proje yayınlayıp “öne çıkan” işaretlediğinde burada görünür."
-          />
-        ) : (
-          <ul className="home-list mt-8 space-y-7">
-            {projects.map((p) => (
-              <li
-                key={p.id}
-                className="border-b border-pink-200/70 pb-7 last:border-0 last:pb-0"
-              >
-                <Link href={`/projeler/${p.slug}`} className="group block">
-                  <h3 className="type-h3 transition group-hover:text-rose">
-                    {p.title}
-                  </h3>
-                  <p className="mt-2 max-w-2xl text-ink-soft">{p.summary}</p>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </SectionPanel>
+        <SectionPanel eyebrow="Şu an" className="pt-4">
+          <h2 className="type-h2">Ne üzerindeyim?</h2>
+          <p className="mt-4 max-w-2xl type-lead">
+            {settings.currently_working_on}
+          </p>
+        </SectionPanel>
 
-      <SectionPanel>
-        <div className="home-section__head">
-          <h2 className="type-h2">Son yazılar</h2>
-          <p className="text-ink-soft">Blogdan kısa notlar.</p>
-          <Link href="/blog" className="nav-link mt-1">
-            Blog
-          </Link>
-        </div>
-        {posts.length === 0 ? (
-          <EmptyHint
-            title="Henüz yayınlanmış yazı yok"
-            body="İlk yazını admin panelinden taslak olarak yazıp yayınladığında burada listelenir."
-          />
-        ) : (
-          <ul className="home-list mt-8 space-y-7">
-            {posts.map((post) => (
-              <li
-                key={post.id}
-                className="border-b border-pink-200/70 pb-7 last:border-0 last:pb-0"
-              >
-                <Link href={`/blog/${post.slug}`} className="group block">
-                  <h3 className="type-h3 transition group-hover:text-rose">
-                    {post.title}
-                  </h3>
-                  <p className="mt-2 max-w-2xl text-ink-soft">{post.excerpt}</p>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </SectionPanel>
+        <SectionPanel>
+          <div className="home-section__head">
+            <h2 className="type-h2">Öne çıkan projeler</h2>
+            <p className="text-ink-soft">Seçilmiş işler ve denemeler.</p>
+            <Link href="/projeler" className="nav-link mt-1">
+              Tümü
+            </Link>
+          </div>
+          {projects.length === 0 ? (
+            <EmptyHint
+              title="Henüz öne çıkan proje yok"
+              body="Admin’den bir proje yayınlayıp “öne çıkan” işaretlediğinde burada görünür."
+            />
+          ) : (
+            <ul className="home-list mt-8 space-y-7">
+              {projects.map((p) => (
+                <li
+                  key={p.id}
+                  className="border-b border-pink-200/70 pb-7 last:border-0 last:pb-0"
+                >
+                  <Link href={`/projeler/${p.slug}`} className="group block">
+                    <h3 className="type-h3 transition group-hover:text-rose">
+                      {p.title}
+                    </h3>
+                    <p className="mt-2 max-w-2xl text-ink-soft">{p.summary}</p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </SectionPanel>
 
-      <section className="site-shell pb-16 pt-4">
-        <div className="section-panel !w-full !max-w-3xl">
+        <SectionPanel>
+          <div className="home-section__head">
+            <h2 className="type-h2">Son yazılar</h2>
+            <p className="text-ink-soft">Blogdan kısa notlar.</p>
+            <Link href="/blog" className="nav-link mt-1">
+              Blog
+            </Link>
+          </div>
+          {posts.length === 0 ? (
+            <EmptyHint
+              title="Henüz yayınlanmış yazı yok"
+              body="İlk yazını admin panelinden taslak olarak yazıp yayınladığında burada listelenir."
+            />
+          ) : (
+            <ul className="home-list mt-8 space-y-7">
+              {posts.map((post) => (
+                <li
+                  key={post.id}
+                  className="border-b border-pink-200/70 pb-7 last:border-0 last:pb-0"
+                >
+                  <Link href={`/blog/${post.slug}`} className="group block">
+                    <h3 className="type-h3 transition group-hover:text-rose">
+                      {post.title}
+                    </h3>
+                    <p className="mt-2 max-w-2xl text-ink-soft">{post.excerpt}</p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </SectionPanel>
+
+        <section className="site-shell pb-16 pt-6">
           <ExperienceStrip items={experiences} />
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   );
 }

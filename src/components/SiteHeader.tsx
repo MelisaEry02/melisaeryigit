@@ -19,7 +19,6 @@ const links = [
 export function SiteHeader({ siteName }: { siteName: string }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const contactCurrent = pathname.startsWith("/iletisim");
 
   return (
     <header className="site-header sticky top-0 z-40">
@@ -56,15 +55,7 @@ export function SiteHeader({ siteName }: { siteName: string }) {
             );
           })}
 
-          <div className="nav-contact-cluster">
-            <Link
-              href="/iletisim"
-              className="nav-link"
-              aria-current={contactCurrent ? "page" : undefined}
-              onClick={() => setOpen(false)}
-            >
-              İletişim
-            </Link>
+          <div className="nav-social-cluster">
             <HeaderSocialLinks />
           </div>
         </nav>

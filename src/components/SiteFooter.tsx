@@ -1,5 +1,11 @@
 import Link from "next/link";
-import { InstagramIcon, TikTokIcon } from "@/components/SocialIcons";
+import { CvLink } from "@/components/CvLink";
+import {
+  InstagramIcon,
+  SOCIAL,
+  TikTokIcon,
+  WhatsAppIcon,
+} from "@/components/SocialIcons";
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
 
 type Props = {
@@ -26,9 +32,19 @@ export function SiteFooter({ siteName, social, cvUrl }: Props) {
           <p className="mt-2 max-w-sm text-sm leading-relaxed text-ink-soft">
             Tasarım, yazılım ve merak — kişisel notlar burada toplanır.
           </p>
+          <p className="mt-2 text-sm text-ink-soft">{SOCIAL.location}</p>
           <p className="mt-3 text-xs text-ink-soft/80">© {year}</p>
         </div>
         <div className="flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-ink-soft">
+          <a
+            href={SOCIAL.whatsapp}
+            target="_blank"
+            rel="noreferrer"
+            className="nav-link inline-flex items-center gap-1.5"
+          >
+            <WhatsAppIcon className="text-base" />
+            WhatsApp
+          </a>
           {social.instagram ? (
             <a
               href={social.instagram}
@@ -71,11 +87,7 @@ export function SiteFooter({ siteName, social, cvUrl }: Props) {
               LinkedIn
             </a>
           ) : null}
-          {cvUrl ? (
-            <a href={cvUrl} target="_blank" rel="noreferrer" className="nav-link">
-              CV indir
-            </a>
-          ) : null}
+          <CvLink cvUrl={cvUrl} variant="text" />
           <Link href="/hakkimda" className="nav-link">
             Hakkımda
           </Link>

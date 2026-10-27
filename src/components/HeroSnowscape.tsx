@@ -1,8 +1,8 @@
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
 
-/** Hero: düşen kar + yer birikimi + kardan adam (CSS, az eleman). */
+/** Hero: yukarıdan düşen kar → yer birikimi → kardan adam (blob yok). */
 export function HeroSnowscape() {
-  const flakes = Array.from({ length: 14 }, (_, i) => i);
+  const flakes = Array.from({ length: 18 }, (_, i) => i);
 
   return (
     <div className="hero-snow" aria-hidden>
@@ -12,11 +12,11 @@ export function HeroSnowscape() {
             key={i}
             className="hero-snow__flake"
             style={{
-              left: `${(i * 7.1 + 3) % 100}%`,
-              animationDelay: `${(i % 7) * 0.55}s`,
-              animationDuration: `${7 + (i % 5) * 1.1}s`,
-              ["--size" as string]: `${10 + (i % 5) * 3}px`,
-              opacity: 0.35 + (i % 4) * 0.1,
+              left: `${(i * 5.7 + 2) % 98}%`,
+              animationDelay: `${(i % 9) * 0.4}s`,
+              animationDuration: `${6.5 + (i % 6) * 0.9}s`,
+              ["--size" as string]: `${9 + (i % 6) * 2.5}px`,
+              opacity: 0.4 + (i % 4) * 0.12,
             }}
           >
             <SnowflakeLogo title="" />
@@ -25,6 +25,7 @@ export function HeroSnowscape() {
       </div>
 
       <div className="hero-snow__ground" />
+      <div className="hero-snow__ground hero-snow__ground--mid" />
 
       <div className="hero-snow__man">
         <span className="hero-snow__man-ball hero-snow__man-ball--base" />
