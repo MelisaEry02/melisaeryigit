@@ -1,8 +1,15 @@
 import Link from "next/link";
 import { EmptyHint } from "@/components/EmptyHint";
+import { ExperienceStrip } from "@/components/ExperienceStrip";
 import { SectionPanel } from "@/components/SectionPanel";
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
-import { getDb, getSettings, type Post, type Project } from "@/lib/db";
+import {
+  getDb,
+  getSettings,
+  type Experience,
+  type Post,
+  type Project,
+} from "@/lib/db";
 
 export default function HomePage() {
   const settings = getSettings();
@@ -22,32 +29,42 @@ export default function HomePage() {
     )
     .all() as Post[];
 
+  const experiences = db
+    .prepare(
+      `SELECT * FROM experiences ORDER BY sort_order ASC, id DESC LIMIT 8`
+    )
+    .all() as Experience[];
+
   return (
     <div className="pb-8">
-      <section className="relative overflow-hidden">
-        <div
-          className="hero-orb pointer-events-none absolute -right-16 top-10 h-64 w-64 rounded-full bg-[#f3c4d4]/35 blur-3xl"
-          aria-hidden
-        />
-        <div
-          className="hero-orb pointer-events-none absolute -left-10 bottom-0 h-48 w-48 rounded-full bg-[#e8a8bc]/25 blur-3xl"
-          aria-hidden
-          style={{ animationDelay: "1.5s" }}
-        />
+      <section className="hero-stage relative overflow-hidden">
+        <div className="hero-stage__bg" aria-hidden>
+          <span className="hero-stage__mesh" />
+          <span className="hero-stage__drift hero-stage__drift--1" />
+          <span className="hero-stage__drift hero-stage__drift--2" />
+          <span className="hero-stage__drift hero-stage__drift--3" />
+          <span className="hero-stage__flake hero-stage__flake--1">
+            <SnowflakeLogo title="" />
+          </span>
+          <span className="hero-stage__flake hero-stage__flake--2">
+            <SnowflakeLogo title="" />
+          </span>
+        </div>
 
-        <div className="site-shell relative grid min-h-[calc(100vh-5rem)] place-items-center py-16 md:py-20">
-          <div className="hero-brand fade-up max-w-3xl">
+        <div className="site-shell relative grid min-h-[calc(100vh-5rem)] place-items-center py-16 md:py-24">
+          <div className="hero-brand fade-up max-w-4xl">
             <SnowflakeLogo className="hero-brand__mark" />
-            <h1 className="hero-brand__name">
+            <p className="hero-brand__eyebrow">Kişisel alan</p>
+            <h1 className="hero-brand__name hero-brand__name--xl">
               {settings.site_name || "Melisa Eryiğit"}
             </h1>
-            <p className="fade-up-delay type-lead mt-1 max-w-2xl font-medium">
+            <p className="fade-up-delay type-lead mt-2 max-w-2xl font-medium">
               {settings.tagline}
             </p>
-            <p className="fade-up-delay-2 mt-4 max-w-xl text-base leading-relaxed text-ink-soft md:text-lg">
+            <p className="fade-up-delay-2 mt-5 max-w-xl text-base leading-relaxed text-ink-soft md:text-lg">
               {settings.hero_intro}
             </p>
-            <div className="fade-up-delay-2 mt-9 flex flex-wrap justify-center gap-3">
+            <div className="fade-up-delay-2 mt-10 flex flex-wrap justify-center gap-3">
               <Link href="/projeler" className="btn btn-primary">
                 Projelerime bakın
               </Link>
@@ -82,7 +99,10 @@ export default function HomePage() {
         ) : (
           <ul className="home-list mt-8 space-y-7">
             {projects.map((p) => (
-              <li key={p.id} className="border-b border-pink-200/70 pb-7 last:border-0 last:pb-0">
+              <li
+                key={p.id}
+                className="border-b border-pink-200/70 pb-7 last:border-0 last:pb-0"
+              >
                 <Link href={`/projeler/${p.slug}`} className="group block">
                   <h3 className="type-h3 transition group-hover:text-rose">
                     {p.title}
@@ -95,7 +115,7 @@ export default function HomePage() {
         )}
       </SectionPanel>
 
-      <SectionPanel className="pb-16">
+      <SectionPanel>
         <div className="home-section__head">
           <h2 className="type-h2">Son yazılar</h2>
           <p className="text-ink-soft">Blogdan kısa notlar.</p>
@@ -126,6 +146,10 @@ export default function HomePage() {
           </ul>
         )}
       </SectionPanel>
+
+      <section className="site-shell pb-16 pt-4">
+        <ExperienceStrip items={experiences} />
+      </section>
     </div>
   );
 }

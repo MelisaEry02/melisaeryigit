@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
 
-const DURATION_MS = 3200;
-const FADE_MS = 640;
+const DURATION_MS = 3600;
+const FADE_MS = 700;
 
 type Flake = {
   id: number;
@@ -21,11 +21,11 @@ function makeFlakes(count: number): Flake[] {
   return Array.from({ length: count }, (_, i) => ({
     id: i,
     left: `${(i * 47 + 5) % 100}%`,
-    size: 14 + ((i * 11) % 22),
-    delay: (i % 9) * 0.18,
-    duration: 2.8 + (i % 5) * 0.35,
-    opacity: 0.22 + (i % 4) * 0.1,
-    drift: ((i % 6) - 2.5) * 22,
+    size: 16 + ((i * 11) % 26),
+    delay: (i % 9) * 0.16,
+    duration: 2.6 + (i % 5) * 0.32,
+    opacity: 0.28 + (i % 4) * 0.12,
+    drift: ((i % 6) - 2.5) * 26,
   }));
 }
 
@@ -36,7 +36,7 @@ export function PageSplash({ siteName }: { siteName: string }) {
   const [phase, setPhase] = useState<"boot" | "mark" | "name" | "white" | "hold">(
     "boot"
   );
-  const flakes = useMemo(() => makeFlakes(16), []);
+  const flakes = useMemo(() => makeFlakes(22), []);
   const name = siteName || "Melisa Eryiğit";
 
   useEffect(() => {
@@ -114,6 +114,7 @@ export function PageSplash({ siteName }: { siteName: string }) {
       </div>
 
       <div className="page-splash__stage">
+        <div className="page-splash__ring" aria-hidden />
         <div className="page-splash__mark-wrap">
           <SnowflakeLogo className="page-splash__mark" title="" />
         </div>

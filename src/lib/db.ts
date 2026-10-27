@@ -141,7 +141,8 @@ function seedIfEmpty(db: Database.Database) {
     cv_url: "",
     social_github: "https://github.com/",
     social_linkedin: "https://linkedin.com/",
-    social_instagram: "",
+    social_instagram: "https://instagram.com/melisaerygit",
+    social_tiktok: "https://www.tiktok.com/@melisaery",
     social_email: "",
     contact_blurb:
       "Proje, işbirliği veya sadece merhaba — formu doldurman yeterli. Mesajın e-postasız, doğrudan admin gelen kutuma düşer.",

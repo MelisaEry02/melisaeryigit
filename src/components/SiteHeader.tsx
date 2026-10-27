@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { HeaderSocialLinks } from "@/components/SocialIcons";
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const links = [
   { href: "/", label: "Ana sayfa" },
@@ -12,39 +14,29 @@ const links = [
   { href: "/blog", label: "Blog" },
   { href: "/deneyim", label: "Deneyim" },
   { href: "/yetenekler", label: "Yetenekler" },
-  { href: "/iletisim", label: "İletişim" },
 ];
 
 export function SiteHeader({ siteName }: { siteName: string }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const contactCurrent = pathname.startsWith("/iletisim");
 
   return (
-    <header className="sticky top-0 z-40 border-b border-pink-200/60 bg-[rgba(255,247,249,0.78)] backdrop-blur-md">
-      <div className="site-shell flex items-center justify-between gap-4 py-4">
+    <header className="site-header sticky top-0 z-40">
+      <div className="site-shell flex items-center gap-3 py-3 md:gap-4 md:py-4">
         <Link
           href="/"
-          className="site-brand font-display tracking-tight text-ink"
+          className="site-brand font-display tracking-tight text-ink shrink-0"
         >
           <SnowflakeLogo className="site-brand__mark" title="" />
           <span>{siteName}</span>
         </Link>
 
-        <button
-          type="button"
-          className="rounded-full border border-pink-200 bg-white/70 px-3 py-1.5 text-sm md:hidden"
-          aria-expanded={open}
-          aria-controls="site-nav"
-          onClick={() => setOpen((v) => !v)}
-        >
-          Menü
-        </button>
-
         <nav
           id="site-nav"
           className={`${
             open ? "flex" : "hidden"
-          } absolute left-0 right-0 top-full flex-col gap-3 border-b border-pink-200/60 bg-[rgba(255,247,249,0.96)] px-4 py-4 md:static md:flex md:flex-row md:items-center md:gap-5 md:border-0 md:bg-transparent md:p-0`}
+          } absolute left-0 right-0 top-full z-30 flex-col gap-3 border-b border-pink-200/60 bg-[color:var(--header-bg)] px-4 py-4 backdrop-blur-md md:static md:ml-auto md:flex md:flex-row md:items-center md:gap-4 md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none`}
         >
           {links.map((l) => {
             const current =
@@ -63,7 +55,32 @@ export function SiteHeader({ siteName }: { siteName: string }) {
               </Link>
             );
           })}
+
+          <div className="nav-contact-cluster">
+            <Link
+              href="/iletisim"
+              className="nav-link"
+              aria-current={contactCurrent ? "page" : undefined}
+              onClick={() => setOpen(false)}
+            >
+              İletişim
+            </Link>
+            <HeaderSocialLinks />
+          </div>
         </nav>
+
+        <div className="ml-auto flex items-center gap-2 md:ml-0">
+          <ThemeToggle />
+          <button
+            type="button"
+            className="rounded-full border border-pink-200 bg-[color:var(--surface)] px-3 py-1.5 text-sm md:hidden"
+            aria-expanded={open}
+            aria-controls="site-nav"
+            onClick={() => setOpen((v) => !v)}
+          >
+            Menü
+          </button>
+        </div>
       </div>
     </header>
   );

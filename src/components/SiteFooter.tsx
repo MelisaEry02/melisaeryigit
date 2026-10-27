@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { InstagramIcon, TikTokIcon } from "@/components/SocialIcons";
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
 
 type Props = {
@@ -7,6 +8,7 @@ type Props = {
     github?: string;
     linkedin?: string;
     instagram?: string;
+    tiktok?: string;
   };
   cvUrl?: string;
 };
@@ -26,7 +28,29 @@ export function SiteFooter({ siteName, social, cvUrl }: Props) {
           </p>
           <p className="mt-3 text-xs text-ink-soft/80">© {year}</p>
         </div>
-        <div className="flex flex-wrap gap-x-5 gap-y-3 text-sm text-ink-soft">
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-ink-soft">
+          {social.instagram ? (
+            <a
+              href={social.instagram}
+              target="_blank"
+              rel="noreferrer"
+              className="nav-link inline-flex items-center gap-1.5"
+            >
+              <InstagramIcon className="text-base" />
+              Instagram
+            </a>
+          ) : null}
+          {social.tiktok ? (
+            <a
+              href={social.tiktok}
+              target="_blank"
+              rel="noreferrer"
+              className="nav-link inline-flex items-center gap-1.5"
+            >
+              <TikTokIcon className="text-base" />
+              TikTok
+            </a>
+          ) : null}
           {social.github ? (
             <a
               href={social.github}
@@ -45,16 +69,6 @@ export function SiteFooter({ siteName, social, cvUrl }: Props) {
               className="nav-link"
             >
               LinkedIn
-            </a>
-          ) : null}
-          {social.instagram ? (
-            <a
-              href={social.instagram}
-              target="_blank"
-              rel="noreferrer"
-              className="nav-link"
-            >
-              Instagram
             </a>
           ) : null}
           {cvUrl ? (
