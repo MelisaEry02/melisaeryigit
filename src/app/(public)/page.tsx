@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { EmptyHint } from "@/components/EmptyHint";
+import { SectionPanel } from "@/components/SectionPanel";
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
 import { getDb, getSettings, type Post, type Project } from "@/lib/db";
 
@@ -21,14 +23,14 @@ export default function HomePage() {
     .all() as Post[];
 
   return (
-    <div>
+    <div className="pb-8">
       <section className="relative overflow-hidden">
         <div
-          className="hero-orb pointer-events-none absolute -right-16 top-10 h-64 w-64 rounded-full bg-[#f3c4d4]/40 blur-3xl"
+          className="hero-orb pointer-events-none absolute -right-16 top-10 h-64 w-64 rounded-full bg-[#f3c4d4]/35 blur-3xl"
           aria-hidden
         />
         <div
-          className="hero-orb pointer-events-none absolute -left-10 bottom-0 h-48 w-48 rounded-full bg-[#e8a8bc]/30 blur-3xl"
+          className="hero-orb pointer-events-none absolute -left-10 bottom-0 h-48 w-48 rounded-full bg-[#e8a8bc]/25 blur-3xl"
           aria-hidden
           style={{ animationDelay: "1.5s" }}
         />
@@ -57,17 +59,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="site-shell home-section border-t border-pink-200/60 py-16">
-        <p className="text-sm font-semibold uppercase tracking-[0.14em] text-rose">
-          Şu an
-        </p>
-        <h2 className="type-h2 mt-2">Ne üzerindeyim?</h2>
+      <SectionPanel eyebrow="Şu an" className="pt-4">
+        <h2 className="type-h2">Ne üzerindeyim?</h2>
         <p className="mt-4 max-w-2xl type-lead">
           {settings.currently_working_on}
         </p>
-      </section>
+      </SectionPanel>
 
-      <section className="site-shell home-section py-16">
+      <SectionPanel>
         <div className="home-section__head">
           <h2 className="type-h2">Öne çıkan projeler</h2>
           <p className="text-ink-soft">Seçilmiş işler ve denemeler.</p>
@@ -75,21 +74,28 @@ export default function HomePage() {
             Tümü
           </Link>
         </div>
-        <ul className="home-list mt-10 space-y-8">
-          {projects.map((p) => (
-            <li key={p.id} className="border-b border-pink-200/70 pb-8">
-              <Link href={`/projeler/${p.slug}`} className="group block">
-                <h3 className="type-h3 transition group-hover:text-rose">
-                  {p.title}
-                </h3>
-                <p className="mt-2 max-w-2xl text-ink-soft">{p.summary}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
+        {projects.length === 0 ? (
+          <EmptyHint
+            title="Henüz öne çıkan proje yok"
+            body="Admin’den bir proje yayınlayıp “öne çıkan” işaretlediğinde burada görünür."
+          />
+        ) : (
+          <ul className="home-list mt-8 space-y-7">
+            {projects.map((p) => (
+              <li key={p.id} className="border-b border-pink-200/70 pb-7 last:border-0 last:pb-0">
+                <Link href={`/projeler/${p.slug}`} className="group block">
+                  <h3 className="type-h3 transition group-hover:text-rose">
+                    {p.title}
+                  </h3>
+                  <p className="mt-2 max-w-2xl text-ink-soft">{p.summary}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </SectionPanel>
 
-      <section className="site-shell home-section pb-20">
+      <SectionPanel className="pb-16">
         <div className="home-section__head">
           <h2 className="type-h2">Son yazılar</h2>
           <p className="text-ink-soft">Blogdan kısa notlar.</p>
@@ -97,19 +103,29 @@ export default function HomePage() {
             Blog
           </Link>
         </div>
-        <ul className="home-list mt-10 space-y-8">
-          {posts.map((post) => (
-            <li key={post.id} className="border-b border-pink-200/70 pb-8">
-              <Link href={`/blog/${post.slug}`} className="group block">
-                <h3 className="type-h3 transition group-hover:text-rose">
-                  {post.title}
-                </h3>
-                <p className="mt-2 max-w-2xl text-ink-soft">{post.excerpt}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
+        {posts.length === 0 ? (
+          <EmptyHint
+            title="Henüz yayınlanmış yazı yok"
+            body="İlk yazını admin panelinden taslak olarak yazıp yayınladığında burada listelenir."
+          />
+        ) : (
+          <ul className="home-list mt-8 space-y-7">
+            {posts.map((post) => (
+              <li
+                key={post.id}
+                className="border-b border-pink-200/70 pb-7 last:border-0 last:pb-0"
+              >
+                <Link href={`/blog/${post.slug}`} className="group block">
+                  <h3 className="type-h3 transition group-hover:text-rose">
+                    {post.title}
+                  </h3>
+                  <p className="mt-2 max-w-2xl text-ink-soft">{post.excerpt}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </SectionPanel>
     </div>
   );
 }

@@ -131,20 +131,20 @@ function seedIfEmpty(db: Database.Database) {
     site_name: "Melisa Eryiğit",
     tagline: "Tasarım, yazılım ve merakın kesişiminde.",
     hero_intro:
-      "Merhaba — burası kişisel alanım. Projelerimi, yazılarımı ve şu an üzerinde çalıştığım şeyleri paylaşıyorum.",
+      "Merhaba — burası kişisel alanım. Projeler, yazılar ve şu an üzerinde olduğum şeyler; abartısız, net, benim.",
     about_short:
-      "Ürün düşüncesi, arayüz ve temiz kod ile ilgileniyorum. Detayları hakkımda sayfasında.",
+      "Arayüz, ürün düşüncesi ve temiz kodla ilgileniyorum. Hikâyenin devamı biraz aşağıda.",
     about_long:
-      "Bu metin yer tutucudur. Admin panelinden kendi hikâyeni yazabilirsin.\n\nOkul, hobiler, yaklaşımın — hepsi buraya gelir.",
+      "Bu metin yer tutucu — kendi cümlelerinle değiştir.\n\nNereden geldiğin, neyi önemsediğin, nasıl çalıştığın: hepsi buraya sığar. Admin → Site ayarları.",
     currently_working_on:
-      "Kişisel sitemi kuruyorum — Next.js, SQLite ve soft pastel pembe bir arayüz.",
+      "Kişisel sitemi inceliyorum: soft pastel pembe bir dil, kartanesi markası ve local admin ile içerik akışı.",
     cv_url: "",
     social_github: "https://github.com/",
     social_linkedin: "https://linkedin.com/",
     social_instagram: "",
     social_email: "",
     contact_blurb:
-      "Bir proje, işbirliği veya sadece merhaba demek için formu kullan — mesajın doğrudan bana ulaşır.",
+      "Proje, işbirliği veya sadece merhaba — formu doldurman yeterli. Mesajın e-postasız, doğrudan admin gelen kutuma düşer.",
   };
 
   const insertSetting = db.prepare(

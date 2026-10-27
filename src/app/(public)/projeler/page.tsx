@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { EmptyHint } from "@/components/EmptyHint";
 import { getDb, type Project } from "@/lib/db";
 
 export const metadata: Metadata = { title: "Projeler" };
@@ -16,20 +17,28 @@ export default function ProjectsPage() {
     <div className="site-shell py-16 md:py-20">
       <h1 className="type-h1">Projeler</h1>
       <p className="mt-3 max-w-xl type-lead">
-        Üzerinde çalıştığım ve paylaşmak istediğim işler.
+        Üzerinde çalıştığım ve paylaşmak istediğim işler — her biri bir öğrenme
+        izi bırakır.
       </p>
-      <ul className="mt-12 space-y-10">
-        {projects.map((p) => (
-          <li key={p.id} className="border-b border-pink-200/70 pb-10">
-            <Link href={`/projeler/${p.slug}`} className="group block">
-              <h2 className="type-h2 transition group-hover:text-rose">
-                {p.title}
-              </h2>
-              <p className="mt-3 max-w-2xl text-ink-soft">{p.summary}</p>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {projects.length === 0 ? (
+        <EmptyHint
+          title="Liste henüz boş"
+          body="İlk projeni admin panelinden ekleyip yayınladığında burada görünür. Şimdilik ana sayfaya dönebilirsin."
+        />
+      ) : (
+        <ul className="mt-12 space-y-10">
+          {projects.map((p) => (
+            <li key={p.id} className="border-b border-pink-200/70 pb-10">
+              <Link href={`/projeler/${p.slug}`} className="group block">
+                <h2 className="type-h2 transition group-hover:text-rose">
+                  {p.title}
+                </h2>
+                <p className="mt-3 max-w-2xl text-ink-soft">{p.summary}</p>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

@@ -3,20 +3,44 @@ type Props = {
   title?: string;
 };
 
+/** Tek kol — 6 kez döndürülerek gerçekçi kristal simetri. */
+function CrystalArm() {
+  return (
+    <g>
+      {/* Ana mil */}
+      <path d="M0 -7.5 V -44" />
+      {/* Üçlü uç */}
+      <path d="M0 -44 L -5.5 -37.5 M0 -44 L 5.5 -37.5" />
+      {/* Üst yan dallar */}
+      <path d="M0 -34 L -7.5 -28.5 M0 -34 L 7.5 -28.5" />
+      <path d="M-7.5 -28.5 L -10 -31.5 M7.5 -28.5 L 10 -31.5" />
+      {/* Orta yan dallar */}
+      <path d="M0 -24 L -9 -17.5 M0 -24 L 9 -17.5" />
+      <path d="M-9 -17.5 L -12.5 -20 M9 -17.5 L 12.5 -20" />
+      {/* Alt yan dallar */}
+      <path d="M0 -15 L -6.5 -10.5 M0 -15 L 6.5 -10.5" />
+      {/* Küçük kristal noktalar */}
+      <circle cx="0" cy="-29" r="1.05" fill="currentColor" stroke="none" />
+      <circle cx="0" cy="-19" r="0.85" fill="currentColor" stroke="none" />
+    </g>
+  );
+}
+
 /**
- * İnce, altı kollu marka kartanesi.
- * Splash, header ve ana sayfada aynı SVG.
+ * Gerçekçi, ince, 6 kollu kristal kartane.
+ * Splash + header + hero aynı marka.
  */
 export function SnowflakeLogo({
   className = "",
   title = "Melisa Eryiğit",
 }: Props) {
   const decorative = !title;
+  const angles = [0, 60, 120, 180, 240, 300];
 
   return (
     <svg
       className={`snowflake-logo ${className}`.trim()}
-      viewBox="0 0 80 80"
+      viewBox="0 0 100 100"
       width="1em"
       height="1em"
       aria-hidden={decorative ? true : undefined}
@@ -27,39 +51,19 @@ export function SnowflakeLogo({
       <g
         fill="none"
         stroke="currentColor"
-        strokeWidth="1.35"
+        strokeWidth="1.15"
         strokeLinecap="round"
         strokeLinejoin="round"
+        transform="translate(50 50)"
       >
-        {/* Ana kollar: 0° / 60° / 120° */}
-        <path d="M40 8v64M8 40h64" />
-        <path d="M17.57 17.57l44.86 44.86M62.43 17.57L17.57 62.43" />
-
-        {/* Orta halka */}
-        <circle cx="40" cy="40" r="5.5" strokeWidth="1.2" />
-        <circle cx="40" cy="40" r="2" fill="currentColor" stroke="none" />
-
-        {/* Uç çatallar — dikey */}
-        <path d="M40 12l-4.2 5.2M40 12l4.2 5.2" />
-        <path d="M40 68l-4.2-5.2M40 68l4.2-5.2" />
-        {/* Yatay */}
-        <path d="M12 40l5.2-4.2M12 40l5.2 4.2" />
-        <path d="M68 40l-5.2-4.2M68 40l-5.2 4.2" />
-        {/* Çapraz */}
-        <path d="M20.2 20.2l6.4.4M20.2 20.2l.4 6.4" />
-        <path d="M59.8 20.2l-6.4.4M59.8 20.2l-.4 6.4" />
-        <path d="M20.2 59.8l6.4-.4M20.2 59.8l.4-6.4" />
-        <path d="M59.8 59.8l-6.4-.4M59.8 59.8l-.4-6.4" />
-
-        {/* Ara dallar */}
-        <path d="M40 24l-3.2 2.4M40 24l3.2 2.4" />
-        <path d="M40 56l-3.2-2.4M40 56l3.2-2.4" />
-        <path d="M24 40l2.4-3.2M24 40l2.4 3.2" />
-        <path d="M56 40l-2.4-3.2M56 40l-2.4 3.2" />
-        <path d="M28.5 28.5l3.8.6M28.5 28.5l.6 3.8" />
-        <path d="M51.5 28.5l-3.8.6M51.5 28.5l-.6 3.8" />
-        <path d="M28.5 51.5l3.8-.6M28.5 51.5l.6-3.8" />
-        <path d="M51.5 51.5l-3.8-.6M51.5 51.5l-.6-3.8" />
+        {/* Merkez hexagon */}
+        <path d="M0 -7.2 L 6.24 -3.6 L 6.24 3.6 L 0 7.2 L -6.24 3.6 L -6.24 -3.6 Z" />
+        <circle cx="0" cy="0" r="2.2" fill="currentColor" stroke="none" />
+        {angles.map((deg) => (
+          <g key={deg} transform={`rotate(${deg})`}>
+            <CrystalArm />
+          </g>
+        ))}
       </g>
     </svg>
   );

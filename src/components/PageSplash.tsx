@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
 
-const DURATION_MS = 2800;
-const FADE_MS = 520;
+const DURATION_MS = 3200;
+const FADE_MS = 640;
 
 type Flake = {
   id: number;
@@ -20,12 +20,12 @@ type Flake = {
 function makeFlakes(count: number): Flake[] {
   return Array.from({ length: count }, (_, i) => ({
     id: i,
-    left: `${(i * 41 + 7) % 100}%`,
-    size: 12 + ((i * 9) % 18),
-    delay: (i % 10) * 0.14,
-    duration: 2.1 + (i % 6) * 0.28,
-    opacity: 0.35 + (i % 5) * 0.1,
-    drift: ((i % 7) - 3) * 18,
+    left: `${(i * 47 + 5) % 100}%`,
+    size: 14 + ((i * 11) % 22),
+    delay: (i % 9) * 0.18,
+    duration: 2.8 + (i % 5) * 0.35,
+    opacity: 0.22 + (i % 4) * 0.1,
+    drift: ((i % 6) - 2.5) * 22,
   }));
 }
 
@@ -33,37 +33,43 @@ export function PageSplash({ siteName }: { siteName: string }) {
   const pathname = usePathname();
   const [show, setShow] = useState(true);
   const [leaving, setLeaving] = useState(false);
-  const [phase, setPhase] = useState<"in" | "white" | "hold">("in");
-  const flakes = useMemo(() => makeFlakes(26), []);
+  const [phase, setPhase] = useState<"boot" | "mark" | "name" | "white" | "hold">(
+    "boot"
+  );
+  const flakes = useMemo(() => makeFlakes(16), []);
   const name = siteName || "Melisa Eryiğit";
 
   useEffect(() => {
     setShow(true);
     setLeaving(false);
-    setPhase("in");
+    setPhase("boot");
 
     const reduce =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (reduce) {
-      const t = window.setTimeout(() => setShow(false), 160);
+      const t = window.setTimeout(() => setShow(false), 140);
       return () => window.clearTimeout(t);
     }
 
-    const toWhite = window.setTimeout(() => setPhase("white"), 900);
-    const toHold = window.setTimeout(() => setPhase("hold"), 1600);
-    const toLeave = window.setTimeout(
+    const tMark = window.setTimeout(() => setPhase("mark"), 180);
+    const tName = window.setTimeout(() => setPhase("name"), 520);
+    const tWhite = window.setTimeout(() => setPhase("white"), 1400);
+    const tHold = window.setTimeout(() => setPhase("hold"), 2100);
+    const tLeave = window.setTimeout(
       () => setLeaving(true),
       DURATION_MS - FADE_MS
     );
-    const toHide = window.setTimeout(() => setShow(false), DURATION_MS);
+    const tHide = window.setTimeout(() => setShow(false), DURATION_MS);
 
     return () => {
-      window.clearTimeout(toWhite);
-      window.clearTimeout(toHold);
-      window.clearTimeout(toLeave);
-      window.clearTimeout(toHide);
+      window.clearTimeout(tMark);
+      window.clearTimeout(tName);
+      window.clearTimeout(tWhite);
+      window.clearTimeout(tHold);
+      window.clearTimeout(tLeave);
+      window.clearTimeout(tHide);
     };
   }, [pathname]);
 
@@ -76,12 +82,16 @@ export function PageSplash({ siteName }: { siteName: string }) {
 
   return (
     <div
-      className={`page-splash${leaving ? " page-splash--out" : ""}`}
+      className={`page-splash page-splash--${phase}${
+        leaving ? " page-splash--out" : ""
+      }`}
       role="presentation"
       aria-hidden="true"
       onClick={skip}
     >
+      <div className="page-splash__grain" aria-hidden />
       <div className="page-splash__veil" aria-hidden />
+      <div className="page-splash__bloom" aria-hidden />
 
       <div className="page-splash__snow" aria-hidden>
         {flakes.map((f) => (
@@ -103,12 +113,11 @@ export function PageSplash({ siteName }: { siteName: string }) {
         ))}
       </div>
 
-      <div
-        className={`page-splash__brand page-splash__brand--${phase}`}
-      >
+      <div className="page-splash__stage">
         <div className="page-splash__mark-wrap">
           <SnowflakeLogo className="page-splash__mark" title="" />
         </div>
+        <span className="page-splash__rule" aria-hidden />
         <p
           className={`page-splash__name font-display${
             phase === "white" || phase === "hold"
@@ -120,7 +129,7 @@ export function PageSplash({ siteName }: { siteName: string }) {
             <span
               key={`${ch}-${i}`}
               className="page-splash__letter"
-              style={{ animationDelay: `${0.35 + i * 0.035}s` }}
+              style={{ animationDelay: `${0.55 + i * 0.028}s` }}
             >
               {ch === " " ? "\u00A0" : ch}
             </span>
