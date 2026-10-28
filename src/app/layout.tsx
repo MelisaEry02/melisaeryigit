@@ -42,7 +42,30 @@ export const metadata: Metadata = {
       { url: "/icons/icon.svg", type: "image/svg+xml" },
     ],
     apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }],
-    shortcut: [{ url: "/icons/favicon-32.png", sizes: "32x32", type: "image/png" }],
+    shortcut: [
+      { url: "/icons/favicon-32.png", sizes: "32x32", type: "image/png" },
+    ],
+  },
+  openGraph: {
+    title: SITE,
+    description: `${SITE} — projeler, yazılar ve iletişim.`,
+    type: "website",
+    locale: "tr_TR",
+    siteName: SITE,
+    images: [
+      {
+        url: "/og-cover.png",
+        width: 1200,
+        height: 630,
+        alt: "Melisa Eryiğit — pembe zemin, beyaz kartane",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE,
+    description: `${SITE} — projeler, yazılar ve iletişim.`,
+    images: ["/og-cover.png"],
   },
 };
 
