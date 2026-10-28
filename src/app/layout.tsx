@@ -35,15 +35,40 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icons/favicon-32.png", sizes: "32x32", type: "image/png" },
-      { url: "/icons/icon-48.png", sizes: "48x48", type: "image/png" },
-      { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
-      { url: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
-      { url: "/icons/icon.svg", type: "image/svg+xml" },
+      {
+        url: "/icons/favicon-32.png?v=pinkwhite2",
+        sizes: "32x32",
+        type: "image/png",
+      },
+      {
+        url: "/icons/icon-48.png?v=pinkwhite2",
+        sizes: "48x48",
+        type: "image/png",
+      },
+      {
+        url: "/icons/icon-192.png?v=pinkwhite2",
+        sizes: "192x192",
+        type: "image/png",
+      },
+      {
+        url: "/icons/icon-512.png?v=pinkwhite2",
+        sizes: "512x512",
+        type: "image/png",
+      },
+      { url: "/icons/icon.svg?v=pinkwhite2", type: "image/svg+xml" },
     ],
-    apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }],
+    apple: [
+      {
+        url: "/icons/apple-touch-icon.png?v=pinkwhite2",
+        sizes: "180x180",
+      },
+    ],
     shortcut: [
-      { url: "/icons/favicon-32.png", sizes: "32x32", type: "image/png" },
+      {
+        url: "/icons/favicon-32.png?v=pinkwhite2",
+        sizes: "32x32",
+        type: "image/png",
+      },
     ],
   },
   openGraph: {
@@ -54,7 +79,7 @@ export const metadata: Metadata = {
     siteName: SITE,
     images: [
       {
-        url: "/og-cover.png",
+        url: "/og-cover.png?v=pinkwhite2",
         width: 1200,
         height: 630,
         alt: "Melisa Eryiğit — pembe zemin, beyaz kartane",
@@ -65,7 +90,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: SITE,
     description: `${SITE} — projeler, yazılar ve iletişim.`,
-    images: ["/og-cover.png"],
+    images: ["/og-cover.png?v=pinkwhite2"],
   },
 };
 
@@ -93,8 +118,12 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-title" content="Melisa Eryiğit" />
-        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.webmanifest" />
+        <link
+          rel="apple-touch-icon"
+          href="/icons/apple-touch-icon.png?v=pinkwhite2"
+        />
+        <link rel="icon" href="/favicon.ico?v=pinkwhite2" sizes="any" />
+        <link rel="manifest" href="/manifest.webmanifest?v=pinkwhite2" />
       </head>
       <body className={`${fraunces.variable} ${manrope.variable} antialiased`}>
         <PwaRegister />
