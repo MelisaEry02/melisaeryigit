@@ -24,11 +24,15 @@ export default function PublicLayout({
       <main>{children}</main>
       <SiteFooter
         siteName={siteName}
-        social={{
+        contact={{
+          email: settings.contact_email || SOCIAL.email,
+          phone: settings.contact_phone || SOCIAL.phone,
+          location: settings.contact_location || SOCIAL.location,
+          whatsapp: settings.social_whatsapp || SOCIAL.whatsapp,
           github: settings.social_github,
           linkedin: settings.social_linkedin,
           instagram: settings.social_instagram || SOCIAL.instagram,
-          tiktok: SOCIAL.tiktok,
+          tiktok: settings.social_tiktok || SOCIAL.tiktok,
         }}
         cvUrl={settings.cv_url}
       />

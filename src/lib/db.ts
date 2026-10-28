@@ -4,10 +4,14 @@ import path from "path";
 
 const dataDir = path.join(process.cwd(), "data");
 const uploadsDir = path.join(process.cwd(), "uploads");
+const publicUploadsDir = path.join(process.cwd(), "public", "uploads");
 
 function ensureDirs() {
   if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
   if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+  if (!fs.existsSync(publicUploadsDir)) {
+    fs.mkdirSync(publicUploadsDir, { recursive: true });
+  }
 }
 
 const dbPath =
@@ -23,6 +27,7 @@ export function getDb() {
   _db.pragma("foreign_keys = ON");
   migrate(_db);
   seedIfEmpty(_db);
+  ensureContactDefaults(_db);
   return _db;
 }
 
@@ -119,6 +124,29 @@ function now() {
   return new Date().toISOString();
 }
 
+/** Mevcut DB’de eksik iletişim anahtarlarını ekler; dolu değerleri ezmez. */
+function ensureContactDefaults(db: Database.Database) {
+  const defaults: Record<string, string> = {
+    contact_email: "melisaeryigit02@gmail.com",
+    contact_phone: "05528465257",
+    contact_location: "İstanbul Kağıthane",
+    social_whatsapp: "https://wa.me/905528465257",
+    social_instagram: "https://instagram.com/melisaerygit",
+    social_tiktok: "https://www.tiktok.com/@melisaery",
+    social_linkedin: "",
+    social_github: "",
+    social_email: "melisaeryigit02@gmail.com",
+    cv_url: "",
+  };
+  const insert = db.prepare(
+    `INSERT INTO site_settings (key, value) VALUES (?, ?)
+     ON CONFLICT(key) DO NOTHING`
+  );
+  for (const [k, v] of Object.entries(defaults)) {
+    insert.run(k, v);
+  }
+}
+
 function seedIfEmpty(db: Database.Database) {
   const count = db.prepare("SELECT COUNT(*) as c FROM site_settings").get() as {
     c: number;
@@ -139,11 +167,15 @@ function seedIfEmpty(db: Database.Database) {
     currently_working_on:
       "Kişisel sitemi inceliyorum: soft pastel pembe bir dil, kartanesi markası ve local admin ile içerik akışı.",
     cv_url: "",
-    social_github: "https://github.com/",
-    social_linkedin: "https://linkedin.com/",
+    social_github: "",
+    social_linkedin: "",
     social_instagram: "https://instagram.com/melisaerygit",
     social_tiktok: "https://www.tiktok.com/@melisaery",
-    social_email: "",
+    social_whatsapp: "https://wa.me/905528465257",
+    social_email: "melisaeryigit02@gmail.com",
+    contact_email: "melisaeryigit02@gmail.com",
+    contact_phone: "05528465257",
+    contact_location: "İstanbul Kağıthane",
     contact_blurb:
       "Proje, işbirliği veya sadece merhaba — formu doldurman yeterli. Mesajın e-postasız, doğrudan admin gelen kutuma düşer.",
   };

@@ -1,28 +1,31 @@
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
 
-/** Hero: net görünen düşen kar → birikim → kardan adam. */
+/**
+ * Sıra: başta yer/kardan adam yok → kar düşer → birikir →
+ * birikim artar → kardan adam parça parça oluşur; yerde kar kalır.
+ */
 export function HeroSnowscape() {
-  const flakes = Array.from({ length: 28 }, (_, i) => i);
+  const flakes = Array.from({ length: 32 }, (_, i) => i);
 
   return (
     <div className="hero-snow" aria-hidden>
       <div className="hero-snow__fall">
         {flakes.map((i) => {
-          const size = 16 + (i % 7) * 4;
+          const size = 15 + (i % 8) * 3.5;
           return (
             <span
               key={i}
-              className={`hero-snow__flake${i % 3 === 0 ? " hero-snow__flake--dot" : ""}`}
+              className={`hero-snow__flake${i % 4 === 0 ? " hero-snow__flake--dot" : ""}`}
               style={{
-                left: `${(i * 3.7 + 1.5) % 97}%`,
-                animationDelay: `${-((i * 0.37) % 5)}s`,
-                animationDuration: `${4.2 + (i % 6) * 0.7}s`,
+                left: `${(i * 3.2 + 1) % 98}%`,
+                animationDelay: `${-((i * 0.28) % 4.5)}s`,
+                animationDuration: `${3.8 + (i % 7) * 0.55}s`,
                 width: size,
                 height: size,
-                ["--drift" as string]: `${((i % 5) - 2) * 18}px`,
+                ["--drift" as string]: `${((i % 5) - 2) * 20}px`,
               }}
             >
-              {i % 3 === 0 ? (
+              {i % 4 === 0 ? (
                 <span className="hero-snow__dot" />
               ) : (
                 <SnowflakeLogo title="" />
@@ -32,8 +35,9 @@ export function HeroSnowscape() {
         })}
       </div>
 
-      <div className="hero-snow__ground" />
-      <div className="hero-snow__ground hero-snow__ground--mid" />
+      {/* Başta gizli; animasyonla büyüyen birikim */}
+      <div className="hero-snow__ground hero-snow__ground--base" />
+      <div className="hero-snow__ground hero-snow__ground--heap" />
 
       <div className="hero-snow__man">
         <span className="hero-snow__man-ball hero-snow__man-ball--base" />
