@@ -16,10 +16,11 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   title: {
-    default: "Melisa Eryiğit",
-    template: "%s · Melisa Eryiğit",
+    default: "Melisa Eryiğit Kişisel Web Sitesi",
+    template: "%s · Melisa Eryiğit Kişisel Web Sitesi",
   },
-  description: "Melisa Eryiğit kişisel sitesi — projeler, yazılar ve iletişim.",
+  description:
+    "Melisa Eryiğit Kişisel Web Sitesi — projeler, yazılar ve iletişim.",
 };
 
 export default function RootLayout({

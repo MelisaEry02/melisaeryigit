@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CvLink } from "@/components/CvLink";
+import { ContactCta } from "@/components/ContactCta";
 import { SpeechBubble } from "@/components/SpeechBubble";
 import { getSettings } from "@/lib/db";
 
@@ -26,7 +26,7 @@ export default function AboutPage() {
         </div>
 
         <div className="mt-10 flex flex-wrap gap-3">
-          <CvLink cvUrl={settings.cv_url} variant="primary" />
+          <ContactCta variant="primary" />
         </div>
       </SpeechBubble>
     </div>

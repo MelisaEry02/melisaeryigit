@@ -34,7 +34,6 @@ export default function PublicLayout({
           instagram: settings.social_instagram || SOCIAL.instagram,
           tiktok: settings.social_tiktok || SOCIAL.tiktok,
         }}
-        cvUrl={settings.cv_url}
       />
     </ThemeProvider>
   );

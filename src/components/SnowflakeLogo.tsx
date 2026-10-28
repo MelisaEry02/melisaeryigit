@@ -32,7 +32,7 @@ function CrystalArm() {
  */
 export function SnowflakeLogo({
   className = "",
-  title = "Melisa Eryiğit",
+  title = "Melisa Eryiğit Kişisel Web Sitesi",
 }: Props) {
   const decorative = !title;
   const angles = [0, 60, 120, 180, 240, 300];

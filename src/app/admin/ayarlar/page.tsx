@@ -10,7 +10,11 @@ type Field = {
 };
 
 const siteFields: Field[] = [
-  { key: "site_name", label: "Site adı / marka" },
+  {
+    key: "site_name",
+    label: "Marka adı",
+    hint: "Header / hero’da görünür (örn. Melisa Eryiğit)",
+  },
   { key: "tagline", label: "Slogan" },
   { key: "hero_intro", label: "Ana sayfa giriş metni", multiline: true },
   { key: "about_short", label: "Hakkımda kısa", multiline: true },
@@ -63,7 +67,7 @@ const contactFields: Field[] = [
   {
     key: "social_github",
     label: "GitHub URL",
-    hint: "Boş bırakırsan footer’da gizlenmiş/muted",
+    hint: "Boş bırakırsan footer’da muted",
   },
 ];
 
@@ -74,15 +78,11 @@ export default function AdminSettingsPage() {
     <div>
       <h1 className="font-display text-3xl text-ink">Site ayarları</h1>
       <p className="mt-2 max-w-2xl text-ink-soft">
-        Metinler, iletişim bilgileri, sosyal linkler ve CV. Footer bu
-        alanlardan beslenir; kaydettikten sonra ana siteyi yenile.
+        Metinler, iletişim bilgileri ve sosyal linkler. Site başlığı tarayıcıda
+        “Melisa Eryiğit Kişisel Web Sitesi”; CV yok — site CV yerine geçiyor.
       </p>
 
-      <form
-        action={saveSettings}
-        encType="multipart/form-data"
-        className="mt-8 max-w-2xl space-y-10"
-      >
+      <form action={saveSettings} className="mt-8 max-w-2xl space-y-10">
         <section className="admin-panel space-y-4">
           <div>
             <h2 className="font-display text-xl text-ink">İçerik</h2>
@@ -105,52 +105,6 @@ export default function AdminSettingsPage() {
           {contactFields.map((f) => (
             <FieldInput key={f.key} field={f} value={settings[f.key] || ""} />
           ))}
-        </section>
-
-        <section className="admin-panel space-y-4">
-          <div>
-            <h2 className="font-display text-xl text-ink">CV</h2>
-            <p className="mt-1 text-sm text-ink-soft">
-              PDF veya Word yükle; ya da doğrudan URL yapıştır.
-            </p>
-          </div>
-          <FieldInput
-            field={{
-              key: "cv_url",
-              label: "CV URL (manuel)",
-              hint: "Dosya yüklersen otomatik dolar",
-            }}
-            value={settings.cv_url || ""}
-          />
-          <div>
-            <label className="label" htmlFor="cv_file">
-              CV yükle (PDF / Word, max 8MB)
-            </label>
-            <input
-              className="field"
-              id="cv_file"
-              name="cv_file"
-              type="file"
-              accept=".pdf,.doc,.docx,application/pdf"
-            />
-            {settings.cv_url ? (
-              <p className="mt-2 text-sm text-ink-soft">
-                Mevcut:{" "}
-                <a
-                  href={settings.cv_url}
-                  className="nav-link"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {settings.cv_url}
-                </a>
-              </p>
-            ) : (
-              <p className="mt-2 text-sm text-ink-soft">
-                Henüz CV yok — yükle veya URL yapıştır.
-              </p>
-            )}
-          </div>
         </section>
 
         <button type="submit" className="btn btn-primary">

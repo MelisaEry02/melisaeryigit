@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { CvLink } from "@/components/CvLink";
+import { BlogExpandList } from "@/components/BlogExpandList";
+import { ContactCta } from "@/components/ContactCta";
 import { EdgeLogos } from "@/components/EdgeLogos";
 import { EmptyHint } from "@/components/EmptyHint";
 import { ExperienceStrip } from "@/components/ExperienceStrip";
@@ -17,7 +18,6 @@ import {
 export default function HomePage() {
   const settings = getSettings();
   const db = getDb();
-  const cvUrl = settings.cv_url || "";
 
   const projects = db
     .prepare(
@@ -50,7 +50,7 @@ export default function HomePage() {
         <div className="site-shell relative z-[2] grid min-h-[calc(100vh-5rem)] place-items-center py-16 md:py-24">
           <div className="hero-brand fade-up max-w-4xl">
             <SnowflakeLogo className="hero-brand__mark" />
-            <p className="hero-brand__eyebrow">Kişisel alan</p>
+            <p className="hero-brand__eyebrow">Kişisel web sitesi</p>
             <h1 className="hero-brand__name hero-brand__name--xl">
               {settings.site_name || "Melisa Eryiğit"}
             </h1>
@@ -64,7 +64,7 @@ export default function HomePage() {
               <Link href="/projeler" className="btn btn-primary">
                 Projelerime bakın
               </Link>
-              <CvLink cvUrl={cvUrl} variant="ghost" />
+              <ContactCta variant="ghost" />
             </div>
           </div>
         </div>
@@ -115,7 +115,7 @@ export default function HomePage() {
         <SectionPanel>
           <div className="home-section__head">
             <h2 className="type-h2">Son yazılar</h2>
-            <p className="text-ink-soft">Blogdan kısa notlar.</p>
+            <p className="text-ink-soft">Blogdan kısa notlar — aynı sayfada açılır.</p>
             <Link href="/blog" className="nav-link mt-1">
               Blog
             </Link>
@@ -126,21 +126,9 @@ export default function HomePage() {
               body="İlk yazını admin panelinden taslak olarak yazıp yayınladığında burada listelenir."
             />
           ) : (
-            <ul className="home-list mt-8 space-y-7">
-              {posts.map((post) => (
-                <li
-                  key={post.id}
-                  className="border-b border-pink-200/70 pb-7 last:border-0 last:pb-0"
-                >
-                  <Link href={`/blog/${post.slug}`} className="group block">
-                    <h3 className="type-h3 transition group-hover:text-rose">
-                      {post.title}
-                    </h3>
-                    <p className="mt-2 max-w-2xl text-ink-soft">{post.excerpt}</p>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <div className="home-list mt-8">
+              <BlogExpandList posts={posts} compact />
+            </div>
           )}
         </SectionPanel>
 

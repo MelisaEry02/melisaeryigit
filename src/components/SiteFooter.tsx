@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { CvLink } from "@/components/CvLink";
+import { ContactCta } from "@/components/ContactCta";
 import {
   GithubIcon,
   InstagramIcon,
@@ -25,7 +25,6 @@ type Props = {
     instagram?: string;
     tiktok?: string;
   };
-  cvUrl?: string;
 };
 
 type ContactItem = {
@@ -37,7 +36,7 @@ type ContactItem = {
   muted?: boolean;
 };
 
-export function SiteFooter({ siteName, contact, cvUrl }: Props) {
+export function SiteFooter({ siteName, contact }: Props) {
   const year = new Date().getFullYear();
   const email = contact.email || SOCIAL.email;
   const phone = contact.phone || SOCIAL.phone;
@@ -137,7 +136,10 @@ export function SiteFooter({ siteName, contact, cvUrl }: Props) {
           <div className="contact-block__intro">
             <div className="site-footer__brand">
               <SnowflakeLogo className="site-footer__mark" title="" />
-              <p className="font-display text-2xl text-ink">{siteName}</p>
+              <div>
+                <p className="font-display text-2xl text-ink">{siteName}</p>
+                <p className="text-xs text-ink-soft">Kişisel web sitesi</p>
+              </div>
             </div>
             <p className="mt-2 max-w-md text-sm leading-relaxed text-ink-soft">
               Yazışmak veya merhaba demek için buradayım.
@@ -148,11 +150,8 @@ export function SiteFooter({ siteName, contact, cvUrl }: Props) {
                 {location}
               </a>
             </p>
-            <div className="mt-4 flex flex-wrap gap-3">
-              <a href={`mailto:${email}`} className="btn btn-ghost">
-                E-posta yaz
-              </a>
-              <CvLink cvUrl={cvUrl} variant="ghost" />
+            <div className="mt-4">
+              <ContactCta variant="ghost" />
             </div>
           </div>
 
@@ -190,7 +189,9 @@ export function SiteFooter({ siteName, contact, cvUrl }: Props) {
           </ul>
         </div>
 
-        <p className="mt-10 text-center text-xs text-ink-soft/80">© {year}</p>
+        <p className="mt-10 text-center text-xs text-ink-soft/80">
+          © {year} Melisa Eryiğit Kişisel Web Sitesi
+        </p>
       </div>
     </footer>
   );

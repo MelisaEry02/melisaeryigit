@@ -136,7 +136,6 @@ function ensureContactDefaults(db: Database.Database) {
     social_linkedin: "",
     social_github: "",
     social_email: "melisaeryigit02@gmail.com",
-    cv_url: "",
   };
   const insert = db.prepare(
     `INSERT INTO site_settings (key, value) VALUES (?, ?)
@@ -166,7 +165,6 @@ function seedIfEmpty(db: Database.Database) {
       "Bu metin yer tutucu — kendi cümlelerinle değiştir.\n\nNereden geldiğin, neyi önemsediğin, nasıl çalıştığın: hepsi buraya sığar. Admin → Site ayarları.",
     currently_working_on:
       "Kişisel sitemi inceliyorum: soft pastel pembe bir dil, kartanesi markası ve local admin ile içerik akışı.",
-    cv_url: "",
     social_github: "",
     social_linkedin: "",
     social_instagram: "https://instagram.com/melisaerygit",
