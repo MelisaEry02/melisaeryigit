@@ -1,4 +1,4 @@
-import { deletePost, savePost } from "@/app/admin/yazilar/actions";
+import { deletePost, savePost } from "@/app/admin/(panel)/yazilar/actions";
 import type { Post } from "@/lib/db";
 
 export function PostForm({ post }: { post?: Post }) {

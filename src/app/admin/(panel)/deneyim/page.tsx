@@ -1,7 +1,7 @@
 import {
   deleteExperience,
   saveExperience,
-} from "@/app/admin/deneyim/actions";
+} from "@/app/admin/(panel)/deneyim/actions";
 import { getDb, type Experience } from "@/lib/db";
 
 export default function AdminExperiencePage() {

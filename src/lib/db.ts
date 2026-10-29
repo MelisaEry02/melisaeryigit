@@ -2,28 +2,39 @@ import Database from "better-sqlite3";
 import fs from "fs";
 import path from "path";
 
+const isVercel = Boolean(process.env.VERCEL);
 const dataDir = path.join(process.cwd(), "data");
 const uploadsDir = path.join(process.cwd(), "uploads");
 const publicUploadsDir = path.join(process.cwd(), "public", "uploads");
 
 function ensureDirs() {
-  if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
-  if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
-  if (!fs.existsSync(publicUploadsDir)) {
-    fs.mkdirSync(publicUploadsDir, { recursive: true });
+  // Vercel’de proje dizini salt okunur; yazılabilir alan /tmp
+  if (!isVercel) {
+    if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
+    if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+    if (!fs.existsSync(publicUploadsDir)) {
+      fs.mkdirSync(publicUploadsDir, { recursive: true });
+    }
+  } else if (!fs.existsSync("/tmp")) {
+    /* no-op */
   }
 }
 
-const dbPath =
-  process.env.DATABASE_PATH || path.join(dataDir, "site.db");
+function resolveDbPath() {
+  if (process.env.DATABASE_PATH) return process.env.DATABASE_PATH;
+  if (isVercel) return path.join("/tmp", "melisa-eryigit-site.db");
+  return path.join(dataDir, "site.db");
+}
 
 let _db: Database.Database | null = null;
 
 export function getDb() {
   if (_db) return _db;
   ensureDirs();
+  const dbPath = resolveDbPath();
   _db = new Database(dbPath);
-  _db.pragma("journal_mode = WAL");
+  // WAL /tmp üzerinde sorun çıkarabilir
+  _db.pragma(isVercel ? "journal_mode = DELETE" : "journal_mode = WAL");
   _db.pragma("foreign_keys = ON");
   migrate(_db);
   seedIfEmpty(_db);

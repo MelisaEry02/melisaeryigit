@@ -1,4 +1,4 @@
-import { saveSettings } from "@/app/admin/ayarlar/actions";
+import { saveSettings } from "@/app/admin/(panel)/ayarlar/actions";
 import { getSettings } from "@/lib/db";
 
 type Field = {

@@ -1,4 +1,4 @@
-import { deleteSkill, saveSkill } from "@/app/admin/yetenekler/actions";
+import { deleteSkill, saveSkill } from "@/app/admin/(panel)/yetenekler/actions";
 import { getDb, type Skill } from "@/lib/db";
 
 export default function AdminSkillsPage() {

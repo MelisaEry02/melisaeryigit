@@ -1,7 +1,7 @@
 import {
   deleteMessage,
   setMessageStatus,
-} from "@/app/admin/mesajlar/actions";
+} from "@/app/admin/(panel)/mesajlar/actions";
 import { getDb, type Message } from "@/lib/db";
 
 export default function AdminMessagesPage() {

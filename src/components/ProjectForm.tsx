@@ -1,4 +1,4 @@
-import { deleteProject, saveProject } from "@/app/admin/projeler/actions";
+import { deleteProject, saveProject } from "@/app/admin/(panel)/projeler/actions";
 import type { Project } from "@/lib/db";
 
 export function ProjectForm({ project }: { project?: Project }) {
