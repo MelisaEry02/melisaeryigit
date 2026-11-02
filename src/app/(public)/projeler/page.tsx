@@ -29,16 +29,34 @@ export default function ProjectsPage() {
           />
         ) : (
           <ul className="mt-10 space-y-8">
-            {projects.map((p) => (
-              <li key={p.id} className="border-b border-pink-200/70 pb-8 last:border-0">
-                <Link href={`/projeler/${p.slug}`} className="group block">
-                  <h2 className="type-h2 transition group-hover:text-rose">
-                    {p.title}
-                  </h2>
-                  <p className="mt-3 text-ink-soft">{p.summary}</p>
-                </Link>
-              </li>
-            ))}
+            {projects.map((p, i) => {
+              const img =
+                p.image_url ||
+                (i % 2 === 0
+                  ? "/placeholders/photo-2.png"
+                  : "/placeholders/photo-3.png");
+              return (
+                <li
+                  key={p.id}
+                  className="border-b border-pink-200/70 pb-8 last:border-0"
+                >
+                  <Link href={`/projeler/${p.slug}`} className="group block">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`${img}?v=mauve3`}
+                      alt=""
+                      className="project-cover"
+                      width={1200}
+                      height={1200}
+                    />
+                    <h2 className="type-h2 mt-4 transition group-hover:text-rose">
+                      {p.title}
+                    </h2>
+                    <p className="mt-3 text-ink-soft">{p.summary}</p>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         )}
       </SpeechBubble>

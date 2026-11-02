@@ -1264,6 +1264,21 @@ html[data-theme="night"] .hero-snow__man-ball {
 }
 
 /* Deneyimler → footer: soft kış köprüsü */
+/* Proje kapak / galeri placeholder (pembe + mauve kartane) */
+.project-cover {
+  display: block;
+  width: 100%;
+  max-width: 28rem;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: #fdf1f5;
+}
+
+.project-cover--detail {
+  max-width: 36rem;
+}
+
 .winter-bridge {
   position: relative;
   width: 100%;
