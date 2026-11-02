@@ -7,6 +7,7 @@ import { ExperienceStrip } from "@/components/ExperienceStrip";
 import { HeroSnowscape } from "@/components/HeroSnowscape";
 import { SectionPanel } from "@/components/SectionPanel";
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
+import { WinterBridge } from "@/components/WinterBridge";
 import {
   getDb,
   getSettings,
@@ -132,9 +133,11 @@ export default function HomePage() {
           )}
         </SectionPanel>
 
-        <section className="site-shell pb-16 pt-6">
+        <section className="site-shell pb-2 pt-6">
           <ExperienceStrip items={experiences} />
         </section>
+
+        <WinterBridge />
       </div>
     </div>
   );

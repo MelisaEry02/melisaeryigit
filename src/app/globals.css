@@ -1254,13 +1254,56 @@ html[data-theme="night"] .hero-snow__man-ball {
 }
 
 .site-footer {
-  margin-top: 5rem;
+  margin-top: 1.25rem;
   border-top: 1px solid rgba(232, 180, 200, 0.65);
   background: linear-gradient(
     180deg,
     transparent 0%,
     rgba(255, 240, 245, 0.55) 100%
   );
+}
+
+/* Deneyimler → footer: soft kış köprüsü */
+.winter-bridge {
+  position: relative;
+  width: 100%;
+  max-width: 52rem;
+  margin: 0.15rem auto 0;
+  padding: 0.15rem 0.75rem 0;
+  pointer-events: none;
+  background: transparent;
+}
+
+.winter-bridge__stage {
+  position: relative;
+  width: min(78%, 18rem);
+  margin: 0;
+  margin-right: auto;
+  margin-left: -0.85rem; /* biraz daha sola */
+  background: transparent;
+  transform: translateX(-0.75rem);
+}
+
+@media (min-width: 768px) {
+  .winter-bridge__stage {
+    width: min(70%, 22rem);
+    margin-left: -1.25rem;
+    transform: translateX(-1.25rem);
+  }
+}
+
+.winter-bridge__photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: transparent;
+  filter: saturate(0.94) contrast(0.97)
+    drop-shadow(0 6px 14px rgba(184, 107, 136, 0.1));
+}
+
+html[data-theme="night"] .winter-bridge__photo {
+  filter: saturate(0.8) brightness(0.92)
+    drop-shadow(0 6px 14px rgba(0, 0, 0, 0.25));
 }
 
 .site-footer__brand {
@@ -1658,7 +1701,7 @@ html[data-theme="night"] .admin-panel {
   background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 0%, transparent 70%);
   opacity: 0;
   transform: scale(0.6);
-  animation: splashBloom 2.4s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+  animation: splashBloom 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
   pointer-events: none;
 }
 
@@ -1711,7 +1754,7 @@ html[data-theme="night"] .admin-panel {
 .page-splash--name .page-splash__ring,
 .page-splash--white .page-splash__ring,
 .page-splash--hold .page-splash__ring {
-  animation: splashRing 1.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: splashRing 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes splashRing {
@@ -1729,16 +1772,10 @@ html[data-theme="night"] .admin-panel {
 }
 
 .page-splash__mark-wrap {
-  opacity: 0;
-  transform: scale(0.55) translateY(12px);
-  filter: blur(8px);
-}
-
-.page-splash--mark .page-splash__mark-wrap,
-.page-splash--name .page-splash__mark-wrap,
-.page-splash--white .page-splash__mark-wrap,
-.page-splash--hold .page-splash__mark-wrap {
-  animation: splashMarkCinematic 1.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  filter: none;
+  animation: splashMarkCinematic 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .page-splash__mark {
@@ -1758,7 +1795,7 @@ html[data-theme="night"] .admin-panel {
 .page-splash--name .page-splash__rule,
 .page-splash--white .page-splash__rule,
 .page-splash--hold .page-splash__rule {
-  animation: splashRule 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+  animation: splashRule 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .page-splash__name {
@@ -1792,26 +1829,21 @@ html[data-theme="night"] .admin-panel {
   transform: translateY(14px);
 }
 
+.page-splash--mark .page-splash__letter,
 .page-splash--name .page-splash__letter,
 .page-splash--white .page-splash__letter,
 .page-splash--hold .page-splash__letter {
-  animation: splashLetterIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: splashLetterIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes splashMarkCinematic {
   0% {
-    opacity: 0;
-    transform: scale(0.55) translateY(12px);
-    filter: blur(8px);
-  }
-  60% {
-    opacity: 1;
-    filter: blur(0);
+    opacity: 0.85;
+    transform: scale(0.92) translateY(4px);
   }
   100% {
     opacity: 1;
     transform: scale(1) translateY(0);
-    filter: blur(0);
   }
 }
 

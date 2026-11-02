@@ -132,6 +132,13 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.webmanifest?v=pinkwhite2" />
       </head>
       <body className={`${fraunces.variable} ${manrope.variable} antialiased`}>
+        {/* İlk boyama: pembe kapak React’ten önce — PageSplash kaldırır */}
+        <div id="me-boot-splash" aria-hidden="true" />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `#me-boot-splash{position:fixed;inset:0;z-index:95;pointer-events:none;background:radial-gradient(ellipse 55% 45% at 50% 42%,#ffe4ee 0%,transparent 70%),linear-gradient(170deg,#fff7f9 0%,#fceef3 42%,#f5d6e2 100%)}@media (prefers-reduced-motion:reduce){#me-boot-splash{display:none}}`,
+          }}
+        />
         <PwaRegister />
         {children}
       </body>

@@ -3,8 +3,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
 
-const DURATION_MS = 3600;
-const FADE_MS = 700;
+/** Giriş motion + hold = 3.1 sn */
+const DURATION_MS = 3100;
+const FADE_MS = 350;
 
 type Flake = {
   id: number;
@@ -21,30 +22,30 @@ function makeFlakes(count: number): Flake[] {
     id: i,
     left: `${(i * 47 + 5) % 100}%`,
     size: 16 + ((i * 11) % 26),
-    delay: (i % 9) * 0.16,
-    duration: 2.6 + (i % 5) * 0.32,
+    delay: (i % 9) * 0.05,
+    duration: 2 + (i % 5) * 0.25,
     opacity: 0.28 + (i % 4) * 0.12,
     drift: ((i % 6) - 2.5) * 26,
   }));
 }
 
 /**
- * Sadece hard load (layout ilk mount).
- * App Router’da public layout client nav’da kalır → pathname’e bağlı değil.
+ * Hard load: SSR + useState(true) → pembe kapak gecikmesiz.
+ * Hold ~3.5 sn (toplam ~4.5 sn).
  */
 export function PageSplash({ siteName }: { siteName: string }) {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const [leaving, setLeaving] = useState(false);
-  const [phase, setPhase] = useState<"boot" | "mark" | "name" | "white" | "hold">(
-    "boot"
-  );
+  const [phase, setPhase] = useState<"mark" | "name" | "white" | "hold">("mark");
   const started = useRef(false);
-  const flakes = useMemo(() => makeFlakes(22), []);
+  const flakes = useMemo(() => makeFlakes(18), []);
   const name = siteName || "Melisa Eryiğit";
 
   useEffect(() => {
     if (started.current) return;
     started.current = true;
+
+    document.getElementById("me-boot-splash")?.remove();
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
@@ -52,12 +53,9 @@ export function PageSplash({ siteName }: { siteName: string }) {
       return;
     }
 
-    setShow(true);
-
-    const tMark = window.setTimeout(() => setPhase("mark"), 180);
-    const tName = window.setTimeout(() => setPhase("name"), 520);
-    const tWhite = window.setTimeout(() => setPhase("white"), 1400);
-    const tHold = window.setTimeout(() => setPhase("hold"), 2100);
+    const tName = window.setTimeout(() => setPhase("name"), 0);
+    const tWhite = window.setTimeout(() => setPhase("white"), 320);
+    const tHold = window.setTimeout(() => setPhase("hold"), 700);
     const tLeave = window.setTimeout(
       () => setLeaving(true),
       DURATION_MS - FADE_MS
@@ -65,7 +63,6 @@ export function PageSplash({ siteName }: { siteName: string }) {
     const tHide = window.setTimeout(() => setShow(false), DURATION_MS);
 
     return () => {
-      window.clearTimeout(tMark);
       window.clearTimeout(tName);
       window.clearTimeout(tWhite);
       window.clearTimeout(tHold);
@@ -131,7 +128,7 @@ export function PageSplash({ siteName }: { siteName: string }) {
             <span
               key={`${ch}-${i}`}
               className="page-splash__letter"
-              style={{ animationDelay: `${0.55 + i * 0.028}s` }}
+              style={{ animationDelay: `${i * 0.016}s` }}
             >
               {ch === " " ? "\u00A0" : ch}
             </span>
