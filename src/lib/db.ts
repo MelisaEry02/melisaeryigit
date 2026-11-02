@@ -22,7 +22,8 @@ function ensureDirs() {
 
 function resolveDbPath() {
   if (process.env.DATABASE_PATH) return process.env.DATABASE_PATH;
-  if (isVercel) return path.join("/tmp", "melisa-eryigit-site.db");
+  // v2: seed.db (4 deneyim) — eski /tmp dosyası placeholder’lı kalmasın
+  if (isVercel) return path.join("/tmp", "melisa-eryigit-site-v2.db");
   return path.join(dataDir, "site.db");
 }
 
