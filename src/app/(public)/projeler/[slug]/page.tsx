@@ -30,14 +30,6 @@ export default async function ProjectDetailPage({ params }: Props) {
         <Link href="/projeler" className="nav-link text-sm">
           ← Projeler
         </Link>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={`${project.image_url || "/placeholders/photo-2.png"}?v=mauve3`}
-          alt=""
-          className="project-cover project-cover--detail mt-6"
-          width={1200}
-          height={1200}
-        />
         <h1 className="type-h1 mt-4">{project.title}</h1>
         <p className="mt-4 type-lead">{project.summary}</p>
         <div className="mt-8 whitespace-pre-wrap leading-relaxed text-ink-soft">

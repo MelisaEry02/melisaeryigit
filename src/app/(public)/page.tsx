@@ -94,34 +94,19 @@ export default function HomePage() {
             />
           ) : (
             <ul className="home-list mt-8 space-y-7">
-              {projects.map((p, i) => {
-                const img =
-                  p.image_url ||
-                  (i % 2 === 0
-                    ? "/placeholders/photo-2.png"
-                    : "/placeholders/photo-3.png");
-                return (
-                  <li
-                    key={p.id}
-                    className="border-b border-pink-200/70 pb-7 last:border-0 last:pb-0"
-                  >
-                    <Link href={`/projeler/${p.slug}`} className="group block">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={`${img}?v=mauve3`}
-                        alt=""
-                        className="project-cover"
-                        width={1200}
-                        height={1200}
-                      />
-                      <h3 className="type-h3 mt-4 transition group-hover:text-rose">
-                        {p.title}
-                      </h3>
-                      <p className="mt-2 max-w-2xl text-ink-soft">{p.summary}</p>
-                    </Link>
-                  </li>
-                );
-              })}
+              {projects.map((p) => (
+                <li
+                  key={p.id}
+                  className="border-b border-pink-200/70 pb-7 last:border-0 last:pb-0"
+                >
+                  <Link href={`/projeler/${p.slug}`} className="group block">
+                    <h3 className="type-h3 transition group-hover:text-rose">
+                      {p.title}
+                    </h3>
+                    <p className="mt-2 max-w-2xl text-ink-soft">{p.summary}</p>
+                  </Link>
+                </li>
+              ))}
             </ul>
           )}
         </SectionPanel>
