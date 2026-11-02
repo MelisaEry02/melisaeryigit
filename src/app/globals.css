@@ -1279,16 +1279,16 @@ html[data-theme="night"] .hero-snow__man-ball {
   width: min(78%, 18rem);
   margin: 0;
   margin-right: auto;
-  margin-left: -0.85rem; /* biraz daha sola */
+  margin-left: -1.85rem; /* yılbaşı ağacı daha sola */
   background: transparent;
-  transform: translateX(-0.75rem);
+  transform: translateX(-1.5rem);
 }
 
 @media (min-width: 768px) {
   .winter-bridge__stage {
     width: min(70%, 22rem);
-    margin-left: -1.25rem;
-    transform: translateX(-1.25rem);
+    margin-left: -2.75rem;
+    transform: translateX(-2.5rem);
   }
 }
 

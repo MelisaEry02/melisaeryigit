@@ -60,6 +60,7 @@ export async function saveExperience(formData: FormData) {
   }
   revalidatePath("/admin/deneyim");
   revalidatePath("/deneyim");
+  revalidatePath("/");
   redirect("/admin/deneyim");
 }
 
@@ -70,4 +71,5 @@ export async function deleteExperience(formData: FormData) {
     .run(Number(formData.get("id")));
   revalidatePath("/admin/deneyim");
   revalidatePath("/deneyim");
+  revalidatePath("/");
 }

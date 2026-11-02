@@ -34,8 +34,10 @@ yarn-error.log*
 .env*
 !.env.example
 
-# local data
-/data/
+# local data (seed.db deploy için commitlenir)
+/data/*
+!/data/.gitkeep
+!/data/seed.db
 /uploads/
 
 # vercel

@@ -6,10 +6,16 @@ const nextConfig: NextConfig = {
   outputFileTracingExcludes: {
     "*": [
       "./.env*",
-      "./data/**",
+      "./data/site.db",
+      "./data/site.db-shm",
+      "./data/site.db-wal",
       "./uploads/**",
       "./public/uploads/**",
     ],
+  },
+  // seed.db serverless fonksiyonuna girsin
+  outputFileTracingIncludes: {
+    "*": ["./data/seed.db"],
   },
 };
 

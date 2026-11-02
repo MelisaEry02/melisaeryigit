@@ -35,9 +35,7 @@ export default function HomePage() {
     .all() as Post[];
 
   const experiences = db
-    .prepare(
-      `SELECT * FROM experiences ORDER BY sort_order ASC, id DESC LIMIT 8`
-    )
+    .prepare(`SELECT * FROM experiences ORDER BY sort_order ASC, id DESC`)
     .all() as Experience[];
 
   return (

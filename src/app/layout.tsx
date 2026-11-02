@@ -136,7 +136,7 @@ export default function RootLayout({
         <div id="me-boot-splash" aria-hidden="true" />
         <style
           dangerouslySetInnerHTML={{
-            __html: `#me-boot-splash{position:fixed;inset:0;z-index:95;pointer-events:none;background:radial-gradient(ellipse 55% 45% at 50% 42%,#ffe4ee 0%,transparent 70%),linear-gradient(170deg,#fff7f9 0%,#fceef3 42%,#f5d6e2 100%)}@media (prefers-reduced-motion:reduce){#me-boot-splash{display:none}}`,
+            __html: `#me-boot-splash{position:fixed;inset:0;z-index:95;pointer-events:none;background:radial-gradient(ellipse 55% 45% at 50% 42%,#ffe4ee 0%,transparent 70%),linear-gradient(170deg,#fff7f9 0%,#fceef3 42%,#f5d6e2 100%)}#me-boot-splash[data-done="1"]{display:none!important}html[data-theme="night"] #me-boot-splash{background:radial-gradient(ellipse 55% 45% at 50% 42%,#3a2430 0%,transparent 70%),linear-gradient(170deg,#2a1820 0%,#24141c 42%,#1c1016 100%)}@media (prefers-reduced-motion:reduce){#me-boot-splash{display:none}}`,
           }}
         />
         <PwaRegister />

@@ -7,7 +7,7 @@ export function WinterBridge() {
       <div className="winter-bridge__stage">
         <img
           className="winter-bridge__photo"
-          src="/illustrations/pink-tree.png?v=1"
+          src="/illustrations/pink-tree.png?v=2"
           alt=""
           width={812}
           height={720}

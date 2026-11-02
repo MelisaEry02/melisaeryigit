@@ -26,12 +26,29 @@ function resolveDbPath() {
   return path.join(dataDir, "site.db");
 }
 
+/** Vercel /tmp boşsa repodaki seed.db’yi kopyala (gerçek deneyimler vb.). */
+function ensureSeedCopy(dbPath: string) {
+  if (!isVercel) return;
+  if (fs.existsSync(dbPath)) return;
+  const candidates = [
+    path.join(process.cwd(), "data", "seed.db"),
+    path.join(__dirname, "..", "..", "data", "seed.db"),
+  ];
+  for (const seed of candidates) {
+    if (fs.existsSync(seed)) {
+      fs.copyFileSync(seed, dbPath);
+      return;
+    }
+  }
+}
+
 let _db: Database.Database | null = null;
 
 export function getDb() {
   if (_db) return _db;
   ensureDirs();
   const dbPath = resolveDbPath();
+  ensureSeedCopy(dbPath);
   _db = new Database(dbPath);
   // WAL /tmp üzerinde sorun çıkarabilir
   _db.pragma(isVercel ? "journal_mode = DELETE" : "journal_mode = WAL");
@@ -254,34 +271,55 @@ function seedIfEmpty(db: Database.Database) {
     t
   );
 
-  db.prepare(
+  const expInsert = db.prepare(
     `INSERT INTO experiences (title, organization, kind, location, start_date, end_date, description, sort_order, created_at, updated_at)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-  ).run(
+  );
+  expInsert.run(
     "Öğrenci / geliştirici",
-    "Üniversite",
+    "Lise",
     "education",
     "Türkiye",
-    "2022",
-    "",
+    "2023",
+    "2027",
     "Yer tutucu eğitim kaydı.",
     1,
     t,
     t
   );
-
-  db.prepare(
-    `INSERT INTO experiences (title, organization, kind, location, start_date, end_date, description, sort_order, created_at, updated_at)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-  ).run(
+  expInsert.run(
     "Stajyer",
-    "Örnek Şirket",
+    "Kağıthane Belediyesi",
     "work",
-    "Uzaktan",
-    "2024",
-    "2024",
-    "Yer tutucu deneyim kaydı.",
+    "",
+    "2026",
+    "2026",
+    "Sosyal Hizmetler de 1 ay görev aldı.",
     2,
+    t,
+    t
+  );
+  expInsert.run(
+    "FRC Robotik Takımı",
+    "",
+    "work",
+    "Sponsorluk Kaptanı & Sosyal Medya Kaptan yardımcısı",
+    "2025",
+    "2026",
+    "",
+    2,
+    t,
+    t
+  );
+  expInsert.run(
+    "Stajyer",
+    "Beyin Atölyesi",
+    "work",
+    "",
+    "2026",
+    "",
+    "Devam ediyor.",
+    3,
     t,
     t
   );

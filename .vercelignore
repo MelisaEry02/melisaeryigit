@@ -1,6 +1,8 @@
 .next
 node_modules
-data
+data/site.db
+data/site.db-shm
+data/site.db-wal
 uploads
 .env.local
 .env

@@ -45,7 +45,10 @@ export function PageSplash({ siteName }: { siteName: string }) {
     if (started.current) return;
     started.current = true;
 
-    document.getElementById("me-boot-splash")?.remove();
+    // React ağacından .remove() etme — soft nav’da insertBefore/removeChild patlar.
+    // Sadece gizle; node layout’ta kalsın.
+    const boot = document.getElementById("me-boot-splash");
+    if (boot) boot.setAttribute("data-done", "1");
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
