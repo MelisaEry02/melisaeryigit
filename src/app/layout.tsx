@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     template: `%s · ${SITE}`,
   },
   description: `${SITE} — projeler, yazılar ve iletişim.`,
-  manifest: "/manifest.webmanifest",
+  manifest: "/manifest.webmanifest?v=mev6",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -41,40 +41,15 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icon.png?v=kartane5", type: "image/png", sizes: "48x48" },
-      { url: "/icons/me-favicon.png?v=kartane5", type: "image/png", sizes: "32x32" },
-      { url: "/favicon.ico?v=kartane5", sizes: "any" },
-      {
-        url: "/icons/favicon-32.png?v=kartane5",
-        sizes: "32x32",
-        type: "image/png",
-      },
-      {
-        url: "/icons/icon-192.png?v=kartane5",
-        sizes: "192x192",
-        type: "image/png",
-      },
-      {
-        url: "/icons/icon-512.png?v=kartane5",
-        sizes: "512x512",
-        type: "image/png",
-      },
-      { url: "/icons/icon.svg?v=kartane5", type: "image/svg+xml" },
+      { url: "/brand/me-v6-48.png", type: "image/png", sizes: "48x48" },
+      { url: "/brand/me-v6-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/brand/me-v6.ico", sizes: "any" },
     ],
     apple: [
-      { url: "/apple-icon.png?v=kartane5", sizes: "180x180", type: "image/png" },
-      {
-        url: "/icons/apple-touch-icon.png?v=kartane5",
-        sizes: "180x180",
-      },
+      { url: "/brand/me-v6-180.png", sizes: "180x180", type: "image/png" },
     ],
     shortcut: [
-      { url: "/icon.png?v=kartane5", type: "image/png" },
-      {
-        url: "/icons/me-favicon.png?v=kartane5",
-        sizes: "32x32",
-        type: "image/png",
-      },
+      { url: "/brand/me-v6-32.png", type: "image/png", sizes: "32x32" },
     ],
   },
   openGraph: {
@@ -85,7 +60,7 @@ export const metadata: Metadata = {
     siteName: SITE,
     images: [
       {
-        url: "/og-cover.png?v=kartane5",
+        url: "/og-cover.png?v=mev6",
         width: 1200,
         height: 630,
         alt: "Melisa Eryiğit — pembe zemin, mauve kartane",
@@ -96,7 +71,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: SITE,
     description: `${SITE} — projeler, yazılar ve iletişim.`,
-    images: ["/og-cover.png?v=kartane5"],
+    images: ["/og-cover.png?v=mev6"],
   },
 };
 
@@ -124,13 +99,12 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-title" content="Melisa Eryiğit" />
-        <link rel="apple-touch-icon" href="/apple-icon.png?v=kartane5" sizes="180x180" />
-        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png?v=kartane5" sizes="180x180" />
-        <link rel="icon" href="/icon.png?v=kartane5" type="image/png" sizes="48x48" />
-        <link rel="icon" href="/icons/me-favicon.png?v=kartane5" type="image/png" sizes="32x32" />
-        <link rel="shortcut icon" href="/icons/me-favicon.png?v=kartane5" />
-        <link rel="icon" href="/favicon.ico?v=kartane5" sizes="any" />
-        <link rel="manifest" href="/manifest.webmanifest?v=kartane5" />
+        <link rel="apple-touch-icon" href="/brand/me-v6-180.png" sizes="180x180" />
+        <link rel="icon" href="/brand/me-v6-48.png" type="image/png" sizes="48x48" />
+        <link rel="icon" href="/brand/me-v6-32.png" type="image/png" sizes="32x32" />
+        <link rel="shortcut icon" href="/brand/me-v6-32.png" />
+        <link rel="icon" href="/brand/me-v6.ico" sizes="any" />
+        <link rel="manifest" href="/manifest.webmanifest?v=mev6" />
       </head>
       <body className={`${fraunces.variable} ${manrope.variable} antialiased`}>
         {/* İlk boyama: pembe kapak React’ten önce — PageSplash kaldırır */}

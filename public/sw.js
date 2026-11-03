@@ -1,11 +1,9 @@
 /* Melisa Eryiğit PWA — hafif önbellek (app shell) */
-const CACHE = "me-pwa-v5";
+const CACHE = "me-pwa-v6";
 const PRECACHE = [
-  "/",
-  "/manifest.webmanifest",
-  "/icons/icon-192.png",
-  "/icons/icon-512.png",
-  "/icons/apple-touch-icon.png",
+  "/manifest.webmanifest?v=mev6",
+  "/brand/me-v6-192.png",
+  "/brand/me-v6-180.png",
 ];
 
 self.addEventListener("install", (event) => {
@@ -35,30 +33,26 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
 
-  // Admin / API / favicon her zaman ağ (eski Vercel V cache olmasın)
-  if (url.pathname.startsWith("/admin") || url.pathname.startsWith("/api")) {
-    return;
-  }
-  if (url.pathname === "/favicon.ico" || url.pathname === "/icon.png" || url.pathname === "/apple-icon.png" || url.pathname.startsWith("/icons/me-favicon")) {
+  // Admin / API / favicon-brand: ağı doğrudan kullan (SW cache etme)
+  if (
+    url.pathname.startsWith("/admin") ||
+    url.pathname.startsWith("/api") ||
+    url.pathname === "/favicon.ico" ||
+    url.pathname.startsWith("/brand/") ||
+    url.pathname === "/icon.png" ||
+    url.pathname === "/apple-icon.png"
+  ) {
     return;
   }
 
   event.respondWith(
     fetch(req)
       .then((res) => {
-        const copy = res.clone();
-        if (res.ok && (url.pathname.startsWith("/icons/") || url.pathname === "/manifest.webmanifest")) {
-          caches.open(CACHE).then((c) => c.put(req, copy));
-        }
         return res;
       })
       .catch(async () => {
         const cached = await caches.match(req);
         if (cached) return cached;
-        if (req.mode === "navigate") {
-          const home = await caches.match("/");
-          if (home) return home;
-        }
         throw new Error("offline");
       })
   );

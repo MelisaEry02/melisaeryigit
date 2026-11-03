@@ -18,9 +18,12 @@ export function PwaRegister() {
       return;
     }
 
-    navigator.serviceWorker.register("/sw.js").catch(() => {
-      /* sessiz: PWA ikon/manifest yine de A2HS için yeterli */
-    });
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then((reg) => reg.update())
+      .catch(() => {
+        /* sessiz: PWA ikon/manifest yine de A2HS için yeterli */
+      });
   }, []);
 
   return null;
