@@ -22,8 +22,8 @@ function ensureDirs() {
 
 function resolveDbPath() {
   if (process.env.DATABASE_PATH) return process.env.DATABASE_PATH;
-  // v4: kartane OG/favicon only (4 deneyim) — eski /tmp dosyası placeholder’lı kalmasın
-  if (isVercel) return path.join("/tmp", "melisa-eryigit-site-v4.db");
+  // v5: favicon force + social labels; github MelisaEry02 seed
+  if (isVercel) return path.join("/tmp", "melisa-eryigit-site-v5.db");
   return path.join(dataDir, "site.db");
 }
 
@@ -163,7 +163,7 @@ function ensureContactDefaults(db: Database.Database) {
     social_instagram: "https://instagram.com/melisaerygit",
     social_tiktok: "https://www.tiktok.com/@melisaery",
     social_linkedin: "",
-    social_github: "",
+    social_github: "https://github.com/MelisaEry02",
     social_email: "melisaeryigit02@gmail.com",
   };
   const insert = db.prepare(
@@ -194,7 +194,7 @@ function seedIfEmpty(db: Database.Database) {
       "Bu metin yer tutucu — kendi cümlelerinle değiştir.\n\nNereden geldiğin, neyi önemsediğin, nasıl çalıştığın: hepsi buraya sığar. Admin → Site ayarları.",
     currently_working_on:
       "Kişisel sitemi inceliyorum: soft pastel pembe bir dil, kartanesi markası ve local admin ile içerik akışı.",
-    social_github: "",
+    social_github: "https://github.com/MelisaEry02",
     social_linkedin: "",
     social_instagram: "https://instagram.com/melisaerygit",
     social_tiktok: "https://www.tiktok.com/@melisaery",

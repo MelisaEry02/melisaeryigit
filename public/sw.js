@@ -1,5 +1,5 @@
 /* Melisa Eryiğit PWA — hafif önbellek (app shell) */
-const CACHE = "me-pwa-v4";
+const CACHE = "me-pwa-v5";
 const PRECACHE = [
   "/",
   "/manifest.webmanifest",
@@ -35,8 +35,11 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
 
-  // Admin / API her zaman ağ
+  // Admin / API / favicon her zaman ağ (eski Vercel V cache olmasın)
   if (url.pathname.startsWith("/admin") || url.pathname.startsWith("/api")) {
+    return;
+  }
+  if (url.pathname === "/favicon.ico" || url.pathname === "/icon.png" || url.pathname === "/apple-icon.png" || url.pathname.startsWith("/icons/me-favicon")) {
     return;
   }
 

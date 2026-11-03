@@ -12,6 +12,7 @@ import {
   WhatsAppIcon,
 } from "@/components/SocialIcons";
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
+import { socialLabel } from "@/lib/socialLabel";
 
 type Props = {
   siteName: string;
@@ -54,12 +55,16 @@ export function SiteFooter({ siteName, contact }: Props) {
     /^https?:\/\/(www\.)?github\.com\/.+/i.test(github) &&
     !/^https?:\/\/(www\.)?github\.com\/?$/i.test(github);
 
+  const igSub = socialLabel(instagram, "instagram") || "@melisaerygit";
+  const ttSub = socialLabel(tiktok, "tiktok") || "@melisaery";
+  const ghSub = socialLabel(github, "github");
+
   const items: ContactItem[] = [
     {
       key: "instagram",
       href: instagram,
       label: "Instagram",
-      sub: "@melisaerygit",
+      sub: igSub,
       icon: <InstagramIcon className="contact-block__icon" />,
     },
     {
@@ -73,7 +78,7 @@ export function SiteFooter({ siteName, contact }: Props) {
       key: "tiktok",
       href: tiktok,
       label: "TikTok",
-      sub: "@melisaery",
+      sub: ttSub,
       icon: <TikTokIcon className="contact-block__icon" />,
     },
     linkedinOk
@@ -96,7 +101,7 @@ export function SiteFooter({ siteName, contact }: Props) {
           key: "github",
           href: github,
           label: "GitHub",
-          sub: "Kodlar",
+          sub: ghSub || "Profil",
           icon: <GithubIcon className="contact-block__icon" />,
         }
       : {
