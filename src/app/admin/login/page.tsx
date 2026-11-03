@@ -34,7 +34,7 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(255,247,249,0.96)] p-6">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[rgba(255,247,249,0.96)] p-6">
       <form
         onSubmit={onSubmit}
         className="w-full max-w-sm space-y-4 rounded-2xl border border-pink-200 bg-white/70 p-8 shadow-sm backdrop-blur"

@@ -1,11 +1,18 @@
 "use client";
 
+import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { AdminNav } from "@/components/AdminNav";
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isLogin = pathname === "/admin/login";
+
+  // Public PageSplash admin’de yok; boot kapak kalırsa login görünmez.
+  useEffect(() => {
+    document.documentElement.dataset.boot = "off";
+    document.getElementById("me-boot-splash")?.setAttribute("data-done", "1");
+  }, []);
 
   if (isLogin) {
     return <>{children}</>;
