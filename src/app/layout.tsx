@@ -42,36 +42,36 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/icons/favicon-32.png?v=mauve3",
+        url: "/icons/favicon-32.png?v=mauve4",
         sizes: "32x32",
         type: "image/png",
       },
       {
-        url: "/icons/icon-48.png?v=mauve3",
+        url: "/icons/icon-48.png?v=mauve4",
         sizes: "48x48",
         type: "image/png",
       },
       {
-        url: "/icons/icon-192.png?v=mauve3",
+        url: "/icons/icon-192.png?v=mauve4",
         sizes: "192x192",
         type: "image/png",
       },
       {
-        url: "/icons/icon-512.png?v=mauve3",
+        url: "/icons/icon-512.png?v=mauve4",
         sizes: "512x512",
         type: "image/png",
       },
-      { url: "/icons/icon.svg?v=mauve3", type: "image/svg+xml" },
+      { url: "/icons/icon.svg?v=mauve4", type: "image/svg+xml" },
     ],
     apple: [
       {
-        url: "/icons/apple-touch-icon.png?v=mauve3",
+        url: "/icons/apple-touch-icon.png?v=mauve4",
         sizes: "180x180",
       },
     ],
     shortcut: [
       {
-        url: "/icons/favicon-32.png?v=mauve3",
+        url: "/icons/favicon-32.png?v=mauve4",
         sizes: "32x32",
         type: "image/png",
       },
@@ -85,10 +85,10 @@ export const metadata: Metadata = {
     siteName: SITE,
     images: [
       {
-        url: "/og-cover.png?v=mauve3",
+        url: "/og-cover.png?v=mauve4",
         width: 1200,
         height: 630,
-        alt: "Melisa Eryiğit — pembe zemin, beyaz kartane",
+        alt: "Melisa Eryiğit — pembe zemin, mauve kartane",
       },
     ],
   },
@@ -96,7 +96,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: SITE,
     description: `${SITE} — projeler, yazılar ve iletişim.`,
-    images: ["/og-cover.png?v=mauve3"],
+    images: ["/og-cover.png?v=mauve4"],
   },
 };
 
@@ -126,10 +126,23 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Melisa Eryiğit" />
         <link
           rel="apple-touch-icon"
-          href="/icons/apple-touch-icon.png?v=mauve3"
+          href="/icons/apple-touch-icon.png?v=mauve4"
         />
-        <link rel="icon" href="/favicon.ico?v=mauve3" sizes="any" />
-        <link rel="manifest" href="/manifest.webmanifest?v=mauve3" />
+        <link
+          rel="icon"
+          href="/icons/favicon-32.png?v=mauve4"
+          type="image/png"
+          sizes="32x32"
+        />
+        <link
+          rel="icon"
+          href="/icons/icon-192.png?v=mauve4"
+          type="image/png"
+          sizes="192x192"
+        />
+        <link rel="shortcut icon" href="/icons/favicon-32.png?v=mauve4" />
+        <link rel="icon" href="/favicon.ico?v=mauve4" sizes="any" />
+        <link rel="manifest" href="/manifest.webmanifest?v=mauve4" />
       </head>
       <body className={`${fraunces.variable} ${manrope.variable} antialiased`}>
         {/* İlk boyama: pembe kapak React’ten önce — PageSplash kaldırır */}

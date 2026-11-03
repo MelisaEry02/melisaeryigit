@@ -1,5 +1,5 @@
 /* Melisa Eryiğit PWA — hafif önbellek (app shell) */
-const CACHE = "me-pwa-v3";
+const CACHE = "me-pwa-v4";
 const PRECACHE = [
   "/",
   "/manifest.webmanifest",
