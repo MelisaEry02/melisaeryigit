@@ -2,15 +2,23 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const SEEN_KEY = "me-defter-seen";
-const SHOWN_KEY = "me-exit-gb-shown";
+/** v2: eski mouse-leave flag (`me-exit-gb-shown`) timer’ı kilitlemesin */
+const SHOWN_KEY = "me-gb-nudge-v2";
 const NUDGE_MS = 90_000;
+const NUDGE_MS_SMOKE = 3_000;
 
-/** Defter görmeden: ~90 sn sonra soft nudge; oturumda 1 kez. */
+/**
+ * Siteye girdikten ~90 sn sonra soft defter nudge (oturumda 1 kez).
+ * Kök neden (önceki): timer `tryOpen`/`pathname` dep’ine bağlıydı →
+ * soft nav’da clearTimeout ile sürekli sıfırlanıyordu; ayrıca eski
+ * sessionStorage flag mouse-leave’den kalmış olabiliyordu.
+ */
 export function GuestbookExitPrompt() {
   const pathname = usePathname();
+  const pathnameRef = useRef(pathname);
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<"idle" | "loading" | "ok" | "err">(
     "idle"
@@ -18,6 +26,7 @@ export function GuestbookExitPrompt() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    pathnameRef.current = pathname;
     if (pathname?.startsWith("/defter")) {
       try {
         sessionStorage.setItem(SEEN_KEY, "1");
@@ -27,23 +36,33 @@ export function GuestbookExitPrompt() {
     }
   }, [pathname]);
 
-  const tryOpen = useCallback(() => {
+  // Timer yalnızca mount’ta bir kez — pathname değişince reset yok
+  useEffect(() => {
+    let ms = NUDGE_MS;
     try {
-      if (sessionStorage.getItem(SEEN_KEY) === "1") return;
-      if (sessionStorage.getItem(SHOWN_KEY) === "1") return;
-      if (pathname?.startsWith("/defter")) return;
-      if (pathname?.startsWith("/admin")) return;
-      sessionStorage.setItem(SHOWN_KEY, "1");
-      setOpen(true);
+      if (new URLSearchParams(window.location.search).has("me_nudge")) {
+        ms = NUDGE_MS_SMOKE;
+      }
     } catch {
       /* ignore */
     }
-  }, [pathname]);
 
-  useEffect(() => {
-    const id = window.setTimeout(() => tryOpen(), NUDGE_MS);
+    const id = window.setTimeout(() => {
+      try {
+        const path = pathnameRef.current || "";
+        if (sessionStorage.getItem(SEEN_KEY) === "1") return;
+        if (sessionStorage.getItem(SHOWN_KEY) === "1") return;
+        if (path.startsWith("/defter")) return;
+        if (path.startsWith("/admin")) return;
+        sessionStorage.setItem(SHOWN_KEY, "1");
+        setOpen(true);
+      } catch {
+        /* ignore */
+      }
+    }, ms);
+
     return () => window.clearTimeout(id);
-  }, [tryOpen]);
+  }, []);
 
   function close() {
     setOpen(false);
