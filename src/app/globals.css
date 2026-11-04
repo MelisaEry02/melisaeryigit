@@ -2132,8 +2132,8 @@ html[data-theme="night"] .admin-panel {
   inset: 0;
   z-index: 130;
   display: grid;
-  place-items: start center;
-  padding: min(16vh, 5.5rem) 1rem 2rem;
+  place-items: center;
+  padding: 1rem;
 }
 
 .exit-gb__backdrop {
