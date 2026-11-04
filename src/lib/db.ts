@@ -22,8 +22,8 @@ function ensureDirs() {
 
 function resolveDbPath() {
   if (process.env.DATABASE_PATH) return process.env.DATABASE_PATH;
-  // v6: skills.proficiency + guestbook; tech seed
-  if (isVercel) return path.join("/tmp", "melisa-eryigit-site-v6.db");
+  // v7: correct TikTok/GitHub prefs in seed
+  if (isVercel) return path.join("/tmp", "melisa-eryigit-site-v7.db");
   return path.join(dataDir, "site.db");
 }
 
@@ -57,6 +57,7 @@ export function getDb() {
   migrate(_db);
   seedIfEmpty(_db);
   ensureContactDefaults(_db);
+  ensureSocialPrefs(_db);
   ensureSkillProficiencyColumn(_db);
   ensureTechSkills(_db);
   ensureNonCodeSkillBadges(_db);
@@ -264,10 +265,14 @@ function now() {
   return new Date().toISOString();
 }
 
+/** Tercih edilen hesaplar (deploy seed ile kalıcı). */
+const SOCIAL_PREFS = {
+  social_github: "https://github.com/MelisaEry02",
+  social_tiktok: "https://www.tiktok.com/@melisaery",
+} as const;
+
 /**
- * Eksik iletişim anahtarlarını ekler; mevcut değerleri ASLA ezmez.
- * social_github / social_tiktok hardcoded URL ile doldurulmaz —
- * admin veya seed’deki değer (veya boş) korunur.
+ * Eksik iletişim anahtarlarını ekler; dolu değerleri ezmez.
  */
 function ensureContactDefaults(db: Database.Database) {
   const defaults: Record<string, string> = {
@@ -278,6 +283,7 @@ function ensureContactDefaults(db: Database.Database) {
     social_instagram: "https://instagram.com/melisaerygit",
     social_linkedin: "",
     social_email: "melisaeryigit02@gmail.com",
+    ...SOCIAL_PREFS,
   };
   const insert = db.prepare(
     `INSERT INTO site_settings (key, value) VALUES (?, ?)
@@ -286,9 +292,25 @@ function ensureContactDefaults(db: Database.Database) {
   for (const [k, v] of Object.entries(defaults)) {
     insert.run(k, v);
   }
-  // Anahtar yoksa boş bırak — seed/admin yazar; kod eski hesabı dayatmasın
-  insert.run("social_github", "");
-  insert.run("social_tiktok", "");
+}
+
+/** Boş veya geçersiz GitHub/TikTok → tercih edilen hesaplar. */
+function ensureSocialPrefs(db: Database.Database) {
+  const get = db.prepare(`SELECT value FROM site_settings WHERE key = ?`);
+  const upsert = db.prepare(
+    `INSERT INTO site_settings (key, value) VALUES (?, ?)
+     ON CONFLICT(key) DO UPDATE SET value = excluded.value`
+  );
+
+  const gh = (get.get("social_github") as { value: string } | undefined)?.value?.trim() || "";
+  const ghOk =
+    /^https?:\/\/(www\.)?github\.com\/.+/i.test(gh) &&
+    !/^https?:\/\/(www\.)?github\.com\/?$/i.test(gh);
+  if (!ghOk) upsert.run("social_github", SOCIAL_PREFS.social_github);
+
+  const tt = (get.get("social_tiktok") as { value: string } | undefined)?.value?.trim() || "";
+  const ttOk = /^https?:\/\/(www\.)?tiktok\.com\/@/i.test(tt);
+  if (!ttOk) upsert.run("social_tiktok", SOCIAL_PREFS.social_tiktok);
 }
 
 function seedIfEmpty(db: Database.Database) {

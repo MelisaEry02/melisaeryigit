@@ -2000,17 +2000,19 @@ html[data-theme="night"] .admin-panel {
 }
 
 .cmdk-trigger--nav {
-  padding: 0.15rem 0.35rem;
+  padding: 0.2rem 0.45rem;
   border-color: transparent;
   background: transparent;
   color: var(--ink-soft);
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   font-weight: 600;
   vertical-align: middle;
+  gap: 0.35rem;
 }
 
 .cmdk-trigger--nav .cmdk-trigger__label {
-  display: none;
+  display: inline;
+  color: var(--ink-soft);
 }
 
 .cmdk-trigger--nav:hover {
@@ -2019,6 +2021,10 @@ html[data-theme="night"] .admin-panel {
   background: transparent;
   box-shadow: none;
   transform: none;
+}
+
+.cmdk-trigger--nav:hover .cmdk-trigger__label {
+  color: var(--ink);
 }
 
 .nav-link-cluster {
@@ -2055,14 +2061,10 @@ html[data-theme="night"] .admin-panel {
   font-weight: 600;
 }
 
-/* Telefonda kısayol yazısı yok; Ara etiketi görünsün */
+/* Telefonda kısayol yazısı yok; «Ara» kalsın */
 @media (max-width: 700px), (hover: none) and (pointer: coarse) {
   .cmdk-trigger__kbd {
     display: none;
-  }
-
-  .cmdk-trigger--nav .cmdk-trigger__label {
-    display: inline;
   }
 }
 

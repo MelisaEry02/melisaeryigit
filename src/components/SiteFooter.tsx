@@ -155,9 +155,6 @@ export function SiteFooter({ siteName, contact }: Props) {
                 <p className="text-xs text-ink-soft">Kişisel web sitesi</p>
               </div>
             </div>
-            <p className="mt-2 max-w-md text-sm leading-relaxed text-ink-soft">
-              Yazışmak veya merhaba demek için buradayım.
-            </p>
             <p className="contact-block__loc mt-3">
               <PinIcon className="contact-block__icon" />
               <a href={mapsHref} target="_blank" rel="noreferrer">

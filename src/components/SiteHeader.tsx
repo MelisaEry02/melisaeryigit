@@ -54,6 +54,9 @@ export function SiteHeader({
                 : pathname.startsWith(l.href);
             return (
               <span key={l.href} className="nav-link-cluster">
+                {l.href === "/" ? (
+                  <CommandPaletteTrigger className="cmdk-trigger--nav" />
+                ) : null}
                 <Link
                   href={l.href}
                   className="nav-link"
@@ -62,9 +65,6 @@ export function SiteHeader({
                 >
                   {l.label}
                 </Link>
-                {l.href === "/" ? (
-                  <CommandPaletteTrigger className="cmdk-trigger--nav" />
-                ) : null}
               </span>
             );
           })}
