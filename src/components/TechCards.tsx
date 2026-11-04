@@ -11,7 +11,12 @@ export function TechCards({ skills }: { skills: Skill[] }) {
   return (
     <ul className="tech-grid">
       {skills.map((s) => {
-        const learning = s.proficiency === "learning";
+        const tone =
+          s.proficiency === "learning"
+            ? "learn"
+            : s.proficiency === "daily" || s.proficiency === "skilled"
+              ? "soft"
+              : "code";
         return (
           <li key={s.id} className="tech-card" tabIndex={0}>
             <span className="tech-card__mark" aria-hidden>
@@ -22,9 +27,7 @@ export function TechCards({ skills }: { skills: Skill[] }) {
               {s.category ? (
                 <p className="tech-card__cat">{s.category}</p>
               ) : null}
-              <span
-                className={`tech-card__badge${learning ? " tech-card__badge--learn" : ""}`}
-              >
+              <span className={`tech-card__badge tech-card__badge--${tone}`}>
                 {skillBadgeLabel(s.proficiency || "comfortable")}
               </span>
             </div>

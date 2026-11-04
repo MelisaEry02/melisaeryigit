@@ -59,6 +59,7 @@ export function getDb() {
   ensureContactDefaults(_db);
   ensureSkillProficiencyColumn(_db);
   ensureTechSkills(_db);
+  ensureNonCodeSkillBadges(_db);
   return _db;
 }
 
@@ -87,7 +88,7 @@ function ensureSkillProficiencyColumn(db: Database.Database) {
 /** Modern stack kartları — eksikse ekler, mevcut satırları ezmez. */
 function ensureTechSkills(db: Database.Database) {
   const t = now();
-  const defaults: Array<[string, string, number, "learning" | "comfortable", number]> = [
+  const defaults: Array<[string, string, number, string, number]> = [
     ["Next.js", "Geliştirme", 4, "comfortable", 1],
     ["React", "Geliştirme", 4, "comfortable", 2],
     ["TypeScript", "Geliştirme", 4, "comfortable", 3],
@@ -106,6 +107,59 @@ function ensureTechSkills(db: Database.Database) {
     if (exists.get(name)) continue;
     insert.run(name, cat, level, proficiency, order, t, t);
   }
+}
+
+/** Kod dışı becerilerde “kod yazıyorum” rozetini düzelt. */
+function ensureNonCodeSkillBadges(db: Database.Database) {
+  const rows = db
+    .prepare(`SELECT id, name, category, level, proficiency FROM skills`)
+    .all() as {
+    id: number;
+    name: string;
+    category: string;
+    level: number;
+    proficiency: string;
+  }[];
+  const update = db.prepare(
+    `UPDATE skills SET proficiency = ?, updated_at = ? WHERE id = ?`
+  );
+  const t = now();
+  for (const row of rows) {
+    if (!isNonCodeSkill(row.name, row.category)) continue;
+    if (
+      row.proficiency === "daily" ||
+      row.proficiency === "skilled" ||
+      row.proficiency === "learning"
+    ) {
+      continue;
+    }
+    const blob = `${row.name} ${row.category}`;
+    const next =
+      row.level >= 4 ||
+      /(sosyal|içerik|sponsor|iletişim|yönetim)/i.test(blob)
+        ? "daily"
+        : "skilled";
+    update.run(next, t, row.id);
+  }
+}
+
+function isNonCodeSkill(name: string, category: string) {
+  const blob = `${name} ${category}`.toLocaleLowerCase("tr");
+  if (
+    /(next|react|typescript|javascript|tailwind|node|sqlite|git\b|html|css|python|java\b)/i.test(
+      blob
+    )
+  ) {
+    return false;
+  }
+  if (/figma|ui tasarım|tasarım/i.test(blob)) return true;
+  if (
+    /(geliştirme|veri|araçlar)/i.test(category) &&
+    !/(yönetim|ticaret|sosyal)/i.test(blob)
+  ) {
+    return false;
+  }
+  return true;
 }
 
 function migrate(db: Database.Database) {
@@ -483,7 +537,11 @@ export type Experience = {
   updated_at: string;
 };
 
-export type SkillProficiency = "learning" | "comfortable";
+export type SkillProficiency =
+  | "learning"
+  | "comfortable"
+  | "daily"
+  | "skilled";
 
 export type Skill = {
   id: number;
@@ -515,9 +573,22 @@ export type GuestbookEntry = {
 };
 
 export function skillBadgeLabel(proficiency: string): string {
-  return proficiency === "learning"
-    ? "Henüz öğreniyorum"
-    : "Rahatlıkla kod yazıyorum";
+  switch (proficiency) {
+    case "learning":
+      return "Henüz öğreniyorum";
+    case "daily":
+      return "Günlük kullanıyorum";
+    case "skilled":
+      return "İyi biliyorum";
+    case "comfortable":
+    default:
+      return "Rahatlıkla kod yazıyorum";
+  }
+}
+
+export function normalizeSkillProficiency(raw: string): SkillProficiency {
+  if (raw === "learning" || raw === "daily" || raw === "skilled") return raw;
+  return "comfortable";
 }
 
 export function isVercelRuntime() {

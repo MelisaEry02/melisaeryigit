@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getDb, isVercelRuntime, now } from "@/lib/db";
+import { getDb, now } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
@@ -17,10 +17,7 @@ export async function GET() {
        ORDER BY id DESC LIMIT 80`
     )
     .all();
-  return NextResponse.json({
-    entries: rows,
-    ephemeral: isVercelRuntime(),
-  });
+  return NextResponse.json({ entries: rows });
 }
 
 export async function POST(request: Request) {
@@ -44,10 +41,6 @@ export async function POST(request: Request) {
     return NextResponse.json({
       ok: true,
       id: Number(info.lastInsertRowid),
-      ephemeral: isVercelRuntime(),
-      warning: isVercelRuntime()
-        ? "Vercel’de SQLite /tmp üzerinde; cold start veya redeploy sonrası kayıtlar silinebilir. Yerelde kalıcıdır."
-        : undefined,
     });
   } catch {
     return NextResponse.json({ error: "Kaydedilemedi." }, { status: 500 });

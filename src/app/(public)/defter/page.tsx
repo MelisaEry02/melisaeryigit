@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Guestbook } from "@/components/Guestbook";
 import { SpeechBubble } from "@/components/SpeechBubble";
-import { getDb, isVercelRuntime, type GuestbookEntry } from "@/lib/db";
+import { getDb, type GuestbookEntry } from "@/lib/db";
 
 export const metadata: Metadata = { title: "Ziyaretçi defteri" };
 
@@ -22,10 +22,7 @@ export default function GuestbookPage() {
           Kısa bir not bırak — teşekkür, selam veya küçük bir iz.
         </p>
         <div className="mt-10">
-          <Guestbook
-            initialEntries={entries}
-            ephemeral={isVercelRuntime()}
-          />
+          <Guestbook initialEntries={entries} />
         </div>
       </SpeechBubble>
     </div>

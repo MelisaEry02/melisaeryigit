@@ -22,21 +22,14 @@ function formatDate(iso: string) {
 
 export function Guestbook({
   initialEntries,
-  ephemeral,
 }: {
   initialEntries: Entry[];
-  ephemeral: boolean;
 }) {
   const [entries, setEntries] = useState(initialEntries);
   const [status, setStatus] = useState<"idle" | "loading" | "ok" | "err">(
     "idle"
   );
   const [error, setError] = useState("");
-  const [note, setNote] = useState(
-    ephemeral
-      ? "Not: Vercel’de veritabanı /tmp’de; redeploy veya cold start sonrası kayıtlar silinebilir. Yerelde kalıcıdır."
-      : ""
-  );
 
   useEffect(() => {
     setEntries(initialEntries);
@@ -70,7 +63,6 @@ export function Guestbook({
         created_at: new Date().toISOString(),
       };
       setEntries((prev) => [entry, ...prev]);
-      if (json.warning) setNote(json.warning);
       setStatus("ok");
       form.reset();
     } catch {
@@ -119,7 +111,6 @@ export function Guestbook({
           <p className="text-sm text-ink-soft">Teşekkürler — kaydedildi.</p>
         )}
         {status === "err" && <p className="text-sm text-red-700">{error}</p>}
-        {note ? <p className="guestbook__note">{note}</p> : null}
       </form>
 
       <ul className="guestbook__list">

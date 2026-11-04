@@ -1,6 +1,13 @@
 import { deleteSkill, saveSkill } from "@/app/admin/(panel)/yetenekler/actions";
 import { getDb, skillBadgeLabel, type Skill } from "@/lib/db";
 
+const PROFICIENCY_OPTIONS = [
+  { value: "comfortable", label: skillBadgeLabel("comfortable") },
+  { value: "learning", label: skillBadgeLabel("learning") },
+  { value: "daily", label: skillBadgeLabel("daily") },
+  { value: "skilled", label: skillBadgeLabel("skilled") },
+] as const;
+
 export default function AdminSkillsPage() {
   const skills = getDb()
     .prepare(`SELECT * FROM skills ORDER BY sort_order ASC, id ASC`)
@@ -10,7 +17,8 @@ export default function AdminSkillsPage() {
     <div>
       <h1 className="font-display text-3xl text-ink">Yetenekler</h1>
       <p className="mt-2 text-sm text-ink-soft">
-        Rozet: {skillBadgeLabel("learning")} / {skillBadgeLabel("comfortable")}
+        Kod: {skillBadgeLabel("learning")} / {skillBadgeLabel("comfortable")} —
+        diğer: {skillBadgeLabel("daily")} / {skillBadgeLabel("skilled")}
       </p>
       <form
         action={saveSkill}
@@ -21,8 +29,11 @@ export default function AdminSkillsPage() {
         <input className="field" name="category" placeholder="Kategori" />
         <div className="grid gap-3 sm:grid-cols-2">
           <select className="field" name="proficiency" defaultValue="comfortable">
-            <option value="comfortable">Rahatlıkla kod yazıyorum</option>
-            <option value="learning">Henüz öğreniyorum</option>
+            {PROFICIENCY_OPTIONS.map((o) => (
+              <option key={o.value} value={o.value}>
+                {o.label}
+              </option>
+            ))}
           </select>
           <input
             className="field"
@@ -58,11 +69,16 @@ export default function AdminSkillsPage() {
                 className="field"
                 name="proficiency"
                 defaultValue={
-                  s.proficiency === "learning" ? "learning" : "comfortable"
+                  PROFICIENCY_OPTIONS.some((o) => o.value === s.proficiency)
+                    ? s.proficiency
+                    : "comfortable"
                 }
               >
-                <option value="comfortable">Rahatlıkla kod yazıyorum</option>
-                <option value="learning">Henüz öğreniyorum</option>
+                {PROFICIENCY_OPTIONS.map((o) => (
+                  <option key={o.value} value={o.value}>
+                    {o.label}
+                  </option>
+                ))}
               </select>
               <input
                 className="field"

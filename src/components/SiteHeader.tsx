@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { CommandPalette } from "@/components/CommandPalette";
 import { HeaderSocialLinks } from "@/components/SocialIcons";
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -63,7 +62,6 @@ export function SiteHeader({ siteName }: { siteName: string }) {
         </nav>
 
         <div className="ml-auto flex items-center gap-2 md:ml-0">
-          <CommandPalette />
           <ThemeToggle />
           <button
             type="button"
