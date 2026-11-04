@@ -8,7 +8,7 @@ const SEEN_KEY = "me-defter-seen";
 /** v3: eski v2 flag laptop’ta (Chrome session restore) smoke’u kilitlemesin */
 const SHOWN_KEY = "me-gb-nudge-v3";
 const LEGACY_SHOWN_KEYS = ["me-gb-nudge-v2", "me-exit-gb-shown"] as const;
-const NUDGE_MS = 90_000;
+const NUDGE_MS = 45_000;
 const NUDGE_MS_SMOKE = 3_000;
 
 function clearNudgeFlags() {
@@ -22,7 +22,7 @@ function clearNudgeFlags() {
 }
 
 /**
- * Siteye girdikten ~90 sn sonra soft defter nudge (oturumda 1 kez).
+ * Siteye girdikten ~45 sn sonra soft defter nudge (oturumda 1 kez).
  *
  * Laptop vs telefon: kodda ayrı path yok. Laptop’ta gelmemesinin kök nedeni
  * sessionStorage (`me-gb-nudge-v2` / `me-defter-seen`) — Chrome “kaldığın yerden
