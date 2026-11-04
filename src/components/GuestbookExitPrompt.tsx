@@ -5,16 +5,29 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 const SEEN_KEY = "me-defter-seen";
-/** v2: eski mouse-leave flag (`me-exit-gb-shown`) timer’ı kilitlemesin */
-const SHOWN_KEY = "me-gb-nudge-v2";
+/** v3: eski v2 flag laptop’ta (Chrome session restore) smoke’u kilitlemesin */
+const SHOWN_KEY = "me-gb-nudge-v3";
+const LEGACY_SHOWN_KEYS = ["me-gb-nudge-v2", "me-exit-gb-shown"] as const;
 const NUDGE_MS = 90_000;
 const NUDGE_MS_SMOKE = 3_000;
 
+function clearNudgeFlags() {
+  try {
+    sessionStorage.removeItem(SEEN_KEY);
+    sessionStorage.removeItem(SHOWN_KEY);
+    for (const k of LEGACY_SHOWN_KEYS) sessionStorage.removeItem(k);
+  } catch {
+    /* ignore */
+  }
+}
+
 /**
  * Siteye girdikten ~90 sn sonra soft defter nudge (oturumda 1 kez).
- * Kök neden (önceki): timer `tryOpen`/`pathname` dep’ine bağlıydı →
- * soft nav’da clearTimeout ile sürekli sıfırlanıyordu; ayrıca eski
- * sessionStorage flag mouse-leave’den kalmış olabiliyordu.
+ *
+ * Laptop vs telefon: kodda ayrı path yok. Laptop’ta gelmemesinin kök nedeni
+ * sessionStorage (`me-gb-nudge-v2` / `me-defter-seen`) — Chrome “kaldığın yerden
+ * devam” session’ı restore eder; telefon genelde taze oturum. `?me_nudge` artık
+ * flag’leri temizleyip smoke’u laptop’ta da zorlar.
  */
 export function GuestbookExitPrompt() {
   const pathname = usePathname();
@@ -39,8 +52,11 @@ export function GuestbookExitPrompt() {
   // Timer yalnızca mount’ta bir kez — pathname değişince reset yok
   useEffect(() => {
     let ms = NUDGE_MS;
+    let smoke = false;
     try {
-      if (new URLSearchParams(window.location.search).has("me_nudge")) {
+      smoke = new URLSearchParams(window.location.search).has("me_nudge");
+      if (smoke) {
+        clearNudgeFlags();
         ms = NUDGE_MS_SMOKE;
       }
     } catch {
@@ -49,13 +65,14 @@ export function GuestbookExitPrompt() {
 
     const id = window.setTimeout(() => {
       try {
-        const path = pathnameRef.current || "";
+        const path = pathnameRef.current || window.location.pathname || "";
         if (sessionStorage.getItem(SEEN_KEY) === "1") return;
         if (sessionStorage.getItem(SHOWN_KEY) === "1") return;
         if (path.startsWith("/defter")) return;
         if (path.startsWith("/admin")) return;
-        sessionStorage.setItem(SHOWN_KEY, "1");
         setOpen(true);
+        // Flag’i open sonrası yaz — dialog gerçekten açıldı
+        sessionStorage.setItem(SHOWN_KEY, "1");
       } catch {
         /* ignore */
       }
