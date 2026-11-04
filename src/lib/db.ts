@@ -22,8 +22,8 @@ function ensureDirs() {
 
 function resolveDbPath() {
   if (process.env.DATABASE_PATH) return process.env.DATABASE_PATH;
-  // v5: favicon force + social labels; github MelisaEry02 seed
-  if (isVercel) return path.join("/tmp", "melisa-eryigit-site-v5.db");
+  // v6: skills.proficiency + guestbook; tech seed
+  if (isVercel) return path.join("/tmp", "melisa-eryigit-site-v6.db");
   return path.join(dataDir, "site.db");
 }
 
@@ -57,7 +57,55 @@ export function getDb() {
   migrate(_db);
   seedIfEmpty(_db);
   ensureContactDefaults(_db);
+  ensureSkillProficiencyColumn(_db);
+  ensureTechSkills(_db);
   return _db;
+}
+
+function tableHasColumn(db: Database.Database, table: string, column: string) {
+  const cols = db.prepare(`PRAGMA table_info(${table})`).all() as {
+    name: string;
+  }[];
+  return cols.some((c) => c.name === column);
+}
+
+function ensureSkillProficiencyColumn(db: Database.Database) {
+  if (!tableHasColumn(db, "skills", "proficiency")) {
+    db.exec(
+      `ALTER TABLE skills ADD COLUMN proficiency TEXT NOT NULL DEFAULT 'comfortable'`
+    );
+  }
+  db.prepare(
+    `UPDATE skills SET proficiency = CASE
+       WHEN level <= 2 THEN 'learning'
+       ELSE 'comfortable'
+     END
+     WHERE proficiency IS NULL OR proficiency = ''`
+  ).run();
+}
+
+/** Modern stack kartları — eksikse ekler, mevcut satırları ezmez. */
+function ensureTechSkills(db: Database.Database) {
+  const t = now();
+  const defaults: Array<[string, string, number, "learning" | "comfortable", number]> = [
+    ["Next.js", "Geliştirme", 4, "comfortable", 1],
+    ["React", "Geliştirme", 4, "comfortable", 2],
+    ["TypeScript", "Geliştirme", 4, "comfortable", 3],
+    ["Tailwind CSS", "Geliştirme", 3, "comfortable", 4],
+    ["Git", "Araçlar", 4, "comfortable", 5],
+    ["SQLite", "Veri", 3, "comfortable", 6],
+    ["Node.js", "Geliştirme", 3, "learning", 7],
+    ["Figma", "Tasarım", 3, "learning", 8],
+  ];
+  const exists = db.prepare(`SELECT id FROM skills WHERE name = ?`);
+  const insert = db.prepare(
+    `INSERT INTO skills (name, category, level, proficiency, sort_order, created_at, updated_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`
+  );
+  for (const [name, cat, level, proficiency, order] of defaults) {
+    if (exists.get(name)) continue;
+    insert.run(name, cat, level, proficiency, order, t, t);
+  }
 }
 
 function migrate(db: Database.Database) {
@@ -114,9 +162,18 @@ function migrate(db: Database.Database) {
       name TEXT NOT NULL,
       category TEXT DEFAULT '',
       level INTEGER NOT NULL DEFAULT 3,
+      proficiency TEXT NOT NULL DEFAULT 'comfortable',
       sort_order INTEGER NOT NULL DEFAULT 0,
       created_at TEXT NOT NULL,
       updated_at TEXT NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS guestbook (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      message TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'visible',
+      created_at TEXT NOT NULL
     );
 
     CREATE TABLE IF NOT EXISTS media (
@@ -326,18 +383,22 @@ function seedIfEmpty(db: Database.Database) {
   );
 
   const skills = [
-    ["TypeScript", "Geliştirme", 4, 1],
-    ["Next.js", "Geliştirme", 4, 2],
-    ["UI tasarımı", "Tasarım", 3, 3],
-    ["SQLite", "Veri", 3, 4],
+    ["Next.js", "Geliştirme", 4, "comfortable", 1],
+    ["React", "Geliştirme", 4, "comfortable", 2],
+    ["TypeScript", "Geliştirme", 4, "comfortable", 3],
+    ["Tailwind CSS", "Geliştirme", 3, "comfortable", 4],
+    ["Git", "Araçlar", 4, "comfortable", 5],
+    ["SQLite", "Veri", 3, "comfortable", 6],
+    ["Node.js", "Geliştirme", 3, "learning", 7],
+    ["Figma", "Tasarım", 3, "learning", 8],
   ] as const;
 
   const insertSkill = db.prepare(
-    `INSERT INTO skills (name, category, level, sort_order, created_at, updated_at)
-     VALUES (?, ?, ?, ?, ?, ?)`
+    `INSERT INTO skills (name, category, level, proficiency, sort_order, created_at, updated_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`
   );
-  for (const [name, cat, level, order] of skills) {
-    insertSkill.run(name, cat, level, order, t, t);
+  for (const [name, cat, level, proficiency, order] of skills) {
+    insertSkill.run(name, cat, level, proficiency, order, t, t);
   }
 
   db.prepare(
@@ -422,11 +483,14 @@ export type Experience = {
   updated_at: string;
 };
 
+export type SkillProficiency = "learning" | "comfortable";
+
 export type Skill = {
   id: number;
   name: string;
   category: string;
   level: number;
+  proficiency: SkillProficiency | string;
   sort_order: number;
   created_at: string;
   updated_at: string;
@@ -441,5 +505,23 @@ export type Message = {
   status: string;
   created_at: string;
 };
+
+export type GuestbookEntry = {
+  id: number;
+  name: string;
+  message: string;
+  status: string;
+  created_at: string;
+};
+
+export function skillBadgeLabel(proficiency: string): string {
+  return proficiency === "learning"
+    ? "Henüz öğreniyorum"
+    : "Rahatlıkla kod yazıyorum";
+}
+
+export function isVercelRuntime() {
+  return isVercel;
+}
 
 export { now, uploadsDir };

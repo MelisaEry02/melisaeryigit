@@ -15,6 +15,9 @@ export async function saveSkill(formData: FormData) {
   const name = String(formData.get("name") || "").trim();
   const category = String(formData.get("category") || "");
   const level = Math.min(5, Math.max(1, Number(formData.get("level") || 3)));
+  const proficiencyRaw = String(formData.get("proficiency") || "comfortable");
+  const proficiency =
+    proficiencyRaw === "learning" ? "learning" : "comfortable";
   const sort_order = Number(formData.get("sort_order") || 0);
   const t = now();
   if (!name) throw new Error("İsim gerekli");
@@ -22,13 +25,13 @@ export async function saveSkill(formData: FormData) {
   const db = getDb();
   if (id) {
     db.prepare(
-      `UPDATE skills SET name=?, category=?, level=?, sort_order=?, updated_at=? WHERE id=?`
-    ).run(name, category, level, sort_order, t, Number(id));
+      `UPDATE skills SET name=?, category=?, level=?, proficiency=?, sort_order=?, updated_at=? WHERE id=?`
+    ).run(name, category, level, proficiency, sort_order, t, Number(id));
   } else {
     db.prepare(
-      `INSERT INTO skills (name, category, level, sort_order, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?)`
-    ).run(name, category, level, sort_order, t, t);
+      `INSERT INTO skills (name, category, level, proficiency, sort_order, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`
+    ).run(name, category, level, proficiency, sort_order, t, t);
   }
   revalidatePath("/admin/yetenekler");
   revalidatePath("/yetenekler");

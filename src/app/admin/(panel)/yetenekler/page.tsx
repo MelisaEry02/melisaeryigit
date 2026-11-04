@@ -1,5 +1,5 @@
 import { deleteSkill, saveSkill } from "@/app/admin/(panel)/yetenekler/actions";
-import { getDb, type Skill } from "@/lib/db";
+import { getDb, skillBadgeLabel, type Skill } from "@/lib/db";
 
 export default function AdminSkillsPage() {
   const skills = getDb()
@@ -9,6 +9,9 @@ export default function AdminSkillsPage() {
   return (
     <div>
       <h1 className="font-display text-3xl text-ink">Yetenekler</h1>
+      <p className="mt-2 text-sm text-ink-soft">
+        Rozet: {skillBadgeLabel("learning")} / {skillBadgeLabel("comfortable")}
+      </p>
       <form
         action={saveSkill}
         className="mt-8 max-w-2xl space-y-3 rounded-xl border border-pink-200 bg-white/40 p-5"
@@ -17,6 +20,10 @@ export default function AdminSkillsPage() {
         <input className="field" name="name" placeholder="İsim" required />
         <input className="field" name="category" placeholder="Kategori" />
         <div className="grid gap-3 sm:grid-cols-2">
+          <select className="field" name="proficiency" defaultValue="comfortable">
+            <option value="comfortable">Rahatlıkla kod yazıyorum</option>
+            <option value="learning">Henüz öğreniyorum</option>
+          </select>
           <input
             className="field"
             name="level"
@@ -47,6 +54,16 @@ export default function AdminSkillsPage() {
                 name="category"
                 defaultValue={s.category}
               />
+              <select
+                className="field"
+                name="proficiency"
+                defaultValue={
+                  s.proficiency === "learning" ? "learning" : "comfortable"
+                }
+              >
+                <option value="comfortable">Rahatlıkla kod yazıyorum</option>
+                <option value="learning">Henüz öğreniyorum</option>
+              </select>
               <input
                 className="field"
                 name="level"

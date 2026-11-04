@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { CommandPalette } from "@/components/CommandPalette";
 import { HeaderSocialLinks } from "@/components/SocialIcons";
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -14,6 +15,7 @@ const links = [
   { href: "/blog", label: "Blog" },
   { href: "/deneyim", label: "Deneyim" },
   { href: "/yetenekler", label: "Yetenekler" },
+  { href: "/defter", label: "Defter" },
 ];
 
 export function SiteHeader({ siteName }: { siteName: string }) {
@@ -61,6 +63,7 @@ export function SiteHeader({ siteName }: { siteName: string }) {
         </nav>
 
         <div className="ml-auto flex items-center gap-2 md:ml-0">
+          <CommandPalette />
           <ThemeToggle />
           <button
             type="button"

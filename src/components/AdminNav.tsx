@@ -9,6 +9,7 @@ const links = [
   { href: "/admin/projeler", label: "Projeler" },
   { href: "/admin/deneyim", label: "Deneyim" },
   { href: "/admin/yetenekler", label: "Yetenekler" },
+  { href: "/admin/defter", label: "Defter" },
   { href: "/admin/mesajlar", label: "Mesajlar" },
   { href: "/admin/ayarlar", label: "Site ayarları" },
 ];
