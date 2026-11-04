@@ -1370,9 +1370,6 @@ html[data-theme="night"] .winter-bridge__photo {
   text-decoration: underline;
   text-underline-offset: 0.18em;
   text-decoration-color: rgba(184, 107, 136, 0.45);
-}
-
-.contact-block__loc a {
   transition:
     color var(--dur-ui) var(--ease-ui),
     opacity var(--dur-ui) var(--ease-ui);
