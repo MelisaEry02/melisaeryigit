@@ -76,16 +76,43 @@ export function GithubIcon({ className = "" }: { className?: string }) {
   );
 }
 
-/** Header’da sadece IG + TikTok ikonları (İletişim yazısı yok). */
-export function HeaderSocialLinks() {
+/** Header’da sadece IG + TikTok — URL’ler admin/seed’den; hardcoded ezme. */
+export function HeaderSocialLinks({
+  instagram,
+  tiktok,
+}: {
+  instagram?: string;
+  tiktok?: string;
+} = {}) {
+  const ig = (instagram || "").trim();
+  const tt = (tiktok || "").trim();
+  const igOk = /^https?:\/\//i.test(ig);
+  const ttOk = /^https?:\/\/(www\.)?tiktok\.com\//i.test(tt);
+
   return (
     <div className="header-social">
-      <a href={IG} target="_blank" rel="noreferrer" className="header-social__link" aria-label="Instagram" title="@melisaerygit">
-        <InstagramIcon />
-      </a>
-      <a href={TT} target="_blank" rel="noreferrer" className="header-social__link" aria-label="TikTok" title="@melisaery">
-        <TikTokIcon />
-      </a>
+      {igOk ? (
+        <a
+          href={ig}
+          target="_blank"
+          rel="noreferrer"
+          className="header-social__link"
+          aria-label="Instagram"
+        >
+          <InstagramIcon />
+        </a>
+      ) : null}
+      {ttOk ? (
+        <a
+          href={tt}
+          target="_blank"
+          rel="noreferrer"
+          className="header-social__link"
+          aria-label="TikTok"
+        >
+          <TikTokIcon />
+        </a>
+      ) : null}
     </div>
   );
 }

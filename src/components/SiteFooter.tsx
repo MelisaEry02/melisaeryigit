@@ -45,8 +45,8 @@ export function SiteFooter({ siteName, contact }: Props) {
   const whatsapp = contact.whatsapp || SOCIAL.whatsapp;
   const github = (contact.github || "").trim();
   const linkedin = (contact.linkedin || "").trim();
-  const instagram = contact.instagram || SOCIAL.instagram;
-  const tiktok = contact.tiktok || SOCIAL.tiktok;
+  const instagram = (contact.instagram || "").trim() || SOCIAL.instagram;
+  const tiktok = (contact.tiktok || "").trim();
   const phoneTel = phone.replace(/\s/g, "").replace(/^0/, "+90");
   const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
 
@@ -54,9 +54,10 @@ export function SiteFooter({ siteName, contact }: Props) {
   const githubOk =
     /^https?:\/\/(www\.)?github\.com\/.+/i.test(github) &&
     !/^https?:\/\/(www\.)?github\.com\/?$/i.test(github);
+  const tiktokOk = /^https?:\/\/(www\.)?tiktok\.com\//i.test(tiktok);
 
   const igSub = socialLabel(instagram, "instagram") || "@melisaerygit";
-  const ttSub = socialLabel(tiktok, "tiktok") || "@melisaery";
+  const ttSub = socialLabel(tiktok, "tiktok");
   const ghSub = socialLabel(github, "github");
 
   const items: ContactItem[] = [
@@ -74,13 +75,21 @@ export function SiteFooter({ siteName, contact }: Props) {
       sub: phone,
       icon: <WhatsAppIcon className="contact-block__icon" />,
     },
-    {
-      key: "tiktok",
-      href: tiktok,
-      label: "TikTok",
-      sub: ttSub,
-      icon: <TikTokIcon className="contact-block__icon" />,
-    },
+    tiktokOk
+      ? {
+          key: "tiktok",
+          href: tiktok,
+          label: "TikTok",
+          sub: ttSub || "Profil",
+          icon: <TikTokIcon className="contact-block__icon" />,
+        }
+      : {
+          key: "tiktok",
+          label: "TikTok",
+          sub: "Admin’den eklenecek",
+          icon: <TikTokIcon className="contact-block__icon" />,
+          muted: true,
+        },
     linkedinOk
       ? {
           key: "linkedin",

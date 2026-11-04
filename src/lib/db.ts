@@ -264,7 +264,11 @@ function now() {
   return new Date().toISOString();
 }
 
-/** Mevcut DB’de eksik iletişim anahtarlarını ekler; dolu değerleri ezmez. */
+/**
+ * Eksik iletişim anahtarlarını ekler; mevcut değerleri ASLA ezmez.
+ * social_github / social_tiktok hardcoded URL ile doldurulmaz —
+ * admin veya seed’deki değer (veya boş) korunur.
+ */
 function ensureContactDefaults(db: Database.Database) {
   const defaults: Record<string, string> = {
     contact_email: "melisaeryigit02@gmail.com",
@@ -272,9 +276,7 @@ function ensureContactDefaults(db: Database.Database) {
     contact_location: "İstanbul Kağıthane",
     social_whatsapp: "https://wa.me/905528465257",
     social_instagram: "https://instagram.com/melisaerygit",
-    social_tiktok: "https://www.tiktok.com/@melisaery",
     social_linkedin: "",
-    social_github: "https://github.com/MelisaEry02",
     social_email: "melisaeryigit02@gmail.com",
   };
   const insert = db.prepare(
@@ -284,6 +286,9 @@ function ensureContactDefaults(db: Database.Database) {
   for (const [k, v] of Object.entries(defaults)) {
     insert.run(k, v);
   }
+  // Anahtar yoksa boş bırak — seed/admin yazar; kod eski hesabı dayatmasın
+  insert.run("social_github", "");
+  insert.run("social_tiktok", "");
 }
 
 function seedIfEmpty(db: Database.Database) {

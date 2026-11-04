@@ -23,7 +23,11 @@ export default function PublicLayout({
       <CommandPaletteProvider>
         <PageSplash siteName={siteName} />
         <ScrollAtmosphere />
-        <SiteHeader siteName={siteName} />
+        <SiteHeader
+          siteName={siteName}
+          instagram={settings.social_instagram}
+          tiktok={settings.social_tiktok}
+        />
         <main>
           <PageFade>{children}</PageFade>
         </main>
@@ -34,10 +38,11 @@ export default function PublicLayout({
             phone: settings.contact_phone || SOCIAL.phone,
             location: settings.contact_location || SOCIAL.location,
             whatsapp: settings.social_whatsapp || SOCIAL.whatsapp,
-            github: settings.social_github,
-            linkedin: settings.social_linkedin,
+            // Admin/seed değerlerini hardcoded SOCIAL ile ezme
+            github: settings.social_github ?? "",
+            linkedin: settings.social_linkedin ?? "",
             instagram: settings.social_instagram || SOCIAL.instagram,
-            tiktok: settings.social_tiktok || SOCIAL.tiktok,
+            tiktok: settings.social_tiktok ?? "",
           }}
         />
       </CommandPaletteProvider>

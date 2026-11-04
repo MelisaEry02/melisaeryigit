@@ -72,6 +72,16 @@ html[data-theme="night"] .btn-primary {
   box-shadow: 0 8px 24px rgba(224, 160, 182, 0.22);
 }
 
+/* Gece: hover glow buton dolgusundan ayrı pembe ton */
+html[data-theme="night"] .btn-primary:hover {
+  background: #f4c8da;
+  color: #2a1520;
+  box-shadow:
+    0 0 0 1px rgba(255, 210, 230, 0.55),
+    0 14px 34px rgba(255, 140, 190, 0.32),
+    0 0 30px rgba(255, 190, 220, 0.65);
+}
+
 html[data-theme="night"] .btn-ghost {
   background: rgba(255, 255, 255, 0.06);
   border-color: var(--pink-200);
@@ -1989,8 +1999,32 @@ html[data-theme="night"] .admin-panel {
     transform var(--dur-ui) var(--ease-ui);
 }
 
-.cmdk-trigger--hero {
-  margin-bottom: 0.35rem;
+.cmdk-trigger--nav {
+  padding: 0.15rem 0.35rem;
+  border-color: transparent;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.cmdk-trigger--nav .cmdk-trigger__label {
+  display: none;
+}
+
+.cmdk-trigger--nav:hover {
+  color: var(--ink);
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+.nav-link-cluster {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .cmdk-trigger:hover {
@@ -2014,10 +2048,21 @@ html[data-theme="night"] .admin-panel {
   color: var(--ink-soft);
 }
 
-/* Telefonda kısayol yazısı yok */
+.cmdk-trigger--nav .cmdk-trigger__kbd {
+  border-color: rgba(232, 180, 200, 0.55);
+  background: transparent;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+/* Telefonda kısayol yazısı yok; Ara etiketi görünsün */
 @media (max-width: 700px), (hover: none) and (pointer: coarse) {
   .cmdk-trigger__kbd {
     display: none;
+  }
+
+  .cmdk-trigger--nav .cmdk-trigger__label {
+    display: inline;
   }
 }
 

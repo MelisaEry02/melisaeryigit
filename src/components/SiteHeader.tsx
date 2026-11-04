@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { CommandPaletteTrigger } from "@/components/CommandPalette";
 import { HeaderSocialLinks } from "@/components/SocialIcons";
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -17,7 +18,15 @@ const links = [
   { href: "/defter", label: "Defter" },
 ];
 
-export function SiteHeader({ siteName }: { siteName: string }) {
+export function SiteHeader({
+  siteName,
+  instagram,
+  tiktok,
+}: {
+  siteName: string;
+  instagram?: string;
+  tiktok?: string;
+}) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -44,20 +53,24 @@ export function SiteHeader({ siteName }: { siteName: string }) {
                 ? pathname === "/"
                 : pathname.startsWith(l.href);
             return (
-              <Link
-                key={l.href}
-                href={l.href}
-                className="nav-link"
-                aria-current={current ? "page" : undefined}
-                onClick={() => setOpen(false)}
-              >
-                {l.label}
-              </Link>
+              <span key={l.href} className="nav-link-cluster">
+                <Link
+                  href={l.href}
+                  className="nav-link"
+                  aria-current={current ? "page" : undefined}
+                  onClick={() => setOpen(false)}
+                >
+                  {l.label}
+                </Link>
+                {l.href === "/" ? (
+                  <CommandPaletteTrigger className="cmdk-trigger--nav" />
+                ) : null}
+              </span>
             );
           })}
 
           <div className="nav-social-cluster">
-            <HeaderSocialLinks />
+            <HeaderSocialLinks instagram={instagram} tiktok={tiktok} />
           </div>
         </nav>
 

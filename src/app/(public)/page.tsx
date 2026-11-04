@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { BlogExpandList } from "@/components/BlogExpandList";
-import { CommandPaletteTrigger } from "@/components/CommandPalette";
 import { ContactCta } from "@/components/ContactCta";
 import { EdgeLogos } from "@/components/EdgeLogos";
 import { EmptyHint } from "@/components/EmptyHint";
@@ -49,7 +48,6 @@ export default function HomePage() {
 
         <div className="site-shell relative z-[2] grid min-h-[calc(100vh-5rem)] place-items-center py-16 md:py-24">
           <div className="hero-brand fade-up max-w-4xl">
-            <CommandPaletteTrigger className="cmdk-trigger--hero" />
             <SnowflakeLogo className="hero-brand__mark" />
             <p className="hero-brand__eyebrow">Kişisel web sitesi</p>
             <h1 className="hero-brand__name hero-brand__name--xl">
