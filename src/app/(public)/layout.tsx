@@ -1,3 +1,4 @@
+import { PageFade } from "@/components/PageFade";
 import { PageSplash } from "@/components/PageSplash";
 import { ScrollAtmosphere } from "@/components/ScrollAtmosphere";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -21,7 +22,9 @@ export default function PublicLayout({
       <PageSplash siteName={siteName} />
       <ScrollAtmosphere />
       <SiteHeader siteName={siteName} />
-      <main>{children}</main>
+      <main>
+        <PageFade>{children}</PageFade>
+      </main>
       <SiteFooter
         siteName={siteName}
         contact={{

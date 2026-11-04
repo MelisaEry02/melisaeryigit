@@ -25,6 +25,8 @@ html[data-theme="day"] {
   --scroll-y: 0px;
   --parallax-a: 0px;
   --parallax-b: 0px;
+  --dur-ui: 240ms;
+  --ease-ui: ease;
 }
 
 /* Gece: aynı pembe ailesi, koyulaşmış */
@@ -138,6 +140,20 @@ body::before {
 a {
   color: inherit;
   text-decoration: none;
+  transition:
+    color var(--dur-ui) var(--ease-ui),
+    opacity var(--dur-ui) var(--ease-ui),
+    transform var(--dur-ui) var(--ease-ui);
+}
+
+button {
+  transition:
+    color var(--dur-ui) var(--ease-ui),
+    opacity var(--dur-ui) var(--ease-ui),
+    transform var(--dur-ui) var(--ease-ui),
+    background-color var(--dur-ui) var(--ease-ui),
+    border-color var(--dur-ui) var(--ease-ui),
+    box-shadow var(--dur-ui) var(--ease-ui);
 }
 
 ::selection {
@@ -404,13 +420,19 @@ html[data-theme="night"] .hero-stage__drift--3 {
   border-radius: 999px;
   color: var(--ink-soft);
   border: 1px solid transparent;
-  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  transition:
+    color var(--dur-ui) var(--ease-ui),
+    opacity var(--dur-ui) var(--ease-ui),
+    transform var(--dur-ui) var(--ease-ui),
+    border-color var(--dur-ui) var(--ease-ui),
+    background-color var(--dur-ui) var(--ease-ui);
 }
 
 .header-social__link:hover {
   color: var(--rose);
   border-color: var(--pink-200);
   background: var(--surface);
+  transform: translateY(-1px);
 }
 
 .header-meta {
@@ -427,7 +449,9 @@ html[data-theme="night"] .hero-stage__drift--3 {
   align-items: center;
   gap: 0.35rem;
   color: var(--ink-soft);
-  transition: color 0.2s ease;
+  transition:
+    color var(--dur-ui) var(--ease-ui),
+    opacity var(--dur-ui) var(--ease-ui);
 }
 
 .header-meta__wa:hover {
@@ -1149,7 +1173,9 @@ html[data-theme="night"] .hero-snow__man-ball {
   font: inherit;
   color: inherit;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition:
+    color var(--dur-ui) var(--ease-ui),
+    opacity var(--dur-ui) var(--ease-ui);
 }
 
 .blog-expand__title:hover {
@@ -1346,6 +1372,12 @@ html[data-theme="night"] .winter-bridge__photo {
   text-decoration-color: rgba(184, 107, 136, 0.45);
 }
 
+.contact-block__loc a {
+  transition:
+    color var(--dur-ui) var(--ease-ui),
+    opacity var(--dur-ui) var(--ease-ui);
+}
+
 .contact-block__loc a:hover {
   color: var(--ink);
 }
@@ -1373,7 +1405,10 @@ html[data-theme="night"] .winter-bridge__photo {
   min-height: 3.35rem;
   padding: 0.55rem 0.35rem;
   color: var(--ink);
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition:
+    color var(--dur-ui) var(--ease-ui),
+    opacity var(--dur-ui) var(--ease-ui),
+    transform var(--dur-ui) var(--ease-ui);
 }
 
 .contact-block__item:hover {
@@ -1424,7 +1459,9 @@ html[data-theme="night"] .site-footer {
   position: relative;
   font-size: 0.95rem;
   color: var(--ink-soft);
-  transition: color 0.2s ease;
+  transition:
+    color var(--dur-ui) var(--ease-ui),
+    opacity var(--dur-ui) var(--ease-ui);
 }
 
 .nav-link:hover,
@@ -1442,7 +1479,7 @@ html[data-theme="night"] .site-footer {
   background: var(--rose);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.25s ease;
+  transition: transform 260ms var(--ease-ui);
 }
 
 .nav-link:hover::after,
@@ -1460,7 +1497,13 @@ html[data-theme="night"] .site-footer {
   border: 1px solid transparent;
   font-weight: 600;
   font-size: 0.95rem;
-  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    color var(--dur-ui) var(--ease-ui),
+    opacity var(--dur-ui) var(--ease-ui),
+    transform var(--dur-ui) var(--ease-ui),
+    background-color var(--dur-ui) var(--ease-ui),
+    border-color var(--dur-ui) var(--ease-ui),
+    box-shadow var(--dur-ui) var(--ease-ui);
 }
 
 .btn:hover {
@@ -1486,6 +1529,22 @@ html[data-theme="night"] .site-footer {
 
 .btn-ghost:hover {
   background: #fff;
+}
+
+/* Rota değişimi: soft fade (abartısız) */
+.page-fade {
+  animation: pageFadeIn 260ms var(--ease-ui) both;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .field {
@@ -1586,12 +1645,25 @@ html[data-theme="night"] .admin-panel {
   .page-splash__bloom,
   .page-splash__ring,
   .hero-stage__mesh,
-  .hero-stage__flake {
+  .hero-stage__flake,
+  .page-fade {
     animation: none !important;
   }
 
   .page-splash__flake {
     animation: none !important;
+  }
+
+  a,
+  button,
+  .btn,
+  .nav-link,
+  .nav-link::after,
+  .header-social__link,
+  .header-meta__wa,
+  .contact-block__item,
+  .blog-expand__title {
+    transition: none !important;
   }
 }
 
