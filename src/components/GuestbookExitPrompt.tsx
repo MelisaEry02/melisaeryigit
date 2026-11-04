@@ -8,7 +8,7 @@ const SEEN_KEY = "me-defter-seen";
 const SHOWN_KEY = "me-exit-gb-shown";
 const NUDGE_MS = 90_000;
 
-/** Defter görmeden: mouse-leave (masaüstü) + ~90 sn timer; oturumda 1 kez. */
+/** Defter görmeden: ~90 sn sonra soft nudge; oturumda 1 kez. */
 export function GuestbookExitPrompt() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -39,16 +39,6 @@ export function GuestbookExitPrompt() {
       /* ignore */
     }
   }, [pathname]);
-
-  useEffect(() => {
-    function onLeave(e: MouseEvent) {
-      if (e.clientY > 12) return;
-      if (e.relatedTarget) return;
-      tryOpen();
-    }
-    document.addEventListener("mouseout", onLeave);
-    return () => document.removeEventListener("mouseout", onLeave);
-  }, [tryOpen]);
 
   useEffect(() => {
     const id = window.setTimeout(() => tryOpen(), NUDGE_MS);

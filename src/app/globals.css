@@ -88,6 +88,24 @@ html[data-theme="night"] .btn-ghost {
   color: var(--ink);
 }
 
+html[data-theme="night"] .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--pink-300);
+  box-shadow: none;
+}
+
+html[data-theme="night"] .cmdk-trigger--cta {
+  border-color: var(--pink-200);
+  background: transparent;
+}
+
+html[data-theme="night"] .cmdk-trigger--cta:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--pink-300);
+  box-shadow: none;
+  transform: translateY(-1px);
+}
+
 html[data-theme="night"] .field {
   background: rgba(26, 16, 20, 0.65);
   border-color: var(--pink-200);
@@ -2038,12 +2056,12 @@ html[data-theme="night"] .admin-panel {
     transform var(--dur-ui) var(--ease-ui);
 }
 
-/* Hero: İletişime geç ile aynı ölçü; arka plan şeffaf */
+/* Hero: İletişime geç ile aynı ölçü + border */
 .cmdk-trigger--cta {
   min-height: 2.85rem;
   padding: 0.75rem 1.35rem;
   border-radius: 999px;
-  border: 1px solid transparent;
+  border: 1px solid var(--pink-200);
   background: transparent;
   box-shadow: none;
   color: var(--ink);
@@ -2055,8 +2073,8 @@ html[data-theme="night"] .admin-panel {
 
 .cmdk-trigger--cta:hover {
   color: var(--ink);
-  border-color: transparent;
-  background: transparent;
+  border-color: var(--pink-400);
+  background: rgba(252, 238, 243, 0.55);
   box-shadow: none;
   transform: translateY(-2px);
 }
