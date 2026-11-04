@@ -97,13 +97,15 @@ html[data-theme="night"] .btn-ghost:hover {
     0 0 16px rgba(224, 160, 182, 0.28);
 }
 
+/* Ara = İletişime geç (btn-ghost) gece */
 html[data-theme="night"] .cmdk-trigger--cta {
+  background: rgba(255, 255, 255, 0.06);
   border-color: var(--pink-200);
-  background: transparent;
+  color: var(--ink);
 }
 
 html[data-theme="night"] .cmdk-trigger--cta:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
   border-color: rgba(224, 160, 182, 0.85);
   box-shadow:
     0 0 0 1px rgba(224, 160, 182, 0.35),
@@ -2061,26 +2063,29 @@ html[data-theme="night"] .admin-panel {
     transform var(--dur-ui) var(--ease-ui);
 }
 
-/* Hero: İletişime geç ile aynı ölçü + border */
+/* Hero: İletişime geç (btn-ghost) ile aynı bg/border/hover */
 .cmdk-trigger--cta {
   min-height: 2.85rem;
   padding: 0.75rem 1.35rem;
   border-radius: 999px;
   border: 1px solid var(--pink-200);
-  background: transparent;
+  background: var(--surface);
   box-shadow: none;
   color: var(--ink);
   font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.2;
   gap: 0.45rem;
+  backdrop-filter: blur(8px);
 }
 
 .cmdk-trigger--cta:hover {
   color: var(--ink);
+  background: rgba(252, 238, 243, 0.92);
   border-color: var(--pink-400);
-  background: rgba(252, 238, 243, 0.55);
-  box-shadow: none;
+  box-shadow:
+    0 0 0 1px rgba(184, 107, 136, 0.2),
+    0 0 22px rgba(232, 180, 200, 0.5);
   transform: translateY(-2px);
 }
 
