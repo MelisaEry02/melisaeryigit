@@ -31,9 +31,21 @@ export function Guestbook({
   );
   const [error, setError] = useState("");
 
+  async function refresh() {
+    try {
+      const res = await fetch("/api/guestbook", { cache: "no-store" });
+      if (!res.ok) return;
+      const json = await res.json();
+      if (Array.isArray(json.entries)) setEntries(json.entries);
+    } catch {
+      /* ignore — SSR / optimistic kalır */
+    }
+  }
+
+  // SSR boş gelebilir (eski /tmp izolasyonu); API’den taze liste
   useEffect(() => {
-    setEntries(initialEntries);
-  }, [initialEntries]);
+    void refresh();
+  }, []);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -60,11 +72,12 @@ export function Guestbook({
         id: json.id,
         name: String(data.get("name") || "").trim(),
         message: String(data.get("message") || "").trim(),
-        created_at: new Date().toISOString(),
+        created_at: json.created_at || new Date().toISOString(),
       };
-      setEntries((prev) => [entry, ...prev]);
+      setEntries((prev) => [entry, ...prev.filter((x) => x.id !== entry.id)]);
       setStatus("ok");
       form.reset();
+      void refresh();
     } catch {
       setStatus("err");
       setError("Bağlantı hatası.");

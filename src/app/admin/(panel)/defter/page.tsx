@@ -1,12 +1,10 @@
 import { deleteGuestbookEntry } from "@/app/admin/(panel)/defter/actions";
-import { getDb, type GuestbookEntry } from "@/lib/db";
+import { listGuestbookAdmin } from "@/lib/guestbook";
 
-export default function AdminGuestbookPage() {
-  const entries = getDb()
-    .prepare(
-      `SELECT * FROM guestbook ORDER BY id DESC LIMIT 200`
-    )
-    .all() as GuestbookEntry[];
+export const dynamic = "force-dynamic";
+
+export default async function AdminGuestbookPage() {
+  const entries = await listGuestbookAdmin(200);
 
   return (
     <div>

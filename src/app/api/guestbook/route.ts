@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getDb, now } from "@/lib/db";
+import {
+  addGuestbookEntry,
+  guestbookBackend,
+  listGuestbookVisible,
+} from "@/lib/guestbook";
 
 export const dynamic = "force-dynamic";
 
@@ -10,14 +14,15 @@ const schema = z.object({
 });
 
 export async function GET() {
-  const rows = getDb()
-    .prepare(
-      `SELECT id, name, message, created_at FROM guestbook
-       WHERE status = 'visible'
-       ORDER BY id DESC LIMIT 80`
-    )
-    .all();
-  return NextResponse.json({ entries: rows });
+  try {
+    const entries = await listGuestbookVisible(80);
+    return NextResponse.json({
+      entries,
+      backend: guestbookBackend(),
+    });
+  } catch {
+    return NextResponse.json({ error: "Liste alınamadı." }, { status: 500 });
+  }
 }
 
 export async function POST(request: Request) {
@@ -31,16 +36,12 @@ export async function POST(request: Request) {
       );
     }
     const { name, message } = parsed.data;
-    const info = getDb()
-      .prepare(
-        `INSERT INTO guestbook (name, message, status, created_at)
-         VALUES (?, ?, 'visible', ?)`
-      )
-      .run(name, message, now());
-
+    const entry = await addGuestbookEntry(name, message);
     return NextResponse.json({
       ok: true,
-      id: Number(info.lastInsertRowid),
+      id: entry.id,
+      created_at: entry.created_at,
+      backend: guestbookBackend(),
     });
   } catch {
     return NextResponse.json({ error: "Kaydedilemedi." }, { status: 500 });

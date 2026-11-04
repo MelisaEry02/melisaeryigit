@@ -2,13 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 import { isAuthenticated } from "@/lib/auth";
-import { getDb } from "@/lib/db";
+import { deleteGuestbookById } from "@/lib/guestbook";
 
 export async function deleteGuestbookEntry(formData: FormData) {
   if (!(await isAuthenticated())) throw new Error("Yetkisiz");
-  getDb()
-    .prepare(`DELETE FROM guestbook WHERE id = ?`)
-    .run(Number(formData.get("id")));
+  await deleteGuestbookById(Number(formData.get("id")));
   revalidatePath("/admin/defter");
   revalidatePath("/defter");
 }

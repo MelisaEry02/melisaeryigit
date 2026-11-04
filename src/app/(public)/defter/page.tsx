@@ -1,18 +1,13 @@
 import type { Metadata } from "next";
 import { Guestbook } from "@/components/Guestbook";
 import { SpeechBubble } from "@/components/SpeechBubble";
-import { getDb, type GuestbookEntry } from "@/lib/db";
+import { listGuestbookVisible } from "@/lib/guestbook";
 
 export const metadata: Metadata = { title: "Ziyaretçi defteri" };
+export const dynamic = "force-dynamic";
 
-export default function GuestbookPage() {
-  const entries = getDb()
-    .prepare(
-      `SELECT id, name, message, created_at FROM guestbook
-       WHERE status = 'visible'
-       ORDER BY id DESC LIMIT 80`
-    )
-    .all() as Omit<GuestbookEntry, "status">[];
+export default async function GuestbookPage() {
+  const entries = await listGuestbookVisible(80);
 
   return (
     <div className="site-shell page-with-soft-snow py-16 md:py-20">
