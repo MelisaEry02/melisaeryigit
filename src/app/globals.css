@@ -1370,6 +1370,9 @@ html[data-theme="night"] .winter-bridge__photo {
 }
 
 .site-footer__place {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   margin: 0.15rem 0 0;
   font-size: 0.88rem;
   color: var(--ink-soft);
@@ -1377,6 +1380,13 @@ html[data-theme="night"] .winter-bridge__photo {
   text-underline-offset: 0.18em;
   text-decoration-color: rgba(184, 107, 136, 0.45);
   transition: color var(--dur-ui) var(--ease-ui);
+}
+
+.site-footer__place-icon {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex-shrink: 0;
+  color: var(--rose);
 }
 
 .site-footer__place:hover {
@@ -2028,17 +2038,19 @@ html[data-theme="night"] .admin-panel {
     transform var(--dur-ui) var(--ease-ui);
 }
 
-/* Hero: İletişime geç yanı — kutu/arka plansız */
+/* Hero: İletişime geç ile aynı ölçü; arka plan şeffaf */
 .cmdk-trigger--cta {
-  padding: 0.35rem 0.15rem;
-  border: 0;
-  border-color: transparent;
+  min-height: 2.85rem;
+  padding: 0.75rem 1.35rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
   background: transparent;
   box-shadow: none;
-  color: var(--ink-soft);
-  font-size: 0.85rem;
+  color: var(--ink);
+  font-size: 0.95rem;
   font-weight: 600;
-  gap: 0.35rem;
+  line-height: 1.2;
+  gap: 0.45rem;
 }
 
 .cmdk-trigger--cta:hover {
@@ -2046,7 +2058,12 @@ html[data-theme="night"] .admin-panel {
   border-color: transparent;
   background: transparent;
   box-shadow: none;
-  transform: none;
+  transform: translateY(-2px);
+}
+
+.cmdk-trigger--cta .cmdk-trigger__label {
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
 .cmdk-trigger--cta .cmdk-trigger__kbd {
@@ -2054,6 +2071,7 @@ html[data-theme="night"] .admin-panel {
   background: transparent;
   padding: 0;
   color: var(--ink-soft);
+  font-size: 0.78rem;
   font-weight: 600;
 }
 

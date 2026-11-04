@@ -6,6 +6,7 @@ import {
   LinkedInIcon,
   MailIcon,
   PhoneIcon,
+  PinIcon,
   SOCIAL,
   TikTokIcon,
   WhatsAppIcon,
@@ -151,7 +152,8 @@ export function SiteFooter({ siteName, contact }: Props) {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {location}
+                  <PinIcon className="site-footer__place-icon" />
+                  <span>{location}</span>
                 </a>
               </div>
             </div>

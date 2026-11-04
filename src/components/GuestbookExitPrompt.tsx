@@ -6,8 +6,9 @@ import { useCallback, useEffect, useState } from "react";
 
 const SEEN_KEY = "me-defter-seen";
 const SHOWN_KEY = "me-exit-gb-shown";
+const NUDGE_MS = 90_000;
 
-/** Defter görmeden çıkışa yakın: soft mini defter (abartısız). */
+/** Defter görmeden: mouse-leave (masaüstü) + ~90 sn timer; oturumda 1 kez. */
 export function GuestbookExitPrompt() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -47,6 +48,11 @@ export function GuestbookExitPrompt() {
     }
     document.addEventListener("mouseout", onLeave);
     return () => document.removeEventListener("mouseout", onLeave);
+  }, [tryOpen]);
+
+  useEffect(() => {
+    const id = window.setTimeout(() => tryOpen(), NUDGE_MS);
+    return () => window.clearTimeout(id);
   }, [tryOpen]);
 
   function close() {
