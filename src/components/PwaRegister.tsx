@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-/** Service worker — yalnızca güvenli bağlam (localhost / https). */
+/** SW: eski cache'leri temizle; HTML/favicon tutma. */
 export function PwaRegister() {
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -12,18 +12,17 @@ export function PwaRegister() {
       window.isSecureContext ||
       location.hostname === "localhost" ||
       location.hostname === "127.0.0.1";
+    if (!secure) return;
 
-    if (!secure) {
-      // LAN http://IP — iOS Ana Ekrana Ekle yine çalışır; SW Chrome için HTTPS ister
-      return;
-    }
-
-    navigator.serviceWorker
-      .register("/sw.js")
-      .then((reg) => reg.update())
-      .catch(() => {
-        /* sessiz: PWA ikon/manifest yine de A2HS için yeterli */
-      });
+    (async () => {
+      const regs = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map((r) => r.unregister()));
+      if ("caches" in window) {
+        const keys = await caches.keys();
+        await Promise.all(keys.map((k) => caches.delete(k)));
+      }
+      await navigator.serviceWorker.register("/sw.js");
+    })().catch(() => {});
   }, []);
 
   return null;

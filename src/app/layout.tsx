@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     template: `%s · ${SITE}`,
   },
   description: `${SITE} — projeler, yazılar ve iletişim.`,
-  manifest: "/manifest.webmanifest?v=mev6",
+  manifest: "/manifest.webmanifest?v=mev7",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -41,16 +41,14 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/brand/me-v6-48.png", type: "image/png", sizes: "48x48" },
-      { url: "/brand/me-v6-32.png", type: "image/png", sizes: "32x32" },
-      { url: "/brand/me-v6.ico", sizes: "any" },
+      { url: "/brand/me-v7-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/brand/me-v7-48.png", type: "image/png", sizes: "48x48" },
+      { url: "/favicon.ico", type: "image/x-icon", sizes: "any" },
     ],
     apple: [
-      { url: "/brand/me-v6-180.png", sizes: "180x180", type: "image/png" },
+      { url: "/brand/me-v7-180.png", type: "image/png", sizes: "180x180" },
     ],
-    shortcut: [
-      { url: "/brand/me-v6-32.png", type: "image/png", sizes: "32x32" },
-    ],
+    shortcut: [{ url: "/brand/me-v7-32.png", type: "image/png" }],
   },
   openGraph: {
     title: SITE,
@@ -60,7 +58,7 @@ export const metadata: Metadata = {
     siteName: SITE,
     images: [
       {
-        url: "/og-cover.png?v=mev6",
+        url: "/og-cover.png?v=mev7",
         width: 1200,
         height: 630,
         alt: "Melisa Eryiğit — pembe zemin, mauve kartane",
@@ -71,7 +69,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: SITE,
     description: `${SITE} — projeler, yazılar ve iletişim.`,
-    images: ["/og-cover.png?v=mev6"],
+    images: ["/og-cover.png?v=mev7"],
   },
 };
 
@@ -99,12 +97,12 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-title" content="Melisa Eryiğit" />
-        <link rel="apple-touch-icon" href="/brand/me-v6-180.png" sizes="180x180" />
-        <link rel="icon" href="/brand/me-v6-48.png" type="image/png" sizes="48x48" />
-        <link rel="icon" href="/brand/me-v6-32.png" type="image/png" sizes="32x32" />
-        <link rel="shortcut icon" href="/brand/me-v6-32.png" />
-        <link rel="icon" href="/brand/me-v6.ico" sizes="any" />
-        <link rel="manifest" href="/manifest.webmanifest?v=mev6" />
+        <link rel="apple-touch-icon" href="/brand/me-v7-180.png" sizes="180x180" type="image/png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/brand/me-v7-32.png" />
+        <link rel="icon" type="image/png" sizes="48x48" href="/brand/me-v7-48.png" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon" />
+        <link rel="manifest" href="/manifest.webmanifest?v=mev7" />
       </head>
       <body className={`${fraunces.variable} ${manrope.variable} antialiased`}>
         {/* İlk boyama: pembe kapak React’ten önce — PageSplash kaldırır */}
