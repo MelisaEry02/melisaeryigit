@@ -22,8 +22,8 @@ function ensureDirs() {
 
 function resolveDbPath() {
   if (process.env.DATABASE_PATH) return process.env.DATABASE_PATH;
-  // v7: correct TikTok/GitHub prefs in seed
-  if (isVercel) return path.join("/tmp", "melisa-eryigit-site-v7.db");
+  // v8: TikTok @melisaerygit prefs
+  if (isVercel) return path.join("/tmp", "melisa-eryigit-site-v8.db");
   return path.join(dataDir, "site.db");
 }
 
@@ -268,7 +268,7 @@ function now() {
 /** Tercih edilen hesaplar (deploy seed ile kalıcı). */
 const SOCIAL_PREFS = {
   social_github: "https://github.com/MelisaEry02",
-  social_tiktok: "https://www.tiktok.com/@melisaery",
+  social_tiktok: "https://www.tiktok.com/@melisaerygit",
 } as const;
 
 /**
@@ -309,8 +309,10 @@ function ensureSocialPrefs(db: Database.Database) {
   if (!ghOk) upsert.run("social_github", SOCIAL_PREFS.social_github);
 
   const tt = (get.get("social_tiktok") as { value: string } | undefined)?.value?.trim() || "";
-  const ttOk = /^https?:\/\/(www\.)?tiktok\.com\/@/i.test(tt);
-  if (!ttOk) upsert.run("social_tiktok", SOCIAL_PREFS.social_tiktok);
+  // Tercih: @melisaerygit (eski @melisaery dahil yanlışları düzelt)
+  if (tt !== SOCIAL_PREFS.social_tiktok) {
+    upsert.run("social_tiktok", SOCIAL_PREFS.social_tiktok);
+  }
 }
 
 function seedIfEmpty(db: Database.Database) {
@@ -335,7 +337,7 @@ function seedIfEmpty(db: Database.Database) {
     social_github: "https://github.com/MelisaEry02",
     social_linkedin: "",
     social_instagram: "https://instagram.com/melisaerygit",
-    social_tiktok: "https://www.tiktok.com/@melisaery",
+    social_tiktok: "https://www.tiktok.com/@melisaerygit",
     social_whatsapp: "https://wa.me/905528465257",
     social_email: "melisaeryigit02@gmail.com",
     contact_email: "melisaeryigit02@gmail.com",

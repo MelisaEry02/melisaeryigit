@@ -1,4 +1,5 @@
 import { CommandPaletteProvider } from "@/components/CommandPalette";
+import { GuestbookExitPrompt } from "@/components/GuestbookExitPrompt";
 import { PageFade } from "@/components/PageFade";
 import { PageSplash } from "@/components/PageSplash";
 import { ScrollAtmosphere } from "@/components/ScrollAtmosphere";
@@ -38,13 +39,13 @@ export default function PublicLayout({
             phone: settings.contact_phone || SOCIAL.phone,
             location: settings.contact_location || SOCIAL.location,
             whatsapp: settings.social_whatsapp || SOCIAL.whatsapp,
-            // Admin/seed değerlerini hardcoded SOCIAL ile ezme
             github: settings.social_github ?? "",
             linkedin: settings.social_linkedin ?? "",
             instagram: settings.social_instagram || SOCIAL.instagram,
             tiktok: settings.social_tiktok ?? "",
           }}
         />
+        <GuestbookExitPrompt />
       </CommandPaletteProvider>
     </ThemeProvider>
   );

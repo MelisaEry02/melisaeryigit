@@ -1344,7 +1344,7 @@ html[data-theme="night"] .winter-bridge__photo {
 
 .site-footer__brand {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.55rem;
 }
 
@@ -1352,6 +1352,35 @@ html[data-theme="night"] .winter-bridge__photo {
   width: 1.35rem;
   height: 1.35rem;
   color: var(--rose);
+  margin-top: 0.35rem;
+  flex-shrink: 0;
+}
+
+.site-footer__brand-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+}
+
+.site-footer__tag {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.site-footer__place {
+  margin: 0.15rem 0 0;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-color: rgba(184, 107, 136, 0.45);
+  transition: color var(--dur-ui) var(--ease-ui);
+}
+
+.site-footer__place:hover {
+  color: var(--ink);
 }
 
 .contact-block {
@@ -1999,23 +2028,20 @@ html[data-theme="night"] .admin-panel {
     transform var(--dur-ui) var(--ease-ui);
 }
 
-.cmdk-trigger--nav {
-  padding: 0.2rem 0.45rem;
+/* Hero: İletişime geç yanı — kutu/arka plansız */
+.cmdk-trigger--cta {
+  padding: 0.35rem 0.15rem;
+  border: 0;
   border-color: transparent;
   background: transparent;
+  box-shadow: none;
   color: var(--ink-soft);
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  vertical-align: middle;
   gap: 0.35rem;
 }
 
-.cmdk-trigger--nav .cmdk-trigger__label {
-  display: inline;
-  color: var(--ink-soft);
-}
-
-.cmdk-trigger--nav:hover {
+.cmdk-trigger--cta:hover {
   color: var(--ink);
   border-color: transparent;
   background: transparent;
@@ -2023,14 +2049,12 @@ html[data-theme="night"] .admin-panel {
   transform: none;
 }
 
-.cmdk-trigger--nav:hover .cmdk-trigger__label {
-  color: var(--ink);
-}
-
-.nav-link-cluster {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
+.cmdk-trigger--cta .cmdk-trigger__kbd {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: var(--ink-soft);
+  font-weight: 600;
 }
 
 .cmdk-trigger:hover {
@@ -2054,17 +2078,110 @@ html[data-theme="night"] .admin-panel {
   color: var(--ink-soft);
 }
 
-.cmdk-trigger--nav .cmdk-trigger__kbd {
-  border-color: rgba(232, 180, 200, 0.55);
-  background: transparent;
-  color: var(--ink-soft);
-  font-weight: 600;
-}
-
 /* Telefonda kısayol yazısı yok; «Ara» kalsın */
 @media (max-width: 700px), (hover: none) and (pointer: coarse) {
   .cmdk-trigger__kbd {
     display: none;
+  }
+}
+
+/* —— Exit-intent mini defter —— */
+.exit-gb {
+  position: fixed;
+  inset: 0;
+  z-index: 130;
+  display: grid;
+  place-items: start center;
+  padding: min(16vh, 5.5rem) 1rem 2rem;
+}
+
+.exit-gb__backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(44, 31, 38, 0.28);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+.exit-gb__panel {
+  position: relative;
+  z-index: 1;
+  width: min(22rem, 100%);
+  padding: 1.15rem 1.2rem 1.25rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(232, 180, 200, 0.65);
+  background: rgba(255, 247, 249, 0.97);
+  box-shadow: 0 18px 40px rgba(44, 31, 38, 0.14);
+  animation: pageFadeIn 220ms var(--ease-ui) both;
+}
+
+html[data-theme="night"] .exit-gb__panel {
+  background: rgba(34, 21, 28, 0.96);
+  border-color: rgba(122, 74, 94, 0.6);
+}
+
+.exit-gb__title {
+  margin: 0;
+  font-family: var(--font-fraunces), ui-serif, Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.exit-gb__lead {
+  margin: 0.35rem 0 0.9rem;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+.exit-gb__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.exit-gb__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.2rem;
+}
+
+.exit-gb__actions .btn {
+  padding: 0.5rem 0.95rem;
+  font-size: 0.85rem;
+}
+
+.exit-gb__skip {
+  border: 0;
+  background: none;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.exit-gb__done {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  align-items: flex-start;
+}
+
+.exit-gb__done p {
+  margin: 0 0 0.25rem;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exit-gb__panel {
+    animation: none !important;
   }
 }
 

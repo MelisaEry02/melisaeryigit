@@ -57,7 +57,7 @@ const contactFields: Field[] = [
   {
     key: "social_tiktok",
     label: "TikTok URL",
-    hint: "https://www.tiktok.com/@melisaery",
+    hint: "https://www.tiktok.com/@melisaerygit",
   },
   {
     key: "social_linkedin",

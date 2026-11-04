@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BlogExpandList } from "@/components/BlogExpandList";
+import { CommandPaletteTrigger } from "@/components/CommandPalette";
 import { ContactCta } from "@/components/ContactCta";
 import { EdgeLogos } from "@/components/EdgeLogos";
 import { EmptyHint } from "@/components/EmptyHint";
@@ -59,11 +60,12 @@ export default function HomePage() {
             <p className="fade-up-delay-2 mt-5 max-w-xl text-base leading-relaxed text-ink-soft md:text-lg">
               {settings.hero_intro}
             </p>
-            <div className="fade-up-delay-2 mt-10 flex flex-wrap justify-center gap-3">
+            <div className="fade-up-delay-2 mt-10 flex flex-wrap items-center justify-center gap-3">
               <Link href="/projeler" className="btn btn-primary">
                 Projelerime bakın
               </Link>
               <ContactCta variant="ghost" />
+              <CommandPaletteTrigger className="cmdk-trigger--cta" />
             </div>
           </div>
         </div>

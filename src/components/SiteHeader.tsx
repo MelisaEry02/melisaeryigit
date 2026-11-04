@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { CommandPaletteTrigger } from "@/components/CommandPalette";
 import { HeaderSocialLinks } from "@/components/SocialIcons";
 import { SnowflakeLogo } from "@/components/SnowflakeLogo";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -53,19 +52,15 @@ export function SiteHeader({
                 ? pathname === "/"
                 : pathname.startsWith(l.href);
             return (
-              <span key={l.href} className="nav-link-cluster">
-                {l.href === "/" ? (
-                  <CommandPaletteTrigger className="cmdk-trigger--nav" />
-                ) : null}
-                <Link
-                  href={l.href}
-                  className="nav-link"
-                  aria-current={current ? "page" : undefined}
-                  onClick={() => setOpen(false)}
-                >
-                  {l.label}
-                </Link>
-              </span>
+              <Link
+                key={l.href}
+                href={l.href}
+                className="nav-link"
+                aria-current={current ? "page" : undefined}
+                onClick={() => setOpen(false)}
+              >
+                {l.label}
+              </Link>
             );
           })}
 

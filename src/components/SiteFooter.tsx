@@ -6,7 +6,6 @@ import {
   LinkedInIcon,
   MailIcon,
   PhoneIcon,
-  PinIcon,
   SOCIAL,
   TikTokIcon,
   WhatsAppIcon,
@@ -57,7 +56,7 @@ export function SiteFooter({ siteName, contact }: Props) {
   const tiktokOk = /^https?:\/\/(www\.)?tiktok\.com\//i.test(tiktok);
 
   const igSub = socialLabel(instagram, "instagram") || "@melisaerygit";
-  const ttSub = socialLabel(tiktok, "tiktok");
+  const ttSub = socialLabel(tiktok, "tiktok") || "@melisaerygit";
   const ghSub = socialLabel(github, "github");
 
   const items: ContactItem[] = [
@@ -80,7 +79,7 @@ export function SiteFooter({ siteName, contact }: Props) {
           key: "tiktok",
           href: tiktok,
           label: "TikTok",
-          sub: ttSub || "Profil",
+          sub: ttSub,
           icon: <TikTokIcon className="contact-block__icon" />,
         }
       : {
@@ -134,13 +133,6 @@ export function SiteFooter({ siteName, contact }: Props) {
       sub: email,
       icon: <MailIcon className="contact-block__icon" />,
     },
-    {
-      key: "maps",
-      href: mapsHref,
-      label: "Konum",
-      sub: location,
-      icon: <PinIcon className="contact-block__icon" />,
-    },
   ];
 
   return (
@@ -150,18 +142,20 @@ export function SiteFooter({ siteName, contact }: Props) {
           <div className="contact-block__intro">
             <div className="site-footer__brand">
               <SnowflakeLogo className="site-footer__mark" title="" />
-              <div>
+              <div className="site-footer__brand-text">
                 <p className="font-display text-2xl text-ink">{siteName}</p>
-                <p className="text-xs text-ink-soft">Kişisel web sitesi</p>
+                <p className="site-footer__tag">Kişisel web sitesi</p>
+                <a
+                  className="site-footer__place"
+                  href={mapsHref}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {location}
+                </a>
               </div>
             </div>
-            <p className="contact-block__loc mt-3">
-              <PinIcon className="contact-block__icon" />
-              <a href={mapsHref} target="_blank" rel="noreferrer">
-                {location}
-              </a>
-            </p>
-            <div className="mt-4">
+            <div className="mt-5">
               <ContactCta variant="ghost" />
             </div>
           </div>

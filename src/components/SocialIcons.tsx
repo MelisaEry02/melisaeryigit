@@ -1,5 +1,5 @@
 const IG = "https://instagram.com/melisaerygit";
-const TT = "https://www.tiktok.com/@melisaery";
+const TT = "https://www.tiktok.com/@melisaerygit";
 const WA = "https://wa.me/905528465257";
 const PHONE = "05528465257";
 const PHONE_TEL = "tel:+905528465257";
